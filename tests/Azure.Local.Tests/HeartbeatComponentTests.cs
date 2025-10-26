@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AwesomeAssertions;
+using Azure.Local.ApiService.Tests.Component.Setup;
 
-namespace Azure.Local.Tests
+namespace Azure.Local.ApiService.Tests.Component
 {
     public class HeartbeatComponentTests : ComponentTestBase
     {
@@ -17,12 +14,13 @@ namespace Azure.Local.Tests
         {
             // Arrange
             var request = new HttpRequestMessage(HttpMethod.Get, "/heartbeat");
-         
+            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
+
             // Act
-            var response = await _client.SendAsync(request);
+            var response = await _client.SendAsync(request, cancelToken);
             
             // Assert
-            response.EnsureSuccessStatusCode(); // Status Code 200-299
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
     }
 }

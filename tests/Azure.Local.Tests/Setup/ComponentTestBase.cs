@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Azure.Local.Tests
+﻿namespace Azure.Local.ApiService.Tests.Component.Setup
 {
     public abstract class ComponentTestBase : IClassFixture<ApiServiceWebApplicationFactory>, IDisposable
     {

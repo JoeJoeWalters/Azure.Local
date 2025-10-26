@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 
-namespace Azure.Local.Tests
+namespace Azure.Local.ApiService.Tests.Component.Setup
 {
     public class ApiServiceWebApplicationFactory : WebApplicationFactory<Program>
     {
