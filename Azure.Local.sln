@@ -22,6 +22,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1684B9CB-6AD2-4611-AAC5-2A92A3712AB7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "utils", "utils", "{2C4C5DD3-C58D-41C0-AF3E-20A8266DE342}"
+	ProjectSection(SolutionItems) = preProject
+		utils\clean.bat = utils\clean.bat
+		utils\cosmosrenew.bat = utils\cosmosrenew.bat
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
