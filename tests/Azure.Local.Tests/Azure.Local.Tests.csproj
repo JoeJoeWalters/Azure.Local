@@ -22,7 +22,7 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\Azure.Local.ApiService\Azure.Local.ApiService.csproj" />
+    <ProjectReference Include="..\..\src\Azure.Local.ApiService\Azure.Local.ApiService.csproj" />
   </ItemGroup>
 
   <ItemGroup>
