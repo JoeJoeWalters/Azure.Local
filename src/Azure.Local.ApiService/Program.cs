@@ -1,3 +1,6 @@
+using Azure.Local.Application;
+using Azure.Local.Infrastructure;
+using Azure.Local.Infrastructure.Repository;
 using System.Diagnostics.CodeAnalysis;
 
 [ExcludeFromCodeCoverage]
@@ -11,6 +14,11 @@ public partial class Program
 
         // Add service defaults & Aspire client integrations.
         builder.AddServiceDefaults();
+
+        // Set up dependent api services
+        builder.Services
+            .AddApplication(builder.Configuration)
+            .AddInfrastructure(builder.Configuration);
 
         // Add services to the container.
         builder.Services.AddProblemDetails();
