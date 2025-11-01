@@ -26,8 +26,8 @@ jobs:
       run: dotnet restore
     - name: Build Project
       run: dotnet build --no-restore
-      with:
-        dotnet-version: 9.0.x
+#      with:
+#        dotnet-version: 9.0.x
     - name: Run Tests
       run: dotnet test ./tests/Azure.Local.ApiService.Tests.Component/Azure.Local.ApiService.Tests.Component.csproj --verbosity detailed --logger trx --results-directory ${{ github.workspace }}/unittests
     - name: Upload Test Results
