@@ -1,4 +1,4 @@
-﻿namespace Azure.Local.Domain
+﻿namespace Azure.Local.Domain.Test
 {
     public class TestItem
     {

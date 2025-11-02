@@ -1,5 +1,6 @@
 ﻿using Azure.Local.Domain;
 using Azure.Local.Infrastructure.Repository;
+using Azure.Local.Infrastructure.Test;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

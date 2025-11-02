@@ -1,4 +1,5 @@
 ﻿using Azure.Local.Infrastructure.Repository;
+using Azure.Local.Infrastructure.Test;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;

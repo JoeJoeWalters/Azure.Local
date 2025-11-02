@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Azure.Local.Infrastructure.Repository
+namespace Azure.Local.Infrastructure.Test
 {
     public class RepositoryTestItem
     {
