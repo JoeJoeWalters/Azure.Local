@@ -12,10 +12,7 @@ namespace Azure.Local.Infrastructure.Repository
         }
 
         public void Add(T item)
-        {
-            //_items.Add(convertedItem.Id, item);
-            throw new NotImplementedException();
-        }
+            => _items.Add(item);
 
         public IEnumerable<T> Query(GenericSpecification<T> expression, int take = 0)
             => (take == 0 ?

@@ -19,7 +19,7 @@ namespace Azure.Local.ApiService.Tests.Component.Setup
                     {
                         // Additional Configuration Setup
                     })
-                    .ConfigureTestServices(services =>
+                    .ConfigureServices(services =>
                     {
                         // Additional Test Services Setup
                         IRepository<RepositoryTestItem> repository = new FakeRepository<RepositoryTestItem>();
