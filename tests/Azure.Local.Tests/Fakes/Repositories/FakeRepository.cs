@@ -1,7 +1,8 @@
-﻿using Azure.Local.Infrastructure.Repository.Specifications;
+﻿using Azure.Local.Infrastructure.Repository;
+using Azure.Local.Infrastructure.Repository.Specifications;
 using System;
 
-namespace Azure.Local.Infrastructure.Repository
+namespace Azure.Local.ApiService.Tests.Component.Fakes.Repositories
 {
 	public class FakeRepository<T> : IRepository<T> where T : class
     {
