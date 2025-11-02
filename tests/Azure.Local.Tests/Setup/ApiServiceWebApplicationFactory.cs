@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Azure.Local.Infrastructure.Repository;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
 
 namespace Azure.Local.ApiService.Tests.Component.Setup
 {
@@ -9,6 +11,17 @@ namespace Azure.Local.ApiService.Tests.Component.Setup
         {
             // You can customize the web host configuration here if needed
             base.ConfigureWebHost(builder);
+
+            builder
+                .ConfigureAppConfiguration((context, configBuilder) =>
+                {
+                    // Additional Configuration Setup
+                }).ConfigureTestServices(services =>
+                {
+                    // Additional Test Services Setup
+                    IRepository<RepositoryTestItem> repository = new FakeRepository<RepositoryTestItem>();
+                    services.AddSingleton<IRepository<RepositoryTestItem>>(repository);
+                });
         }
     }
 }

@@ -12,20 +12,9 @@ namespace Azure.Local.ApiService.Tests.Component.Setup
         protected ComponentTestBase(ApiServiceWebApplicationFactory factory)
         {
             _factory = factory;
-            _factory.WithWebHostBuilder(builder =>
-            {
-                builder
-                    .ConfigureAppConfiguration((context, configBuilder) =>
-                    {
-                        // Additional Configuration Setup
-                    })
-                    .ConfigureServices(services =>
-                    {
-                        // Additional Test Services Setup
-                        IRepository<RepositoryTestItem> repository = new FakeRepository<RepositoryTestItem>();
-                        services.AddSingleton<IRepository<RepositoryTestItem>>(repository);
-                    });
-            });
+            //_factory.WithWebHostBuilder(builder =>
+            //{
+            //});
             _client = _factory.CreateDefaultClient();
             _client.DefaultRequestHeaders.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
             _client.DefaultRequestHeaders.Add("Accept", "application/json");
