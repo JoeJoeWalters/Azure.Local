@@ -1,4 +1,5 @@
-﻿using Azure.Local.Infrastructure.Repository;
+﻿using Azure.Local.Domain;
+using Azure.Local.Infrastructure.Repository;
 using Microsoft.AspNetCore.TestHost;
 
 namespace Azure.Local.ApiService.Tests.Component.Setup
@@ -21,7 +22,8 @@ namespace Azure.Local.ApiService.Tests.Component.Setup
                     .ConfigureTestServices(services =>
                     {
                         // Additional Test Services Setup
-                        //services.AddSingleton<IRepository<>>
+                        IRepository<RepositoryTestItem> repository = new FakeRepository<RepositoryTestItem>();
+                        services.AddSingleton<IRepository<RepositoryTestItem>>(repository);
                     });
             });
             _client = _factory.CreateDefaultClient();

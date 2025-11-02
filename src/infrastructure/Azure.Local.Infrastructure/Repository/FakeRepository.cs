@@ -2,30 +2,25 @@
 
 namespace Azure.Local.Infrastructure.Repository
 {
-	public class FakeRepository<T> : IRepository<T> where T : IRepositoryItem
+	public class FakeRepository<T> : IRepository<T> where T : class
     {
-		private readonly Dictionary<string, T> _items;
+		private readonly HashSet<T> _items;
 
         public FakeRepository()
 		{
-            _items = new Dictionary<string, T>();
+            _items = new HashSet<T>();
         }
 
         public void Add(T item)
         {
-            _items.Add(item.Id, item);
-        }
-
-        public T GetById(string id)
-        {
-            _items.TryGetValue(id, out T item);
-            return item;
-        }
-
-        public IEnumerable<T> Query()
-        {
+            //_items.Add(convertedItem.Id, item);
             throw new NotImplementedException();
         }
+
+        public IEnumerable<T> Query(GenericSpecification<T> expression, int take = 0)
+            => (take == 0 ?
+                _items.AsQueryable().Where(expression.Expression) :
+                _items.AsQueryable().Where(expression.Expression).Take(take)).ToList();
 
         public void Update(T item)
         {

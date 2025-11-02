@@ -4,25 +4,23 @@ namespace Azure.Local.Infrastructure.Repository
 {
 	public class CosmosRepository<T> : IRepository<T> where T : class
     {
-		public CosmosRepository()
-		{
+        private readonly HashSet<T> _items;
 
-		}
+        public CosmosRepository()
+        {
+            _items = new HashSet<T>();
+        }
 
         public void Add(T item)
         {
+            //_items.Add(convertedItem.Id, item);
             throw new NotImplementedException();
         }
 
-        public T GetById(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<T> Query()
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<T> Query(GenericSpecification<T> expression, int take = 0)
+            => (take == 0 ?
+                _items.AsQueryable().Where(expression.Expression) :
+                _items.AsQueryable().Where(expression.Expression).Take(take)).ToList();
 
         public void Update(T item)
         {
