@@ -35,7 +35,7 @@ namespace Azure.Local.ApiService.Tests.Component
         }
 
         [Fact]
-        public async Task TestAddEndpoint_ReturnsBaadRequest_WhenIdTooBig()
+        public async Task TestAddEndpoint_ReturnsBadRequest_WhenIdTooBig()
         {
             // Arrange
             var request = new HttpRequestMessage(HttpMethod.Post, "/test");
@@ -55,7 +55,7 @@ namespace Azure.Local.ApiService.Tests.Component
         }
 
         [Fact]
-        public async Task TestAddEndpoint_ReturnsBaadRequest_WhenNameTooBig()
+        public async Task TestAddEndpoint_ReturnsBadRequest_WhenNameTooBig()
         {
             // Arrange
             var request = new HttpRequestMessage(HttpMethod.Post, "/test");
