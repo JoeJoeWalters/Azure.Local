@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Azure.Local.ApiService.Controllers
+namespace Azure.Local.ApiService.Health.Controllers
 {
     [ApiController]
     [Route("[controller]")]

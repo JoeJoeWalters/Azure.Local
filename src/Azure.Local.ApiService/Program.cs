@@ -1,6 +1,8 @@
+using Azure.Local.ApiService.Test.Contracts;
+using Azure.Local.ApiService.Test.Controllers.Validators;
 using Azure.Local.Application;
 using Azure.Local.Infrastructure;
-using Azure.Local.Infrastructure.Repository;
+using FluentValidation;
 using System.Diagnostics.CodeAnalysis;
 
 [ExcludeFromCodeCoverage]
@@ -21,6 +23,9 @@ public partial class Program
         builder.Services
             .AddApplication(builder.Configuration)
             .AddInfrastructure(builder.Configuration);
+
+        // Register validators
+        builder.Services.AddScoped<IValidator<AddTestItemHttpRequest>, AddTestItemHttpRequestValidator>();
 
         // Add services to the container.
         builder.Services.AddProblemDetails();
