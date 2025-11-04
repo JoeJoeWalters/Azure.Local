@@ -9,7 +9,7 @@ namespace Azure.Local.ApiService.Tests.Component
         {
         }
 
-        [Fact]
+        [Fact] // Explicitly qualify the attribute to avoid ambiguity
         public async Task HeartbeatEndpoint_ReturnsOk()
         {
             // Arrange
@@ -18,7 +18,7 @@ namespace Azure.Local.ApiService.Tests.Component
 
             // Act
             var response = await _client.SendAsync(request, cancelToken);
-            
+
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }

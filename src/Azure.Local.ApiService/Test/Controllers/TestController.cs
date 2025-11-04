@@ -1,5 +1,4 @@
 using Azure.Local.ApiService.Test.Contracts;
-using Azure.Local.ApiService.Test.Controllers.Validators;
 using Azure.Local.ApiService.Test.Helpers;
 using Azure.Local.Domain.Test;
 using Azure.Local.Infrastructure.Repository;
