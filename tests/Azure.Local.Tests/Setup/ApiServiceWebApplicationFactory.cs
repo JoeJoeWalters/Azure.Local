@@ -25,8 +25,7 @@ namespace Azure.Local.ApiService.Tests.Component.Setup
                     services.RemoveAll<IRepository<RepositoryTestItem>>();
 
                     // Additional Test Services Setup
-                    IRepository<RepositoryTestItem> repository = new FakeRepository<RepositoryTestItem>();
-                    services.AddSingleton<IRepository<RepositoryTestItem>>(repository);
+                    services.AddSingleton<IRepository<RepositoryTestItem>, FakeRepository<RepositoryTestItem>>();
                 });
         }
     }

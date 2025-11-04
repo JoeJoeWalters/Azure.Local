@@ -10,8 +10,14 @@ namespace Azure.Local.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            IRepository<RepositoryTestItem> repository = new CosmosRepository<RepositoryTestItem>("", "", "");
-            services.AddSingleton<IRepository<RepositoryTestItem>>(repository);
+            services.AddOptions<CosmosRepositorySettings>()
+                .Configure(x => 
+                    { 
+                        x.ConnectionString = configuration["CosmosDb:ConnectionString"]; 
+                        x.DatabaseId = configuration["CosmosDb:DatabaseId"];
+                        x.ContainerId = configuration["CosmosDb:ContainerId"];
+                    });
+            services.AddSingleton<IRepository<RepositoryTestItem>, CosmosRepository<RepositoryTestItem>>();
 
             // Register infrastructure services here
             return services;

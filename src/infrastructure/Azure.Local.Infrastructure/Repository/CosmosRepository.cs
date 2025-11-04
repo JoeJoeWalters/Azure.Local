@@ -1,5 +1,6 @@
 ﻿using Azure.Local.Infrastructure.Repository.Specifications;
 using Microsoft.Azure.Cosmos;
+using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
 
 namespace Azure.Local.Infrastructure.Repository
@@ -9,14 +10,14 @@ namespace Azure.Local.Infrastructure.Repository
         private readonly CosmosClient _client;
         private readonly Container _container;
 
-        public CosmosRepository(string connectionString, string databaseId, string containerId)
+        public CosmosRepository(IOptions<CosmosRepositorySettings> connectionOptions)
         {
             // Initialize Cosmos DB client and container but protect it from taking the app down
             // if it is running component tests without Cosmos DB available.
             try
             {
-                _client = new CosmosClient(connectionString);
-                _container = _client.GetContainer(databaseId, containerId);
+                _client = new CosmosClient(connectionOptions.Value.ConnectionString);
+                _container = _client.GetContainer(connectionOptions.Value.DatabaseId, connectionOptions.Value.ContainerId);
             }
             catch (CosmosException ex)
             {
