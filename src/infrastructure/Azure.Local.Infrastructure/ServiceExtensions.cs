@@ -10,7 +10,7 @@ namespace Azure.Local.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            IRepository<RepositoryTestItem> repository = new CosmosRepository<RepositoryTestItem>();
+            IRepository<RepositoryTestItem> repository = new CosmosRepository<RepositoryTestItem>("", "", "");
             services.AddSingleton<IRepository<RepositoryTestItem>>(repository);
 
             // Register infrastructure services here

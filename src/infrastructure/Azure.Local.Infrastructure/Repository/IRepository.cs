@@ -10,6 +10,6 @@ namespace Azure.Local.Infrastructure.Repository
         public void Add(T item);
         public void Update(T item);
         public void Upsert(T item);
-        public IEnumerable<T> Query(GenericSpecification<T> expression, int take = 0);
+        public Task<IEnumerable<T>> Query(GenericSpecification<T> expression, int take = 0);
     }
 }

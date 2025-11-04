@@ -1,6 +1,7 @@
 ﻿using Azure.Local.Infrastructure.Repository;
 using Azure.Local.Infrastructure.Repository.Specifications;
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Local.ApiService.Tests.Component.Fakes.Repositories
 {
@@ -13,20 +14,20 @@ namespace Azure.Local.ApiService.Tests.Component.Fakes.Repositories
             _items = new Dictionary<string, T>();
         }
 
-        public void Add(T item)
+        public async void Add(T item)
             => _items.Add(item.Id, item);
 
-        public IEnumerable<T> Query(GenericSpecification<T> expression, int take = 0)
+        public async Task<IEnumerable<T>> Query(GenericSpecification<T> expression, int take = 0)
             => (take == 0 ?
                 _items.Select(x => x.Value).AsQueryable().Where(expression.Expression) :
                 _items.Select(x => x.Value).AsQueryable().Where(expression.Expression).Take(take)).ToList();
 
-        public void Update(T item)
+        public async void Update(T item)
         {
             _items[item.Id] = item;
         }
 
-        public void Upsert(T item)
+        public async void Upsert(T item)
         {
             if (_items.ContainsKey(item.Id))
                 Update(item);
