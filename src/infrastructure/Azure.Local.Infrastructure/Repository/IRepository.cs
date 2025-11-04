@@ -3,7 +3,10 @@ using System;
 
 namespace Azure.Local.Infrastructure.Repository
 {
-    public interface IRepository<T>
+    /// <summary>
+    /// Repository pattern where there is no compound / composite key
+    /// </summary>
+    public interface IRepository<T> where T : IRepositoryItem
     {
         public void Add(T item);
         public void Update(T item);
