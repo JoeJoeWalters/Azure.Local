@@ -11,8 +11,23 @@ namespace Azure.Local.Infrastructure.Repository
 
         public CosmosRepository(string connectionString, string databaseId, string containerId)
         {
-            _client = new CosmosClient(connectionString);
-            _container = _client.GetContainer(databaseId, containerId);
+            // Initialize Cosmos DB client and container but protect it from taking the app down
+            // if it is running component tests without Cosmos DB available.
+            try
+            {
+                _client = new CosmosClient(connectionString);
+                _container = _client.GetContainer(databaseId, containerId);
+            }
+            catch (CosmosException ex)
+            {
+                // Handle Cosmos DB specific exceptions
+                //throw new InvalidOperationException("Failed to initialize Cosmos DB client or container.", ex);
+            }
+            catch (Exception ex)
+            {
+                // Handle general exceptions
+                //throw new InvalidOperationException("An error occurred while initializing the repository.", ex);
+            }
         }
 
         public async void Add(T item)

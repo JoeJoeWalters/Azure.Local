@@ -4,6 +4,7 @@ using Azure.Local.Infrastructure.Test;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Azure.Local.ApiService.Tests.Component.Setup
 {
@@ -20,6 +21,9 @@ namespace Azure.Local.ApiService.Tests.Component.Setup
                     // Additional Configuration Setup
                 }).ConfigureTestServices(services =>
                 {
+                    // Remove existing registrations setup in Program.cs or Infrastructure
+                    services.RemoveAll<IRepository<RepositoryTestItem>>();
+
                     // Additional Test Services Setup
                     IRepository<RepositoryTestItem> repository = new FakeRepository<RepositoryTestItem>();
                     services.AddSingleton<IRepository<RepositoryTestItem>>(repository);
