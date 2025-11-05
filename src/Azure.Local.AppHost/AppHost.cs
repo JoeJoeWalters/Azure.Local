@@ -9,9 +9,12 @@ var cache = builder.AddRedis("cache");
 var cosmos = builder.AddAzureCosmosDB("cosmosdb").RunAsPreviewEmulator(
                     emulator =>
                     {
+                        var endpoint = emulator.GetEndpoint("emulator");
+
                         emulator
                             .WithDataExplorer()
-                            .WithLifetime(ContainerLifetime.Session);
+                            .WithLifetime(ContainerLifetime.Session)
+                            .WithHttpEndpoint(port: endpoint.TargetPort, targetPort: endpoint.TargetPort, isProxied: false); // https://github.com/dotnet/aspire/issues/6349
                         //.WithLifetime(ContainerLifetime.Session)
                         //.WithPartitionCount(2);
                         //.WithDataVolume();

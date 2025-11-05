@@ -27,11 +27,20 @@ namespace Azure.Local.Infrastructure.Repository
                             ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                         }),
                         ConnectionMode = ConnectionMode.Gateway,
-                    }: 
+                        LimitToEndpoint = true // https://github.com/dotnet/aspire/issues/6349
+                    } : 
                     new CosmosClientOptions();
 
                 _client = new CosmosClient(connectionOptions.Value.ConnectionString);
                 var dbResult = _client.CreateDatabaseIfNotExistsAsync(connectionOptions.Value.DatabaseId).GetAwaiter().GetResult();
+                if (dbResult.Database != null)
+                {
+                    var containerResult = dbResult.Database.CreateContainerIfNotExistsAsync(connectionOptions.Value.ContainerId, "/id").GetAwaiter().GetResult();
+                    if (containerResult.Container != null)
+                    {
+                        _container = containerResult.Container;
+                    }
+                }
                 //    .CreateContainerIfNotExistsAsync(connectionOptions.Value.ContainerId, "/id").GetAwaiter().GetResult().Container;
                 //_container = _client.GetContainer(connectionOptions.Value.DatabaseId, connectionOptions.Value.ContainerId);
             }
