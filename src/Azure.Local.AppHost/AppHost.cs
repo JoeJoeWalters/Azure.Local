@@ -1,3 +1,5 @@
+using Azure.Provisioning.CosmosDB;
+
 var builder = DistributedApplication.CreateBuilder(args);
 
 var cache = builder.AddRedis("cache");
@@ -7,7 +9,9 @@ var cache = builder.AddRedis("cache");
 var cosmos = builder.AddAzureCosmosDB("cosmosdb").RunAsPreviewEmulator(
                     emulator =>
                     {
-                        emulator.WithDataExplorer();
+                        emulator
+                            .WithDataExplorer()
+                            .WithLifetime(ContainerLifetime.Session);
                         //.WithLifetime(ContainerLifetime.Session)
                         //.WithPartitionCount(2);
                         //.WithDataVolume();

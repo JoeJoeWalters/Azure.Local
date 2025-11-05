@@ -16,7 +16,16 @@ namespace Azure.Local.Infrastructure.Repository
             // if it is running component tests without Cosmos DB available.
             try
             {
-                CosmosClientOptions options = new CosmosClientOptions() { };
+                // For local emulator or self-signed certificates, bypass certificate validation
+                // https://learn.microsoft.com/en-us/azure/cosmos-db/how-to-develop-emulator?tabs=windows%2Ccsharp&pivots=api-nosql
+                CosmosClientOptions options = new CosmosClientOptions()
+                {
+                    HttpClientFactory = () => new HttpClient(new HttpClientHandler()
+                    {
+                        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                    }),
+                    ConnectionMode = ConnectionMode.Gateway,
+                };
                 _client = new CosmosClient(connectionOptions.Value.ConnectionString);
                 var dbResult = _client.CreateDatabaseIfNotExistsAsync(connectionOptions.Value.DatabaseId).GetAwaiter().GetResult();
                 //    .CreateContainerIfNotExistsAsync(connectionOptions.Value.ContainerId, "/id").GetAwaiter().GetResult().Container;
