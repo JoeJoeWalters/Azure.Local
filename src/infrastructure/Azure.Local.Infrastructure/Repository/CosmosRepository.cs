@@ -16,8 +16,11 @@ namespace Azure.Local.Infrastructure.Repository
             // if it is running component tests without Cosmos DB available.
             try
             {
+                CosmosClientOptions options = new CosmosClientOptions() { };
                 _client = new CosmosClient(connectionOptions.Value.ConnectionString);
-                _container = _client.GetContainer(connectionOptions.Value.DatabaseId, connectionOptions.Value.ContainerId);
+                var dbResult = _client.CreateDatabaseIfNotExistsAsync(connectionOptions.Value.DatabaseId).GetAwaiter().GetResult();
+                //    .CreateContainerIfNotExistsAsync(connectionOptions.Value.ContainerId, "/id").GetAwaiter().GetResult().Container;
+                //_container = _client.GetContainer(connectionOptions.Value.DatabaseId, connectionOptions.Value.ContainerId);
             }
             catch (CosmosException ex)
             {

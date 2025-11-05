@@ -10,6 +10,8 @@ namespace Azure.Local.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            // Configure Cosmos DB Repository with Options pattern so it can be injected
+            // and the test runner can override it if needed.
             services.AddOptions<CosmosRepositorySettings>()
                 .Configure(x => 
                     { 

@@ -2,12 +2,14 @@ var builder = DistributedApplication.CreateBuilder(args);
 
 var cache = builder.AddRedis("cache");
 
-var cosmos = builder.AddAzureCosmosDB("cosmosdb").RunAsEmulator(
+#pragma warning disable ASPIRECOSMOSDB001
+
+var cosmos = builder.AddAzureCosmosDB("cosmosdb").RunAsPreviewEmulator(
                     emulator =>
                     {
-                        emulator
-                        .WithLifetime(ContainerLifetime.Session)
-                        .WithPartitionCount(2);
+                        emulator.WithDataExplorer();
+                        //.WithLifetime(ContainerLifetime.Session)
+                        //.WithPartitionCount(2);
                         //.WithDataVolume();
                     });
 
