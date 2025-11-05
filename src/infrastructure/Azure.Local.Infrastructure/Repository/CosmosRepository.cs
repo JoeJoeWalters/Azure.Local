@@ -18,14 +18,18 @@ namespace Azure.Local.Infrastructure.Repository
             {
                 // For local emulator or self-signed certificates, bypass certificate validation
                 // https://learn.microsoft.com/en-us/azure/cosmos-db/how-to-develop-emulator?tabs=windows%2Ccsharp&pivots=api-nosql
-                CosmosClientOptions options = new CosmosClientOptions()
-                {
-                    HttpClientFactory = () => new HttpClient(new HttpClientHandler()
+                CosmosClientOptions options = 
+                    (connectionOptions.Value.ConnectionString == string.Empty || connectionOptions.Value.ConnectionString.Contains("8081")) ? 
+                    new CosmosClientOptions()
                     {
-                        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-                    }),
-                    ConnectionMode = ConnectionMode.Gateway,
-                };
+                        HttpClientFactory = () => new HttpClient(new HttpClientHandler()
+                        {
+                            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                        }),
+                        ConnectionMode = ConnectionMode.Gateway,
+                    }: 
+                    new CosmosClientOptions();
+
                 _client = new CosmosClient(connectionOptions.Value.ConnectionString);
                 var dbResult = _client.CreateDatabaseIfNotExistsAsync(connectionOptions.Value.DatabaseId).GetAwaiter().GetResult();
                 //    .CreateContainerIfNotExistsAsync(connectionOptions.Value.ContainerId, "/id").GetAwaiter().GetResult().Container;
