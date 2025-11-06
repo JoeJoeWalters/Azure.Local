@@ -78,6 +78,7 @@ namespace Azure.Local.ApiService.Tests.Component
         public async Task TestGetEndpoint_ReturnsOk()
         {
             // Arrange
+            await AddTestItemAsync(_testId, _testName);
             var request = new HttpRequestMessage(HttpMethod.Get, "/test");
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
 
@@ -86,6 +87,19 @@ namespace Azure.Local.ApiService.Tests.Component
             
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        private async Task<Boolean> AddTestItemAsync(string id, string name)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, "/test");
+            request.Content = JsonContent.Create(new AddTestItemHttpRequest()
+            {
+                Id = id,
+                Name = name
+            });
+            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
+            var response = await _client.SendAsync(request, cancelToken);
+            return (response.StatusCode == HttpStatusCode.OK);
         }
     }
 }

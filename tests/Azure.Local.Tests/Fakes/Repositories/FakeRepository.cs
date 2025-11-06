@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Azure.Local.ApiService.Tests.Component.Fakes.Repositories
 {
-	public class FakeRepository<T> : IRepository<T> where T : IRepositoryItem
+	public class FakeRepository<T> : IRepository<T> where T : RepositoryItem
     {
 		private readonly Dictionary<string, T> _items;
 
