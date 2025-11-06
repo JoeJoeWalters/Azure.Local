@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Azure.Local.Infrastructure.Repository
 {
-    public class CosmosRepository<T> : IRepository<T> where T : IRepositoryItem
+    public class CosmosRepository<T> : IRepository<T> where T : RepositoryItem
     {
         private readonly CosmosClient _client;
         private readonly Container _container;
@@ -18,20 +18,23 @@ namespace Azure.Local.Infrastructure.Repository
             {
                 // For local emulator or self-signed certificates, bypass certificate validation
                 // https://learn.microsoft.com/en-us/azure/cosmos-db/how-to-develop-emulator?tabs=windows%2Ccsharp&pivots=api-nosql
-                CosmosClientOptions options = 
-                    (connectionOptions.Value.ConnectionString == string.Empty || connectionOptions.Value.ConnectionString.Contains("8081")) ? 
-                    new CosmosClientOptions()
+                CosmosClientOptions options =
+                    new CosmosClientOptions
                     {
-                        HttpClientFactory = () => new HttpClient(new HttpClientHandler()
+                        HttpClientFactory = () =>
                         {
-                            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-                        }),
-                        ConnectionMode = ConnectionMode.Gateway,
-                        LimitToEndpoint = true // https://github.com/dotnet/aspire/issues/6349
-                    } : 
-                    new CosmosClientOptions();
+                            HttpMessageHandler httpMessageHandler = new HttpClientHandler()
+                            {
+                                ServerCertificateCustomValidationCallback = (req, cert, chain, errors) => true
+                            };
 
-                _client = new CosmosClient(connectionOptions.Value.ConnectionString);
+                            return new HttpClient(httpMessageHandler);
+                        },
+                        ConnectionMode = ConnectionMode.Gateway,
+                        LimitToEndpoint = true
+                    };
+
+                _client = new CosmosClient(connectionOptions.Value.ConnectionString, clientOptions: options);
                 var dbResult = _client.CreateDatabaseIfNotExistsAsync(connectionOptions.Value.DatabaseId).GetAwaiter().GetResult();
                 if (dbResult.Database != null)
                 {
@@ -54,6 +57,8 @@ namespace Azure.Local.Infrastructure.Repository
                 // Handle general exceptions
                 //throw new InvalidOperationException("An error occurred while initializing the repository.", ex);
             }
+        // https://www.aaron-powell.com/posts/2022-08-24-improved-local-dev-with-cosmosdb-and-devcontainers/
+        // https://github.com/Azure/azure-cosmos-db-emulator-docker/issues/117
         }
 
         public async void Add(T item)

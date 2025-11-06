@@ -2,9 +2,12 @@
 
 namespace Azure.Local.Infrastructure.Test
 {
-    public class RepositoryTestItem : IRepositoryItem
+    public class RepositoryTestItem : RepositoryItem
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public RepositoryTestItem() { 
+            Id = Guid.NewGuid().ToString();
+        }
+
         public string Name { get; set; } = string.Empty;
     }
 }

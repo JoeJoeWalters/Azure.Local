@@ -6,6 +6,7 @@ using Azure.Local.Infrastructure.Test;
 using Azure.Local.Infrastructure.Test.Specifications;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics.Eventing.Reader;
 
 namespace Azure.Local.ApiService.Test.Controllers
 {
@@ -19,7 +20,7 @@ namespace Azure.Local.ApiService.Test.Controllers
         private const string _testId = "test-item-1";
 
         public TestController(
-            IRepository<RepositoryTestItem> repository, 
+            IRepository<RepositoryTestItem> repository,
             IValidator<AddTestItemHttpRequest> addTestItemHttpRequestValidator)
         {
             _repository = repository;
@@ -51,7 +52,20 @@ namespace Azure.Local.ApiService.Test.Controllers
         {
             var result = _repository.Query(new TestItemGetSpecification(_testId), 1);
 
-            return Ok();
+            if (result.Result.Any())
+            {
+                var item = new TestItem
+                {
+                    Id = result.Result.First().Id,
+                    Name = result.Result.First().Name
+                };
+
+                return new OkObjectResult(item);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }

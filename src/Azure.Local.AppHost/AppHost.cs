@@ -6,18 +6,16 @@ var cache = builder.AddRedis("cache");
 
 #pragma warning disable ASPIRECOSMOSDB001
 
-var cosmos = builder.AddAzureCosmosDB("cosmosdb").RunAsPreviewEmulator(
+var cosmos = builder.AddAzureCosmosDB("cosmosdb").RunAsEmulator(
                     emulator =>
                     {
                         var endpoint = emulator.GetEndpoint("emulator");
 
                         emulator
-                            .WithDataExplorer()
+                            //.WithDataExplorer()
                             .WithLifetime(ContainerLifetime.Session)
+                            //.WithEnvironment("AZURE_COSMOS_EMULATOR_IP_ADDRESS_OVERRIDE", "127.0.0.1")
                             .WithHttpEndpoint(port: endpoint.TargetPort, targetPort: endpoint.TargetPort, isProxied: false); // https://github.com/dotnet/aspire/issues/6349
-                        //.WithLifetime(ContainerLifetime.Session)
-                        //.WithPartitionCount(2);
-                        //.WithDataVolume();
                     });
 
 var storage = builder.AddAzureStorage("storageaccount").RunAsEmulator(
