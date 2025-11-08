@@ -1,8 +1,4 @@
-﻿using Azure.Local.Domain;
-using Azure.Local.Infrastructure.Repository;
-using Microsoft.AspNetCore.TestHost;
-
-namespace Azure.Local.ApiService.Tests.Component.Setup
+﻿namespace Azure.Local.ApiService.Tests.Component.Setup
 {
     public abstract class ComponentTestBase : IClassFixture<ApiServiceWebApplicationFactory>, IDisposable
     {

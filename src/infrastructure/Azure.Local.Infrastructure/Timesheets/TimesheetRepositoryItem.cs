@@ -1,5 +1,4 @@
-﻿using Azure.Local.Domain.Timesheets;
-using Azure.Local.Infrastructure.Repository;
+﻿using Azure.Local.Infrastructure.Repository;
 
 namespace Azure.Local.Infrastructure.Timesheets
 {

@@ -30,7 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "utils", "utils", "{2C4C5DD3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Local.Infrastructure", "src\infrastructure\Azure.Local.Infrastructure\Azure.Local.Infrastructure.csproj", "{D19CB0D7-B68E-DAF3-0547-40DFFBBCEE0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Local.Domain", "Azure.Local.Domain\Azure.Local.Domain.csproj", "{88386D7E-2675-42A6-934B-DA953652AA28}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Local.Domain", "src\domain\Azure.Local.Domain\Azure.Local.Domain.csproj", "{88386D7E-2675-42A6-934B-DA953652AA28}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Local.Application", "src\application\Azure.Local.Application\Azure.Local.Application.csproj", "{9AD4D6C2-35D8-44C9-8A8C-7E83BAD1E0E5}"
 EndProject

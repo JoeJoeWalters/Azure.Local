@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Azure.Local.ServiceDefaults\Azure.Local.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\domain\Azure.Local.Domain\Azure.Local.Domain.csproj" />
     <ProjectReference Include="..\infrastructure\Azure.Local.Infrastructure\Azure.Local.Infrastructure.csproj" />
   </ItemGroup>
 
