@@ -1,5 +1,8 @@
-﻿namespace Azure.Local.Infrastructure.Repository
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Azure.Local.Infrastructure.Repository
 {
+    [ExcludeFromCodeCoverage]
     public class CosmosRepositorySettings
     {
         public string ConnectionString { get; set; } = string.Empty;

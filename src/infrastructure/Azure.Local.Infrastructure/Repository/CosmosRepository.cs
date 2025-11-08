@@ -1,10 +1,12 @@
 ﻿using Azure.Local.Infrastructure.Repository.Specifications;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Options;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
 namespace Azure.Local.Infrastructure.Repository
 {
+    [ExcludeFromCodeCoverage]
     public class CosmosRepository<T> : IRepository<T> where T : RepositoryItem
     {
         private readonly CosmosClient _client;
