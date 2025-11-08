@@ -1,5 +1,5 @@
 ﻿using Azure.Local.ApiService.Test.Contracts;
-using Azure.Local.Domain.Test;
+using Azure.Local.Domain.Timesheets;
 
 namespace Azure.Local.ApiService.Test.Helpers
 {
@@ -10,7 +10,21 @@ namespace Azure.Local.ApiService.Test.Helpers
             return new TimesheetItem
             {
                 Id = request.Id,
-                Name = request.Name
+                From = request.From,
+                To = request.To,
+                Components = request.Components?
+                                .Select(c => c.ToTimesheetComponentItem())
+                                .ToList() ?? new List<TimesheetComponentItem>()
+            };
+        }
+
+        public static TimesheetComponentItem ToTimesheetComponentItem(this AddTimesheetHttpRequestComponent component)
+        {
+            return new TimesheetComponentItem
+            {
+                Units = component.Units,
+                From = component.From,
+                To = component.To
             };
         }
     }

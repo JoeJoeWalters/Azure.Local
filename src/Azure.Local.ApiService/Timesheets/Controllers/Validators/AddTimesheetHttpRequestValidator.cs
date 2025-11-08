@@ -10,9 +10,11 @@ namespace Azure.Local.ApiService.Test.Controllers.Validators
             RuleFor(x => x.Id)
                 .NotEmpty().WithMessage("Id is required.")
                 .MaximumLength(50).WithMessage("Id must not exceed 50 characters.");
-            RuleFor(x => x.Name)
-                .NotEmpty().WithMessage("Name is required.")
-                .MaximumLength(100).WithMessage("Name must not exceed 100 characters.");
+            RuleFor(x => x.From)
+                .NotEmpty().WithMessage("From is required.");
+            RuleFor(x => x.To)
+                .NotEmpty().WithMessage("To is required.");
+            //  .MaximumLength(100).WithMessage("Name must not exceed 100 characters.");
         }
     }
 }

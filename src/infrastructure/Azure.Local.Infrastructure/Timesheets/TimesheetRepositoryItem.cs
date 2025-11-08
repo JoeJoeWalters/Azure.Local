@@ -1,4 +1,5 @@
-﻿using Azure.Local.Infrastructure.Repository;
+﻿using Azure.Local.Domain.Timesheets;
+using Azure.Local.Infrastructure.Repository;
 
 namespace Azure.Local.Infrastructure.Timesheets
 {
@@ -8,6 +9,8 @@ namespace Azure.Local.Infrastructure.Timesheets
             Id = Guid.NewGuid().ToString();
         }
 
-        public string Name { get; set; } = string.Empty;
+        public DateTime From { get; set; } = DateTime.MinValue;
+        public DateTime To { get; set; } = DateTime.MinValue; 
+        public List<TimesheetComponentRepositoryItem> Components { get; set; } = new List<TimesheetComponentRepositoryItem>();
     }
 }
