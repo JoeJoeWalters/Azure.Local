@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Azure.Local.ApiService.Test.Controllers.Validators
 {
-    public class AddTestItemHttpRequestValidator : AbstractValidator<AddTestItemHttpRequest>
+    public class AddTimesheetHttpRequestValidator : AbstractValidator<AddTimesheetHttpRequest>
     {
-        public AddTestItemHttpRequestValidator()
+        public AddTimesheetHttpRequestValidator()
         {
             RuleFor(x => x.Id)
                 .NotEmpty().WithMessage("Id is required.")

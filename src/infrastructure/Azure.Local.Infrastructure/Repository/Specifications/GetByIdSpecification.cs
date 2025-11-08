@@ -1,10 +1,11 @@
 ﻿using Azure.Local.Infrastructure.Repository.Specifications;
+using Azure.Local.Infrastructure.Timesheets;
 
 namespace Azure.Local.Infrastructure.Test.Specifications
 {
-    public class TestItemGetSpecification : GenericSpecification<RepositoryTestItem>
+    public class GetByIdSpecification : GenericSpecification<TimesheetRepositoryItem>
     {
-        public TestItemGetSpecification(string Id)
+        public GetByIdSpecification(string Id)
             => Expression = obj => obj.Id == Id; 
     }
 }

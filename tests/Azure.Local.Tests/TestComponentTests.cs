@@ -19,7 +19,7 @@ namespace Azure.Local.ApiService.Tests.Component
         {
             // Arrange
             var request = new HttpRequestMessage(HttpMethod.Post, "/test");
-            request.Content = JsonContent.Create(new AddTestItemHttpRequest()
+            request.Content = JsonContent.Create(new AddTimesheetHttpRequest()
             {
                 Id = _testId,
                 Name = _testName
@@ -39,7 +39,7 @@ namespace Azure.Local.ApiService.Tests.Component
         {
             // Arrange
             var request = new HttpRequestMessage(HttpMethod.Post, "/test");
-            request.Content = JsonContent.Create(new AddTestItemHttpRequest()
+            request.Content = JsonContent.Create(new AddTimesheetHttpRequest()
             {
                 Id = _testId.PadRight(101, '0'),
                 Name = _testName
@@ -59,7 +59,7 @@ namespace Azure.Local.ApiService.Tests.Component
         {
             // Arrange
             var request = new HttpRequestMessage(HttpMethod.Post, "/test");
-            request.Content = JsonContent.Create(new AddTestItemHttpRequest()
+            request.Content = JsonContent.Create(new AddTimesheetHttpRequest()
             {
                 Id = _testId,
                 Name = _testName.PadRight(101, '0')
@@ -92,7 +92,7 @@ namespace Azure.Local.ApiService.Tests.Component
         private async Task<Boolean> AddTestItemAsync(string id, string name)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, "/test");
-            request.Content = JsonContent.Create(new AddTestItemHttpRequest()
+            request.Content = JsonContent.Create(new AddTimesheetHttpRequest()
             {
                 Id = id,
                 Name = name

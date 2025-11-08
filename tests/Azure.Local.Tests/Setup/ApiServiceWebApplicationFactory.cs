@@ -1,6 +1,7 @@
 ﻿using Azure.Local.ApiService.Tests.Component.Fakes.Repositories;
 using Azure.Local.Infrastructure.Repository;
 using Azure.Local.Infrastructure.Test;
+using Azure.Local.Infrastructure.Timesheets;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -22,10 +23,10 @@ namespace Azure.Local.ApiService.Tests.Component.Setup
                 }).ConfigureTestServices(services =>
                 {
                     // Remove existing registrations setup in Program.cs or Infrastructure
-                    services.RemoveAll<IRepository<RepositoryTestItem>>();
+                    services.RemoveAll<IRepository<TimesheetRepositoryItem>>();
 
                     // Additional Test Services Setup
-                    services.AddSingleton<IRepository<RepositoryTestItem>, FakeRepository<RepositoryTestItem>>();
+                    services.AddSingleton<IRepository<TimesheetRepositoryItem>, FakeRepository<TimesheetRepositoryItem>>();
                 });
         }
     }

@@ -1,6 +1,5 @@
-﻿using Azure.Local.Domain;
-using Azure.Local.Infrastructure.Repository;
-using Azure.Local.Infrastructure.Test;
+﻿using Azure.Local.Infrastructure.Repository;
+using Azure.Local.Infrastructure.Timesheets;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,7 +18,7 @@ namespace Azure.Local.Infrastructure
                         x.DatabaseId = configuration["CosmosDb:DatabaseId"];
                         x.ContainerId = configuration["CosmosDb:ContainerId"];
                     });
-            services.AddSingleton<IRepository<RepositoryTestItem>, CosmosRepository<RepositoryTestItem>>();
+            services.AddSingleton<IRepository<TimesheetRepositoryItem>, CosmosRepository<TimesheetRepositoryItem>>();
 
             // Register infrastructure services here
             return services;

@@ -5,9 +5,9 @@ namespace Azure.Local.ApiService.Test.Helpers
 {
     public static class CastHelper
     {
-        public static TestItem ToTestItem(this AddTestItemHttpRequest request)
+        public static TimesheetItem ToTimesheetItem(this AddTimesheetHttpRequest request)
         {
-            return new TestItem
+            return new TimesheetItem
             {
                 Id = request.Id,
                 Name = request.Name

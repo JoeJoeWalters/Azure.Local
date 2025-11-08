@@ -25,7 +25,7 @@ public partial class Program
             .AddInfrastructure(builder.Configuration);
 
         // Register validators
-        builder.Services.AddScoped<IValidator<AddTestItemHttpRequest>, AddTestItemHttpRequestValidator>();
+        builder.Services.AddScoped<IValidator<AddTimesheetHttpRequest>, AddTimesheetHttpRequestValidator>();
 
         // Add services to the container.
         builder.Services.AddProblemDetails();

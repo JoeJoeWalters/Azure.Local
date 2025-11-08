@@ -1,10 +1,10 @@
 ﻿using Azure.Local.Infrastructure.Repository;
 
-namespace Azure.Local.Infrastructure.Test
+namespace Azure.Local.Infrastructure.Timesheets
 {
-    public class RepositoryTestItem : RepositoryItem
+    public class TimesheetRepositoryItem : RepositoryItem
     {
-        public RepositoryTestItem() { 
+        public TimesheetRepositoryItem() { 
             Id = Guid.NewGuid().ToString();
         }
 
