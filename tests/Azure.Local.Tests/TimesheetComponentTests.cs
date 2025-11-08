@@ -7,7 +7,6 @@ namespace Azure.Local.ApiService.Tests.Component
 {
     public class TimesheetComponentTests : ComponentTestBase
     {
-        private const string _testId = "test-id-01";
         private const string _endpoint = "/timesheet";
         //private const string _testName = "test-name-01";
 
@@ -88,7 +87,7 @@ namespace Azure.Local.ApiService.Tests.Component
         private AddTimesheetHttpRequest GenerateAddTimesheetHttpRequest()
             => new AddTimesheetHttpRequest()
                 {
-                    Id = _testId,
+                    Id = Guid.NewGuid().ToString(),
                     From = DateTime.UtcNow,
                     To = DateTime.UtcNow.AddDays(1),
                     Components = new List<AddTimesheetHttpRequestComponent>()
