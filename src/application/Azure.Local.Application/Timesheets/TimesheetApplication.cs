@@ -1,4 +1,5 @@
-﻿using Azure.Local.Domain.Timesheets;
+﻿using Azure.Local.Application.Timesheets.Helpers;
+using Azure.Local.Domain.Timesheets;
 using Azure.Local.Infrastructure.Repository;
 using Azure.Local.Infrastructure.Test.Specifications;
 using Azure.Local.Infrastructure.Timesheets;
@@ -16,19 +17,7 @@ namespace Azure.Local.Application.Timesheets
 
         public bool Save(TimesheetItem item)
         {
-            _repository.Add(new TimesheetRepositoryItem
-            {
-                Id = item.Id,
-                From = item.From,
-                To = item.To,
-                Components = item.Components.Select(c => new TimesheetComponentRepositoryItem
-                {
-                    Units = c.Units,
-                    From = c.From,
-                    To = c.To
-                }).ToList()
-            });
-
+            _repository.Add(item.ToTimesheetRepositoryItem());
             return true;
         }
 
@@ -36,23 +25,7 @@ namespace Azure.Local.Application.Timesheets
         {
             var queryResult = _repository.Query(new GetByIdSpecification(id), 1);
             if (queryResult.Result.Any())
-            {
-                var first = queryResult.Result.First();
-                var item = new TimesheetItem
-                {
-                    Id = first.Id,
-                    From = first.From,
-                    To = first.To,
-                    Components = first.Components.Select(c => new TimesheetComponentItem
-                    {
-                        Units = c.Units,
-                        From = c.From,
-                        To = c.To
-                    }).ToList()
-                };
-
-                return item;
-            }
+                return queryResult.Result.First().ToTimesheetItem();
             else
                 return null;
         }
