@@ -52,12 +52,12 @@ namespace Azure.Local.Infrastructure.Repository
             catch (CosmosException ex)
             {
                 // Handle Cosmos DB specific exceptions
-                //throw new InvalidOperationException("Failed to initialize Cosmos DB client or container.", ex);
+                throw new InvalidOperationException("Failed to initialize Cosmos DB client or container.", ex);
             }
             catch (Exception ex)
             {
                 // Handle general exceptions
-                //throw new InvalidOperationException("An error occurred while initializing the repository.", ex);
+                throw new InvalidOperationException("An error occurred while initializing the repository.", ex);
             }
         // https://www.aaron-powell.com/posts/2022-08-24-improved-local-dev-with-cosmosdb-and-devcontainers/
         // https://github.com/Azure/azure-cosmos-db-emulator-docker/issues/117

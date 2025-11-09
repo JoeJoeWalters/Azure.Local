@@ -28,7 +28,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
             var result = await repository.Query(getByIdSpecification, 1);
 
             // Assert   
-            var firstItem = result.FirstOrDefault();
+            var firstItem = result.First();
             testItem.Id.Should().Be(firstItem.Id);
         }
     }

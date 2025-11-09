@@ -12,9 +12,9 @@ namespace Azure.Local.ApiService.Test.Helpers
                 Id = request.Id,
                 From = request.From,
                 To = request.To,
-                Components = request.Components?
+                Components = request.Components
                                 .Select(c => c.ToTimesheetComponentItem())
-                                .ToList() ?? new List<TimesheetComponentItem>()
+                                .ToList()
             };
         }
 

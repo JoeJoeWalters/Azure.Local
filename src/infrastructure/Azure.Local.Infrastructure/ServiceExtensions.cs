@@ -14,9 +14,9 @@ namespace Azure.Local.Infrastructure
             services.AddOptions<CosmosRepositorySettings>()
                 .Configure(x => 
                     { 
-                        x.ConnectionString = configuration["CosmosDb:ConnectionString"]; 
-                        x.DatabaseId = configuration["CosmosDb:DatabaseId"];
-                        x.ContainerId = configuration["CosmosDb:ContainerId"];
+                        x.ConnectionString = configuration["CosmosDb:ConnectionString"] ?? string.Empty; 
+                        x.DatabaseId = configuration["CosmosDb:DatabaseId"] ?? string.Empty;
+                        x.ContainerId = configuration["CosmosDb:ContainerId"] ?? string.Empty;
                     });
             services.AddSingleton<IRepository<TimesheetRepositoryItem>, CosmosRepository<TimesheetRepositoryItem>>();
 
