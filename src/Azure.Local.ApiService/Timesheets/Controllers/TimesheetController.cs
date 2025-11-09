@@ -1,5 +1,6 @@
 using Azure.Local.ApiService.Test.Contracts;
 using Azure.Local.ApiService.Test.Helpers;
+using Azure.Local.Application.Timesheets;
 using Azure.Local.Domain.Timesheets;
 using Azure.Local.Infrastructure.Repository;
 using Azure.Local.Infrastructure.Test.Specifications;
@@ -13,14 +14,14 @@ namespace Azure.Local.ApiService.Test.Controllers
     [Route("[controller]")]
     public class TimesheetController : ControllerBase
     {
-        private readonly IRepository<TimesheetRepositoryItem> _repository;
+        private readonly ITimesheetApplication _timesheetApplication;
         private readonly IValidator<AddTimesheetHttpRequest> _addTestItemHttpRequestValidator;
 
         public TimesheetController(
-            IRepository<TimesheetRepositoryItem> repository,
+            ITimesheetApplication timesheetApplication,
             IValidator<AddTimesheetHttpRequest> addTestItemHttpRequestValidator)
         {
-            _repository = repository;
+            _timesheetApplication = timesheetApplication;
             _addTestItemHttpRequestValidator = addTestItemHttpRequestValidator;
         }
 
@@ -35,50 +36,20 @@ namespace Azure.Local.ApiService.Test.Controllers
 
             TimesheetItem item = request.ToTimesheetItem();
 
-            _repository.Add(new TimesheetRepositoryItem
-            {
-                Id = item.Id,
-                From = item.From,
-                To = item.To,
-                Components = item.Components.Select(c => new TimesheetComponentRepositoryItem
-                {
-                    Units = c.Units,
-                    From = c.From,
-                    To = c.To
-                }).ToList()
-            });
-
-            return Ok();
+            if (_timesheetApplication.Save(item))
+                return Ok();
+            else
+                return StatusCode(500, "Failed to save timesheet item.");
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
-            var result = _repository.Query(new GetByIdSpecification(id), 1);
-
-            if (result.Result.Any())
-            {
-                var first = result.Result.First();
-
-                var item = new TimesheetItem
-                {
-                    Id = first.Id,
-                    From = first.From,
-                    To = first.To,
-                    Components = first.Components.Select(c => new TimesheetComponentItem
-                    {
-                        Units = c.Units,
-                        From = c.From,
-                        To = c.To
-                    }).ToList()
-                };
-
-                return new OkObjectResult(item);
-            }
+            var result = _timesheetApplication.GetById(id);
+            if (result != null)
+                return new OkObjectResult(result);
             else
-            {
                 return NotFound();
-            }
         }
     }
 }

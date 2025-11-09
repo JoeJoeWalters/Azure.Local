@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Azure.Local.Domain.Timesheets;
 
 namespace Azure.Local.Application.Timesheets
 {
     public interface ITimesheetApplication
     {
+        bool Save(TimesheetItem item);
+        TimesheetItem? GetById(string id);
     }
 }
