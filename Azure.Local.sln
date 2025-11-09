@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Local.ApiService", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Local.Web", "src\Azure.Local.Web\Azure.Local.Web.csproj", "{11EBBE50-0716-061D-0829-A839B8342E34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Local.ApiService.Tests.Component", "tests\Azure.Local.Tests\Azure.Local.ApiService.Tests.Component.csproj", "{63DCFD76-A70B-8D5B-ADE3-25A049F45772}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Local.ApiService.Tests", "tests\Azure.Local.Tests\Azure.Local.ApiService.Tests.csproj", "{63DCFD76-A70B-8D5B-ADE3-25A049F45772}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject

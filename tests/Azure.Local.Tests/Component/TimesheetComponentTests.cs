@@ -14,6 +14,8 @@ namespace Azure.Local.ApiService.Tests.Component
         {
         }
 
+        ~TimesheetComponentTests() => base.Dispose();
+
         [Fact]
         public async Task AddEndpoint_ReturnsOk()
         {
@@ -82,6 +84,20 @@ namespace Azure.Local.ApiService.Tests.Component
             
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async Task GetEndpoint_ReturnsFailure_WhenIdNotRecognised()
+        {
+            // Arrange
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_endpoint}/{Guid.NewGuid().ToString()}");
+            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
+
+            // Act
+            var response = await _client.SendAsync(request, cancelToken);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         private AddTimesheetHttpRequest GenerateAddTimesheetHttpRequest()

@@ -16,6 +16,11 @@
             _client.DefaultRequestHeaders.Add("Accept", "application/json");
         }
 
+        ~ComponentTestBase()
+        {
+            Dispose();
+        }
+
         public void Dispose()
         {
             _client.Dispose();
