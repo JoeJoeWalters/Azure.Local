@@ -18,14 +18,15 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
             IRepository<TimesheetRepositoryItem> repository = 
                 new FakeRepository<TimesheetRepositoryItem>();
 
-            repository.Add(testItem);
+            var addResult = await repository.AddAsync(testItem);
 
-            GetByIdSpecification getByIdSpecification = new GetByIdSpecification(
-                Id: testItem.Id.ToString()
-                );
+            GetByIdSpecification getByIdSpecification = 
+                                    new GetByIdSpecification(
+                                        Id: testItem.Id.ToString()
+                                    );
 
             // Act
-            var result = await repository.Query(getByIdSpecification, 1);
+            var result = await repository.QueryAsync(getByIdSpecification, 1);
 
             // Assert   
             var firstItem = result.First();

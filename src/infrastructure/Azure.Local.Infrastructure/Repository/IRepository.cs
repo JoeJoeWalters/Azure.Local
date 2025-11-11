@@ -7,9 +7,9 @@ namespace Azure.Local.Infrastructure.Repository
     /// </summary>
     public interface IRepository<T> where T : RepositoryItem
     {
-        public void Add(T item);
-        public void Update(T item);
-        public void Upsert(T item);
-        public Task<IEnumerable<T>> Query(GenericSpecification<T> expression, int take = 0);
+        public Task<bool> AddAsync(T item);
+        public Task<bool> UpdateAsync(T item);
+        public Task<bool> UpsertAsync(T item);
+        public Task<IEnumerable<T>> QueryAsync(GenericSpecification<T> expression, int take = 0);
     }
 }

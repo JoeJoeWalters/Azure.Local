@@ -2,6 +2,7 @@
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Options;
 using System.Diagnostics.CodeAnalysis;
+using System.Net;
 
 // Notes:
 // https://www.aaron-powell.com/posts/2022-08-24-improved-local-dev-with-cosmosdb-and-devcontainers/
@@ -62,22 +63,25 @@ namespace Azure.Local.Infrastructure.Repository
             }
         }
 
-        public async void Add(T item)
+        public async Task<bool> AddAsync(T item)
         {
-            await _container.CreateItemAsync(item, new PartitionKey(item.Id));
+            var result = await _container.CreateItemAsync(item, new PartitionKey(item.Id));
+            return (result.StatusCode == HttpStatusCode.OK);
         }
 
-        public async void Update(T item)
+        public async Task<bool> UpdateAsync(T item)
         {
-            await _container.ReplaceItemAsync(item, item.Id, new PartitionKey(item.Id));
+            var result = await _container.ReplaceItemAsync(item, item.Id, new PartitionKey(item.Id));
+            return (result.StatusCode == HttpStatusCode.OK);
         }
 
-        public async void Upsert(T item)
+        public async Task<bool> UpsertAsync(T item)
         {
-            await _container.UpsertItemAsync(item, new PartitionKey(item.Id));
+            var result = await _container.UpsertItemAsync(item, new PartitionKey(item.Id));
+            return (result.StatusCode == HttpStatusCode.OK);
         }
 
-        public async Task<IEnumerable<T>> Query(GenericSpecification<T> specification, int take = 0)
+        public async Task<IEnumerable<T>> QueryAsync(GenericSpecification<T> specification, int take = 0)
         {
             var queryable = _container.GetItemLinqQueryable<T>(allowSynchronousQueryExecution: true)
                 .Where(specification.Expression.Compile());

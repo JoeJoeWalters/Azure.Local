@@ -15,19 +15,18 @@ namespace Azure.Local.Application.Timesheets
             _repository = repository;
         }
 
-        public bool Save(TimesheetItem item)
+        public Task<bool> SaveAsync(TimesheetItem item)
         {
-            _repository.Add(item.ToTimesheetRepositoryItem());
-            return true;
+            return _repository.AddAsync(item.ToTimesheetRepositoryItem());
         }
 
-        public TimesheetItem? GetById(string id)
+        public Task<TimesheetItem?> GetAsync(string id)
         {
-            var queryResult = _repository.Query(new GetByIdSpecification(id), 1);
+            var queryResult = _repository.QueryAsync(new GetByIdSpecification(id), 1);
             if (queryResult.Result.Any())
-                return queryResult.Result.First().ToTimesheetItem();
+                return Task.FromResult(queryResult.Result.First().ToTimesheetItem());
             else
-                return null;
+                return Task.FromResult((TimesheetItem?)null);
         }
     }
 }

@@ -12,25 +12,45 @@ namespace Azure.Local.ApiService.Tests.Component.Fakes.Repositories
             _items = new Dictionary<string, T>();
         }
 
-        public async void Add(T item)
-            => _items.Add(item.Id, item);
+        public async Task<bool> AddAsync(T item)
+        {
+            try
+            {
+                _items.Add(item.Id, item);
+                return true;
+            }
+            catch
+            {
+            }
 
-        public async Task<IEnumerable<T>> Query(GenericSpecification<T> expression, int take = 0)
+            return false;
+        }
+
+        public async Task<IEnumerable<T>> QueryAsync(GenericSpecification<T> expression, int take = 0)
             => (take == 0 ?
                 _items.Select(x => x.Value).AsQueryable().Where(expression.Expression) :
                 _items.Select(x => x.Value).AsQueryable().Where(expression.Expression).Take(take)).ToList();
 
-        public async void Update(T item)
+        public async Task<bool> UpdateAsync(T item)
         {
-            _items[item.Id] = item;
+            try
+            {
+                _items[item.Id] = item;
+                return true;
+            }
+            catch
+            {
+            }
+
+            return false;
         }
 
-        public async void Upsert(T item)
+        public async Task<bool> UpsertAsync(T item)
         {
             if (_items.ContainsKey(item.Id))
-                Update(item);
+                return await UpdateAsync(item);
             else
-                Add(item);
+                return await AddAsync(item);
         }
     }
 }

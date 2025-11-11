@@ -23,7 +23,7 @@ namespace Azure.Local.ApiService.Test.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(AddTimesheetHttpRequest request)
+        public async Task<IActionResult> Post(AddTimesheetHttpRequest request)
         {
             var validationResult = _addTestItemHttpRequestValidator.Validate(request);
             if (!validationResult.IsValid)
@@ -33,16 +33,17 @@ namespace Azure.Local.ApiService.Test.Controllers
 
             TimesheetItem item = request.ToTimesheetItem();
 
-            if (_timesheetApplication.Save(item))
+            var saveResult = await _timesheetApplication.SaveAsync(item);
+            if (saveResult)
                 return Ok();
             else
                 return StatusCode(500, "Failed to save timesheet item.");
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(string id)
+        public async Task<IActionResult> Get(string id)
         {
-            var result = _timesheetApplication.GetById(id);
+            var result = await _timesheetApplication.GetAsync(id);
             if (result != null)
                 return new OkObjectResult(result);
             else
