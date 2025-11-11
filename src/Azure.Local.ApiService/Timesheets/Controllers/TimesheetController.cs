@@ -69,7 +69,7 @@ namespace Azure.Local.ApiService.Test.Controllers
                 if (saveResult)
                     return Ok();
                 else
-                    return Conflict();
+                    return NotFound();
             }
             catch (Exception ex)
             {

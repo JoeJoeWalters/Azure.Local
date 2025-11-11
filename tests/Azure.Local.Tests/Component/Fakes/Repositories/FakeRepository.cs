@@ -35,6 +35,9 @@ namespace Azure.Local.ApiService.Tests.Component.Fakes.Repositories
         {
             try
             {
+                if (!_items.ContainsKey(item.Id))
+                    return false;
+
                 _items[item.Id] = item;
                 return true;
             }

@@ -33,7 +33,7 @@ namespace Azure.Local.ApiService.Tests.Component
         }
 
         [Fact]
-        public async Task AddEndpoint_ReturnsConflict_IfAlreadyExists()
+        public async Task AddEndpoint_ReturnsConflict_IfNotExists()
         {
             // Arrange
             AddTimesheetHttpRequest requestBody = GenerateAddTimesheetHttpRequest();
@@ -58,7 +58,9 @@ namespace Azure.Local.ApiService.Tests.Component
             AddTimesheetHttpRequest requestBody = GenerateAddTimesheetHttpRequest();
             await AddTestItemAsync(requestBody);
 
-            var request = new HttpRequestMessage(HttpMethod.Post, _endpoint);
+            requestBody.To = requestBody.To.AddDays(1); // Modify something
+
+            var request = new HttpRequestMessage(HttpMethod.Patch, _endpoint);
             request.Content = JsonContent.Create(requestBody);
 
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
@@ -67,7 +69,24 @@ namespace Azure.Local.ApiService.Tests.Component
             var response = await _client.SendAsync(request, cancelToken);
 
             // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async Task PatchEndpoint_ReturnsFailure_IfNotExists()
+        {
+            // Arrange
+            AddTimesheetHttpRequest requestBody = GenerateAddTimesheetHttpRequest();
+            var request = new HttpRequestMessage(HttpMethod.Patch, _endpoint);
+            request.Content = JsonContent.Create(requestBody);
+
+            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
+
+            // Act
+            var response = await _client.SendAsync(request, cancelToken);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Fact]
