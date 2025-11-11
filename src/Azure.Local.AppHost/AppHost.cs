@@ -1,5 +1,3 @@
-using Azure.Provisioning.CosmosDB;
-
 var builder = DistributedApplication.CreateBuilder(args);
 
 var cache = builder.AddRedis("cache");

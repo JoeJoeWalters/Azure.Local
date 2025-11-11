@@ -1,6 +1,4 @@
-﻿using Azure.Local.Infrastructure.Repository;
-
-namespace Azure.Local.Infrastructure.Timesheets
+﻿namespace Azure.Local.Infrastructure.Timesheets
 {
     public class TimesheetComponentRepositoryItem
     {

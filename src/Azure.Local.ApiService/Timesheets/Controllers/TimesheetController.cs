@@ -2,9 +2,6 @@ using Azure.Local.ApiService.Test.Contracts;
 using Azure.Local.ApiService.Test.Helpers;
 using Azure.Local.Application.Timesheets;
 using Azure.Local.Domain.Timesheets;
-using Azure.Local.Infrastructure.Repository;
-using Azure.Local.Infrastructure.Test.Specifications;
-using Azure.Local.Infrastructure.Timesheets;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 

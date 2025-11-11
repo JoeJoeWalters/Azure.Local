@@ -1,7 +1,5 @@
 ﻿using Azure.Local.Infrastructure.Repository;
 using Azure.Local.Infrastructure.Repository.Specifications;
-using System;
-using System.Collections.Generic;
 
 namespace Azure.Local.ApiService.Tests.Component.Fakes.Repositories
 {

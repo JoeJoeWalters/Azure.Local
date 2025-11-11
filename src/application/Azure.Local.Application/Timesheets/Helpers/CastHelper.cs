@@ -1,7 +1,5 @@
-﻿using Azure.Core;
-using Azure.Local.Domain.Timesheets;
+﻿using Azure.Local.Domain.Timesheets;
 using Azure.Local.Infrastructure.Timesheets;
-using System.Collections.Generic;
 
 namespace Azure.Local.Application.Timesheets.Helpers
 {
