@@ -15,9 +15,14 @@ namespace Azure.Local.Application.Timesheets
             _repository = repository;
         }
 
-        public Task<bool> SaveAsync(TimesheetItem item)
+        public Task<bool> AddAsync(TimesheetItem item)
         {
             return _repository.AddAsync(item.ToTimesheetRepositoryItem());
+        }
+
+        public Task<bool> UpdateAsync(TimesheetItem item)
+        {
+            return _repository.UpdateAsync(item.ToTimesheetRepositoryItem());
         }
 
         public Task<TimesheetItem?> GetAsync(string id)

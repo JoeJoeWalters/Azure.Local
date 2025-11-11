@@ -8,7 +8,6 @@ namespace Azure.Local.ApiService.Tests.Component
     public class TimesheetComponentTests : ComponentTestBase
     {
         private const string _endpoint = "/timesheet";
-        //private const string _testName = "test-name-01";
 
         public TimesheetComponentTests(ApiServiceWebApplicationFactory factory) : base(factory)
         {
@@ -53,6 +52,25 @@ namespace Azure.Local.ApiService.Tests.Component
         }
 
         [Fact]
+        public async Task PatchEndpoint_ReturnsOk_IfAlreadyExists()
+        {
+            // Arrange
+            AddTimesheetHttpRequest requestBody = GenerateAddTimesheetHttpRequest();
+            await AddTestItemAsync(requestBody);
+
+            var request = new HttpRequestMessage(HttpMethod.Post, _endpoint);
+            request.Content = JsonContent.Create(requestBody);
+
+            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
+
+            // Act
+            var response = await _client.SendAsync(request, cancelToken);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+        }
+
+        [Fact]
         public async Task AddEndpoint_ReturnsBadRequest_WhenIdTooBig()
         {
             // Arrange
@@ -69,25 +87,6 @@ namespace Azure.Local.ApiService.Tests.Component
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
-
-        /*
-        [Fact]
-        public async Task TestAddEndpoint_ReturnsBadRequest_WhenNameTooBig()
-        {
-            // Arrange
-            AddTimesheetHttpRequest requestBody = GenerateAddTimesheetHttpRequest();
-            var request = new HttpRequestMessage(HttpMethod.Post, _endpoint);
-            request.Content = JsonContent.Create(requestBody);
-
-            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
-
-            // Act
-            var response = await _client.SendAsync(request, cancelToken);
-
-            // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        }
-        */
 
         [Fact]
         public async Task GetEndpoint_ReturnsOk()

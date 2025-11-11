@@ -4,7 +4,8 @@ namespace Azure.Local.Application.Timesheets
 {
     public interface ITimesheetApplication
     {
-        Task<bool> SaveAsync(TimesheetItem item);
+        Task<bool> AddAsync(TimesheetItem item);
+        Task<bool> UpdateAsync(TimesheetItem item);
         Task<TimesheetItem?> GetAsync(string id);
     }
 }

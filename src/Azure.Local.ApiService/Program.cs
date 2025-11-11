@@ -26,6 +26,7 @@ public partial class Program
 
         // Register validators
         builder.Services.AddScoped<IValidator<AddTimesheetHttpRequest>, AddTimesheetHttpRequestValidator>();
+        builder.Services.AddScoped<IValidator<PatchTimesheetHttpRequest>, PatchTimesheetHttpRequestValidator>();
 
         // Add services to the container.
         builder.Services.AddProblemDetails();
