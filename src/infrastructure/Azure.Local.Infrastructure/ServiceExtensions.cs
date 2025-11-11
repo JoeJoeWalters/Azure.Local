@@ -2,9 +2,12 @@
 using Azure.Local.Infrastructure.Timesheets;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Local.Infrastructure
 {
+    [ExcludeFromCodeCoverage]
+
     public static class ServiceExtensions
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)

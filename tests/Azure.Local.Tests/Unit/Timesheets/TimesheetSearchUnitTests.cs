@@ -1,10 +1,8 @@
 ﻿using AwesomeAssertions;
 using Azure.Local.ApiService.Tests.Component.Fakes.Repositories;
 using Azure.Local.Infrastructure.Repository;
-using Azure.Local.Infrastructure.Test.Specifications;
+using Azure.Local.Infrastructure.Repository.Specifications;
 using Azure.Local.Infrastructure.Timesheets;
-using Azure.Local.Infrastructure.Timesheets.Specifications;
-using System.Security.Cryptography.Xml;
 
 namespace Azure.Local.ApiService.Tests.Unit.Timesheets
 {

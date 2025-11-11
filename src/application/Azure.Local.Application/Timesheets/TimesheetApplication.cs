@@ -1,7 +1,7 @@
 ﻿using Azure.Local.Application.Timesheets.Helpers;
 using Azure.Local.Domain.Timesheets;
 using Azure.Local.Infrastructure.Repository;
-using Azure.Local.Infrastructure.Test.Specifications;
+using Azure.Local.Infrastructure.Repository.Specifications;
 using Azure.Local.Infrastructure.Timesheets;
 
 namespace Azure.Local.Application.Timesheets
