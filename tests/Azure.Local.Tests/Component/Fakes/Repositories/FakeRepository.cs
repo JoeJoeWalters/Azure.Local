@@ -55,5 +55,27 @@ namespace Azure.Local.ApiService.Tests.Component.Fakes.Repositories
             else
                 return await AddAsync(item);
         }
+
+        public Task<bool> DeleteAsync(GenericSpecification<T> expression)
+        {
+            var result = QueryAsync(expression).GetAwaiter().GetResult();
+            if (result.Any())
+            {
+                bool success = true;
+                foreach (var item in result)
+                {
+                    var deleteResult = _items.Remove(item.Id);
+
+                    // If one fails they all fail
+                    if (!deleteResult)
+                        success = false;
+                }
+                return Task.FromResult(success);
+            }
+            else
+            {
+                return Task.FromResult(false);
+            }
+        }
     }
 }

@@ -137,6 +137,36 @@ namespace Azure.Local.ApiService.Tests.Component
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
+        [Fact]
+        public async Task DeleteEndpoint_ReturnsOk()
+        {
+            // Arrange
+            AddTimesheetHttpRequest requestBody = GenerateAddTimesheetHttpRequest();
+            await AddTestItemAsync(requestBody);
+            var request = new HttpRequestMessage(HttpMethod.Delete, $"{_endpoint}/{requestBody.Id}");
+            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
+
+            // Act
+            var response = await _client.SendAsync(request, cancelToken);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async Task DeleteEndpoint_ReturnsFailure_WhenIdNotRecognised()
+        {
+            // Arrange
+            var request = new HttpRequestMessage(HttpMethod.Delete, $"{_endpoint}/{Guid.NewGuid().ToString()}");
+            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
+
+            // Act
+            var response = await _client.SendAsync(request, cancelToken);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
         private AddTimesheetHttpRequest GenerateAddTimesheetHttpRequest()
             => new AddTimesheetHttpRequest()
                 {

@@ -11,5 +11,6 @@ namespace Azure.Local.Infrastructure.Repository
         public Task<bool> UpdateAsync(T item);
         public Task<bool> UpsertAsync(T item);
         public Task<IEnumerable<T>> QueryAsync(GenericSpecification<T> expression, int take = 0);
+        public Task<bool> DeleteAsync(GenericSpecification<T> expression);
     }
 }

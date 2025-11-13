@@ -33,5 +33,10 @@ namespace Azure.Local.Application.Timesheets
             else
                 return Task.FromResult((TimesheetItem?)null);
         }
+
+        public Task<bool> DeleteAsync(string id)
+        {
+            return _repository.DeleteAsync(new DeleteByIdSpecification(id));
+        }
     }
 }

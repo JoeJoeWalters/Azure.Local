@@ -91,5 +91,28 @@ namespace Azure.Local.Infrastructure.Repository
 
             return queryable.ToList();
         }
+
+        public Task<bool> DeleteAsync(GenericSpecification<T> expression)
+        {
+            var result = QueryAsync(expression).GetAwaiter().GetResult();
+            if (result.Any())
+            {
+                bool success = true;
+                foreach (var item in result)
+                {
+                    var deleteResponse = _container.DeleteItemAsync<T>(item.Id, new PartitionKey(item.Id)).GetAwaiter().GetResult();
+                    var deleteResult = deleteResponse.StatusCode == HttpStatusCode.OK;
+
+                    // If one fails they all fail
+                    if (!deleteResult)
+                        success = false;
+                }
+                return Task.FromResult(success);
+            }
+            else
+            {
+                return Task.FromResult(false);
+            }
+        }
     }
 }

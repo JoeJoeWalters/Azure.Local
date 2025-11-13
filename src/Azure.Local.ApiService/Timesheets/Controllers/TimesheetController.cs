@@ -86,5 +86,15 @@ namespace Azure.Local.ApiService.Test.Controllers
             else
                 return NotFound();
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var result = await _timesheetApplication.DeleteAsync(id);
+            if (result)
+                return Ok();
+            else
+                return NotFound();
+        }
     }
 }
