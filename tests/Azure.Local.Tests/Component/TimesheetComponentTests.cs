@@ -52,6 +52,24 @@ namespace Azure.Local.ApiService.Tests.Component
         }
 
         [Fact]
+        public async Task PatchEndpoint_ReturnsBadRequest_WhenIdTooBig()
+        {
+            // Arrange
+            AddTimesheetHttpRequest requestBody = GeneratePatchTimesheetHttpRequest();
+            requestBody.Id = requestBody.Id.PadRight(300, 'X'); // Make the Id too big
+            var request = new HttpRequestMessage(HttpMethod.Patch, _endpoint);
+            request.Content = JsonContent.Create(requestBody);
+
+            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
+
+            // Act
+            var response = await _client.SendAsync(request, cancelToken);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
         public async Task PatchEndpoint_ReturnsOk_IfAlreadyExists()
         {
             // Arrange
@@ -166,6 +184,9 @@ namespace Azure.Local.ApiService.Tests.Component
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
+
+        private AddTimesheetHttpRequest GeneratePatchTimesheetHttpRequest()
+            => GenerateAddTimesheetHttpRequest();
 
         private AddTimesheetHttpRequest GenerateAddTimesheetHttpRequest()
             => new AddTimesheetHttpRequest()
