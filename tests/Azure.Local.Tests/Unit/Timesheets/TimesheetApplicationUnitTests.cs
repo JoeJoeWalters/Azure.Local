@@ -20,7 +20,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
         }
 
         [Fact]
-        public async Task GetById_WithExistingItem_ShouldBeSuccess()
+        public async Task GetById_Exists_ShouldBeSuccess()
         {
             // Arrange
             var testItem = base.CreateTestItem();
@@ -35,7 +35,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
         }
 
         [Fact]
-        public async Task GetById_WithUnknownItem_ShouldBeFailure()
+        public async Task GetById_NotExists_ShouldBeFailure()
         {
             // Arrange
 
