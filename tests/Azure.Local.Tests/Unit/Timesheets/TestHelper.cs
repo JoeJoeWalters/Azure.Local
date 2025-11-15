@@ -3,9 +3,9 @@ using Azure.Local.Infrastructure.Timesheets;
 
 namespace Azure.Local.ApiService.Tests.Unit.Timesheets
 {
-    public class TimeseetUnitTests
+    public static class TestHelper
     {
-        public TimesheetItem CreateTestItem() 
+        public static TimesheetItem CreateTestItem() 
             => new TimesheetItem
             {
                 Id = Guid.NewGuid().ToString(),

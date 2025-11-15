@@ -5,11 +5,11 @@ using Azure.Local.Infrastructure.Timesheets;
 
 namespace Azure.Local.ApiService.Tests.Unit.Timesheets
 {
-    public class TimesheetApplicationUnitTests : TimeseetUnitTests
+    public class ApplicationUnitTests
     {
         private readonly ITimesheetApplication _application;
 
-        public TimesheetApplicationUnitTests()
+        public ApplicationUnitTests()
         {
             _application = new TimesheetApplication(
                 repository: new FakeRepository<TimesheetRepositoryItem>()
@@ -20,7 +20,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
         public async Task GetById_Exists_ShouldBeSuccess()
         {
             // Arrange
-            var testItem = base.CreateTestItem();
+            var testItem = TestHelper.CreateTestItem();
             _application.AddAsync(testItem).Wait();
 
             // Act
@@ -47,7 +47,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
         public async Task AddNewItem_NotExists_ShouldBeSuccess()
         {
             // Arrange
-            var testItem = base.CreateTestItem();
+            var testItem = TestHelper.CreateTestItem();
 
             // Act
             var result = _application.AddAsync(testItem);
@@ -61,7 +61,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
         public async Task AddNewItem_Exists_ShouldBeFailure()
         {
             // Arrange
-            var testItem = base.CreateTestItem();
+            var testItem = TestHelper.CreateTestItem();
             var resultFirst = _application.AddAsync(testItem);
 
             // Act
@@ -76,7 +76,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
         public async Task UpdateItem_NotExists_ShouldBeFailure()
         {
             // Arrange
-            var testItem = base.CreateTestItem();
+            var testItem = TestHelper.CreateTestItem();
 
             // Act
             var result = _application.UpdateAsync(testItem);
@@ -90,7 +90,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
         public async Task UpdateItem_Exists_ShouldBeSuccess()
         {
             // Arrange
-            var testItem = base.CreateTestItem();
+            var testItem = TestHelper.CreateTestItem();
             var resultFirst = _application.AddAsync(testItem);
 
             // Act
@@ -105,7 +105,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
         public async Task DeleteItem_NotExists_ShouldBeFailure()
         {
             // Arrange
-            var testItem = base.CreateTestItem();
+            var testItem = TestHelper.CreateTestItem();
 
             // Act
             var result = _application.DeleteAsync(testItem.Id);
@@ -119,7 +119,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
         public async Task DeleteItem_Exists_ShouldBeSuccess()
         {
             // Arrange
-            var testItem = base.CreateTestItem();
+            var testItem = TestHelper.CreateTestItem();
             var resultFirst = _application.AddAsync(testItem);
 
             // Act
