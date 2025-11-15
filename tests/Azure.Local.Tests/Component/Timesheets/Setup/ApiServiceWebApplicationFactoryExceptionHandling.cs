@@ -1,14 +1,12 @@
-﻿using Azure.Local.ApiService.Tests.Component.Fakes.Applications;
-using Azure.Local.ApiService.Tests.Component.Fakes.Repositories;
+﻿using Azure.Local.ApiService.Tests.Component.Setup;
+using Azure.Local.ApiService.Tests.Component.Timesheets.Fakes.Applications;
 using Azure.Local.Application.Timesheets;
-using Azure.Local.Infrastructure.Repository;
-using Azure.Local.Infrastructure.Timesheets;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Azure.Local.ApiService.Tests.Component.Setup
+namespace Azure.Local.ApiService.Tests.Component.Timesheets.Setup
 {
     public class ApiServiceWebApplicationFactoryExceptionHandling : WebApplicationFactory<Program>
     {

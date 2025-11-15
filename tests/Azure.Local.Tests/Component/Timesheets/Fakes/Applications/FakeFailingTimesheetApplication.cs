@@ -1,7 +1,7 @@
 ﻿using Azure.Local.Application.Timesheets;
 using Azure.Local.Domain.Timesheets;
 
-namespace Azure.Local.ApiService.Tests.Component.Fakes.Applications
+namespace Azure.Local.ApiService.Tests.Component.Timesheets.Fakes.Applications
 {
     public class FakeFailingTimesheetApplication : ITimesheetApplication
     {

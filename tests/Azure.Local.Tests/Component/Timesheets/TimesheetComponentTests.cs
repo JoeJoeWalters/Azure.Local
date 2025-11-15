@@ -3,7 +3,7 @@ using Azure.Local.ApiService.Test.Contracts;
 using Azure.Local.ApiService.Tests.Component.Setup;
 using System.Net.Http.Json;
 
-namespace Azure.Local.ApiService.Tests.Component
+namespace Azure.Local.ApiService.Tests.Component.Timesheets
 {
     public class TimesheetComponentTests : ComponentTestBase<ApiServiceWebApplicationFactoryBase>
     {
@@ -13,7 +13,7 @@ namespace Azure.Local.ApiService.Tests.Component
         {
         }
 
-        ~TimesheetComponentTests() => base.Dispose();
+        ~TimesheetComponentTests() => Dispose();
 
         [Fact]
         public async Task AddEndpoint_ReturnsOk()
@@ -37,7 +37,7 @@ namespace Azure.Local.ApiService.Tests.Component
         {
             // Arrange
             AddTimesheetHttpRequest requestBody = TimesheetComponentTestHelper.GenerateAddTimesheetHttpRequest();
-            await TimesheetComponentTestHelper.AddTestItemAsync(base._client, _endpoint, requestBody);
+            await TimesheetComponentTestHelper.AddTestItemAsync(_client, _endpoint, requestBody);
 
             var request = new HttpRequestMessage(HttpMethod.Post, _endpoint);
             request.Content = JsonContent.Create(requestBody);
@@ -74,7 +74,7 @@ namespace Azure.Local.ApiService.Tests.Component
         {
             // Arrange
             AddTimesheetHttpRequest requestBody = TimesheetComponentTestHelper.GenerateAddTimesheetHttpRequest();
-            await TimesheetComponentTestHelper.AddTestItemAsync(base._client, _endpoint, requestBody);
+            await TimesheetComponentTestHelper.AddTestItemAsync(_client, _endpoint, requestBody);
 
             requestBody.To = requestBody.To.AddDays(1); // Modify something
 
@@ -130,7 +130,7 @@ namespace Azure.Local.ApiService.Tests.Component
         {
             // Arrange
             AddTimesheetHttpRequest requestBody = TimesheetComponentTestHelper.GenerateAddTimesheetHttpRequest();
-            await TimesheetComponentTestHelper.AddTestItemAsync(base._client, _endpoint, requestBody);
+            await TimesheetComponentTestHelper.AddTestItemAsync(_client, _endpoint, requestBody);
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_endpoint}/{requestBody.Id}");
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
 
@@ -160,7 +160,7 @@ namespace Azure.Local.ApiService.Tests.Component
         {
             // Arrange
             AddTimesheetHttpRequest requestBody = TimesheetComponentTestHelper.GenerateAddTimesheetHttpRequest();
-            await TimesheetComponentTestHelper.AddTestItemAsync(base._client, _endpoint, requestBody);
+            await TimesheetComponentTestHelper.AddTestItemAsync(_client, _endpoint, requestBody);
             var request = new HttpRequestMessage(HttpMethod.Delete, $"{_endpoint}/{requestBody.Id}");
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
 

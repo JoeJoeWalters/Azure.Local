@@ -1,10 +1,7 @@
 ﻿using AwesomeAssertions;
-using Azure.Local.ApiService.Tests.Component.Fakes.Repositories;
+using Azure.Local.ApiService.Tests.Component.Timesheets.Fakes.Repositories;
 using Azure.Local.Application.Timesheets;
-using Azure.Local.Infrastructure.Repository;
-using Azure.Local.Infrastructure.Repository.Specifications;
 using Azure.Local.Infrastructure.Timesheets;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Azure.Local.ApiService.Tests.Unit.Timesheets
 {

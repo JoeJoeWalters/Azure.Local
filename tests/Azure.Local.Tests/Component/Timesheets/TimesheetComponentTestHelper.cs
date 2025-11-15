@@ -6,7 +6,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Azure.Local.ApiService.Tests.Component
+namespace Azure.Local.ApiService.Tests.Component.Timesheets
 {
     public static class TimesheetComponentTestHelper
     {
@@ -30,13 +30,13 @@ namespace Azure.Local.ApiService.Tests.Component
                     }
             };
 
-        public static async Task<Boolean> AddTestItemAsync(HttpClient httpClient, string endpoint, AddTimesheetHttpRequest requestBody)
+        public static async Task<bool> AddTestItemAsync(HttpClient httpClient, string endpoint, AddTimesheetHttpRequest requestBody)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, endpoint);
             request.Content = JsonContent.Create(requestBody);
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
             var response = await httpClient.SendAsync(request, cancelToken);
-            return (response.StatusCode == HttpStatusCode.OK);
+            return response.StatusCode == HttpStatusCode.OK;
         }
     }
 }

@@ -1,12 +1,10 @@
 ﻿using AwesomeAssertions;
 using Azure.Local.ApiService.Test.Contracts;
-using Azure.Local.ApiService.Tests.Component.Fakes.Applications;
 using Azure.Local.ApiService.Tests.Component.Setup;
-using Azure.Local.Application.Timesheets;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+using Azure.Local.ApiService.Tests.Component.Timesheets.Setup;
 using System.Net.Http.Json;
 
-namespace Azure.Local.ApiService.Tests.Component
+namespace Azure.Local.ApiService.Tests.Component.Timesheets
 {
     public class TimesheetComponentTestsWithExceptionHandling : ComponentTestBase<ApiServiceWebApplicationFactoryExceptionHandling>
     {
@@ -16,7 +14,7 @@ namespace Azure.Local.ApiService.Tests.Component
         {
         }
 
-        ~TimesheetComponentTestsWithExceptionHandling() => base.Dispose();
+        ~TimesheetComponentTestsWithExceptionHandling() => Dispose();
 
         [Fact]
         public async Task AddEndpoint_ReturnsInternalServerError()
@@ -57,7 +55,7 @@ namespace Azure.Local.ApiService.Tests.Component
         {
             // Arrange
             AddTimesheetHttpRequest requestBody = TimesheetComponentTestHelper.GenerateAddTimesheetHttpRequest();
-            await TimesheetComponentTestHelper.AddTestItemAsync(base._client, _endpoint, requestBody);
+            await TimesheetComponentTestHelper.AddTestItemAsync(_client, _endpoint, requestBody);
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_endpoint}/{requestBody.Id}");
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
 
@@ -73,7 +71,7 @@ namespace Azure.Local.ApiService.Tests.Component
         {
             // Arrange
             AddTimesheetHttpRequest requestBody = TimesheetComponentTestHelper.GenerateAddTimesheetHttpRequest();
-            await TimesheetComponentTestHelper.AddTestItemAsync(base._client, _endpoint, requestBody);
+            await TimesheetComponentTestHelper.AddTestItemAsync(_client, _endpoint, requestBody);
             var request = new HttpRequestMessage(HttpMethod.Delete, $"{_endpoint}/{requestBody.Id}");
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
 

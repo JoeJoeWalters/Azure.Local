@@ -1,7 +1,7 @@
 ﻿using AwesomeAssertions;
 using Azure.Local.ApiService.Tests.Component.Setup;
 
-namespace Azure.Local.ApiService.Tests.Component
+namespace Azure.Local.ApiService.Tests.Component.Heartbeat
 {
     public class HeartbeatComponentTests : ComponentTestBase<ApiServiceWebApplicationFactoryBase>
     {

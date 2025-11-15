@@ -1,7 +1,7 @@
 ﻿using Azure.Local.Infrastructure.Repository;
 using Azure.Local.Infrastructure.Repository.Specifications;
 
-namespace Azure.Local.ApiService.Tests.Component.Fakes.Repositories
+namespace Azure.Local.ApiService.Tests.Component.Timesheets.Fakes.Repositories
 {
 	public class FakeRepository<T> : IRepository<T> where T : RepositoryItem
     {
