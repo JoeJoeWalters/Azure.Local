@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Local.ApiService.Tests.Component.Timesheets
 {
-    public static class TimesheetComponentTestHelper
+    public static class TestHelper
     {
         public static AddTimesheetHttpRequest GeneratePatchTimesheetHttpRequest()
             => GenerateAddTimesheetHttpRequest();
