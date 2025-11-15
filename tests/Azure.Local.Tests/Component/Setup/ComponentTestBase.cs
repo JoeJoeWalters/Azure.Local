@@ -1,11 +1,13 @@
-﻿namespace Azure.Local.ApiService.Tests.Component.Setup
+﻿using Microsoft.AspNetCore.Mvc.Testing;
+
+namespace Azure.Local.ApiService.Tests.Component.Setup
 {
-    public abstract class ComponentTestBase : IClassFixture<ApiServiceWebApplicationFactory>, IDisposable
+    public abstract class ComponentTestBase<T> : IClassFixture<T>, IDisposable where T: WebApplicationFactory<Program>
     {
-        protected readonly ApiServiceWebApplicationFactory _factory;
+        protected readonly T _factory;
         protected HttpClient _client;
 
-        protected ComponentTestBase(ApiServiceWebApplicationFactory factory)
+        protected ComponentTestBase(T factory)
         {
             _factory = factory;
             //_factory.WithWebHostBuilder(builder =>

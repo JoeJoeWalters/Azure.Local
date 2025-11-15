@@ -3,9 +3,9 @@ using Azure.Local.ApiService.Tests.Component.Setup;
 
 namespace Azure.Local.ApiService.Tests.Component
 {
-    public class HeartbeatComponentTests : ComponentTestBase
+    public class HeartbeatComponentTests : ComponentTestBase<ApiServiceWebApplicationFactoryBase>
     {
-        public HeartbeatComponentTests(ApiServiceWebApplicationFactory factory) : base(factory)
+        public HeartbeatComponentTests(ApiServiceWebApplicationFactoryBase factory) : base(factory)
         {
         }
 

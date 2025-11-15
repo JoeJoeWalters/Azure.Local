@@ -1,4 +1,6 @@
-﻿using Azure.Local.ApiService.Tests.Component.Fakes.Repositories;
+﻿using Azure.Local.ApiService.Tests.Component.Fakes.Applications;
+using Azure.Local.ApiService.Tests.Component.Fakes.Repositories;
+using Azure.Local.Application.Timesheets;
 using Azure.Local.Infrastructure.Repository;
 using Azure.Local.Infrastructure.Timesheets;
 using Microsoft.AspNetCore.Hosting;
@@ -8,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Azure.Local.ApiService.Tests.Component.Setup
 {
-    public class ApiServiceWebApplicationFactory : WebApplicationFactory<Program>
+    public class ApiServiceWebApplicationFactoryBase : WebApplicationFactory<Program>
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -22,10 +24,7 @@ namespace Azure.Local.ApiService.Tests.Component.Setup
                 }).ConfigureTestServices(services =>
                 {
                     // Remove existing registrations setup in Program.cs or Infrastructure
-                    services.RemoveAll<IRepository<TimesheetRepositoryItem>>();
-
-                    // Additional Test Services Setup
-                    services.AddSingleton<IRepository<TimesheetRepositoryItem>, FakeRepository<TimesheetRepositoryItem>>();
+                    services.SetupBaseServices();
                 });
         }
     }

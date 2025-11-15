@@ -5,11 +5,11 @@ using System.Net.Http.Json;
 
 namespace Azure.Local.ApiService.Tests.Component
 {
-    public class TimesheetComponentTests : ComponentTestBase
+    public class TimesheetComponentTests : ComponentTestBase<ApiServiceWebApplicationFactoryBase>
     {
         private const string _endpoint = "/timesheet";
 
-        public TimesheetComponentTests(ApiServiceWebApplicationFactory factory) : base(factory)
+        public TimesheetComponentTests(ApiServiceWebApplicationFactoryBase factory) : base(factory)
         {
         }
 

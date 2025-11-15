@@ -46,7 +46,7 @@ namespace Azure.Local.ApiService.Test.Controllers
                 else
                     return Conflict();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
             }
@@ -80,21 +80,35 @@ namespace Azure.Local.ApiService.Test.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
-            var result = await _timesheetApplication.GetAsync(id);
-            if (result != null)
-                return new OkObjectResult(result);
-            else
-                return NotFound();
+            try
+            {
+                var result = await _timesheetApplication.GetAsync(id);
+                if (result != null)
+                    return new OkObjectResult(result);
+                else
+                    return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var result = await _timesheetApplication.DeleteAsync(id);
-            if (result)
-                return Ok();
-            else
-                return NotFound();
+            try
+            {
+                var result = await _timesheetApplication.DeleteAsync(id);
+                if (result)
+                    return Ok();
+                else
+                    return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+            }
         }
     }
 }
