@@ -22,7 +22,7 @@ namespace Azure.Local.ApiService.Tests.Component
         public async Task AddEndpoint_ReturnsInternalServerError()
         {
             // Arrange
-            AddTimesheetHttpRequest requestBody = GenerateAddTimesheetHttpRequest();
+            AddTimesheetHttpRequest requestBody = TimesheetComponentTestHelper.GenerateAddTimesheetHttpRequest();
             var request = new HttpRequestMessage(HttpMethod.Post, _endpoint);
             request.Content = JsonContent.Create(requestBody);
 
@@ -39,7 +39,7 @@ namespace Azure.Local.ApiService.Tests.Component
         public async Task PatchEndpoint_ReturnsInternalServerError()
         {
             // Arrange
-            AddTimesheetHttpRequest requestBody = GeneratePatchTimesheetHttpRequest();
+            AddTimesheetHttpRequest requestBody = TimesheetComponentTestHelper.GeneratePatchTimesheetHttpRequest();
             var request = new HttpRequestMessage(HttpMethod.Patch, _endpoint);
             request.Content = JsonContent.Create(requestBody);
 
@@ -56,8 +56,8 @@ namespace Azure.Local.ApiService.Tests.Component
         public async Task GetEndpoint_ReturnsInternalServerError()
         {
             // Arrange
-            AddTimesheetHttpRequest requestBody = GenerateAddTimesheetHttpRequest();
-            await AddTestItemAsync(requestBody);
+            AddTimesheetHttpRequest requestBody = TimesheetComponentTestHelper.GenerateAddTimesheetHttpRequest();
+            await TimesheetComponentTestHelper.AddTestItemAsync(base._client, _endpoint, requestBody);
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_endpoint}/{requestBody.Id}");
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
 
@@ -72,8 +72,8 @@ namespace Azure.Local.ApiService.Tests.Component
         public async Task DeleteEndpoint_ReturnsInternalServerError()
         {
             // Arrange
-            AddTimesheetHttpRequest requestBody = GenerateAddTimesheetHttpRequest();
-            await AddTestItemAsync(requestBody);
+            AddTimesheetHttpRequest requestBody = TimesheetComponentTestHelper.GenerateAddTimesheetHttpRequest();
+            await TimesheetComponentTestHelper.AddTestItemAsync(base._client, _endpoint, requestBody);
             var request = new HttpRequestMessage(HttpMethod.Delete, $"{_endpoint}/{requestBody.Id}");
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
 
@@ -82,35 +82,6 @@ namespace Azure.Local.ApiService.Tests.Component
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
-        }
-
-        private AddTimesheetHttpRequest GeneratePatchTimesheetHttpRequest()
-            => GenerateAddTimesheetHttpRequest();
-
-        private AddTimesheetHttpRequest GenerateAddTimesheetHttpRequest()
-            => new AddTimesheetHttpRequest()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    From = DateTime.UtcNow,
-                    To = DateTime.UtcNow.AddDays(1),
-                    Components = new List<AddTimesheetHttpRequestComponent>()
-                    {
-                        new AddTimesheetHttpRequestComponent()
-                        {
-                            Units = 8.0,
-                            From = DateTime.UtcNow,
-                            To = DateTime.UtcNow.AddDays(1) 
-                        }
-                    }
-                };
-
-        private async Task<Boolean> AddTestItemAsync(AddTimesheetHttpRequest requestBody)
-        {
-            var request = new HttpRequestMessage(HttpMethod.Post, _endpoint);
-            request.Content = JsonContent.Create(requestBody);
-            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
-            var response = await _client.SendAsync(request, cancelToken);
-            return (response.StatusCode == HttpStatusCode.OK);
         }
     }
 }
