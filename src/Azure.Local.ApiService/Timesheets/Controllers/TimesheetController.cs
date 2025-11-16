@@ -3,7 +3,6 @@ using Azure.Local.ApiService.Test.Helpers;
 using Azure.Local.Application.Timesheets;
 using Azure.Local.Domain.Timesheets;
 using FluentValidation;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 

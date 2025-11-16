@@ -1,10 +1,5 @@
 ﻿using Azure.Local.ApiService.Test.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Azure.Local.ApiService.Tests.Component.Timesheets
 {
