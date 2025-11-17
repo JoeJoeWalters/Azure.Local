@@ -17,11 +17,11 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
         }
 
         [Fact]
-        public async Task GetById_Exists_ShouldBeSuccess()
+        public void GetById_Exists_ShouldBeSuccess()
         {
             // Arrange
             var testItem = TestHelper.CreateTestItem();
-            _application.AddAsync(testItem).Wait();
+            _ = _application.AddAsync(testItem);
 
             // Act
             var result = _application.GetAsync(testItem.Id);
@@ -32,7 +32,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
         }
 
         [Fact]
-        public async Task GetById_NotExists_ShouldBeFailure()
+        public void GetById_NotExists_ShouldBeFailure()
         {
             // Arrange
 
@@ -44,7 +44,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
         }
 
         [Fact]
-        public async Task AddNewItem_NotExists_ShouldBeSuccess()
+        public void AddNewItem_NotExists_ShouldBeSuccess()
         {
             // Arrange
             var testItem = TestHelper.CreateTestItem();
@@ -58,7 +58,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
         }
 
         [Fact]
-        public async Task AddNewItem_Exists_ShouldBeFailure()
+        public void AddNewItem_Exists_ShouldBeFailure()
         {
             // Arrange
             var testItem = TestHelper.CreateTestItem();
@@ -73,7 +73,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
         }
 
         [Fact]
-        public async Task UpdateItem_NotExists_ShouldBeFailure()
+        public void UpdateItem_NotExists_ShouldBeFailure()
         {
             // Arrange
             var testItem = TestHelper.CreateTestItem();
@@ -87,7 +87,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
         }
 
         [Fact]
-        public async Task UpdateItem_Exists_ShouldBeSuccess()
+        public void UpdateItem_Exists_ShouldBeSuccess()
         {
             // Arrange
             var testItem = TestHelper.CreateTestItem();
@@ -102,7 +102,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
         }
 
         [Fact]
-        public async Task DeleteItem_NotExists_ShouldBeFailure()
+        public void DeleteItem_NotExists_ShouldBeFailure()
         {
             // Arrange
             var testItem = TestHelper.CreateTestItem();
@@ -116,7 +116,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
         }
 
         [Fact]
-        public async Task DeleteItem_Exists_ShouldBeSuccess()
+        public void DeleteItem_Exists_ShouldBeSuccess()
         {
             // Arrange
             var testItem = TestHelper.CreateTestItem();

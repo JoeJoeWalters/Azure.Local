@@ -83,13 +83,17 @@ namespace Azure.Local.Infrastructure.Repository
 
         public async Task<IEnumerable<T>> QueryAsync(GenericSpecification<T> specification, int take = 0)
         {
-            var queryable = _container.GetItemLinqQueryable<T>(allowSynchronousQueryExecution: true)
-                .Where(specification.Expression.Compile());
+            // Use Task.Run to execute the synchronous LINQ query on a background thread
+            return await Task.Run(() =>
+            {
+                var queryable = _container.GetItemLinqQueryable<T>(allowSynchronousQueryExecution: true)
+                    .Where(specification.Expression.Compile());
 
-            if (take > 0)
-                queryable = queryable.Take(take);
+                if (take > 0)
+                    queryable = queryable.Take(take);
 
-            return queryable.ToList();
+                return queryable.ToList();
+            });
         }
 
         public Task<bool> DeleteAsync(GenericSpecification<T> expression)

@@ -29,7 +29,7 @@ namespace Azure.Local.Application.Timesheets
         {
             var queryResult = _repository.QueryAsync(new GetByIdSpecification(id), 1);
             if (queryResult.Result.Any())
-                return Task.FromResult(queryResult.Result.First().ToTimesheetItem());
+                return Task.FromResult(queryResult.Result?.First().ToTimesheetItem());
             else
                 return Task.FromResult((TimesheetItem?)null);
         }

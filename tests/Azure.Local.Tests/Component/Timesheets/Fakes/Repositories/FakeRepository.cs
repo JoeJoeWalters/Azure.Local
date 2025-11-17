@@ -23,13 +23,19 @@ namespace Azure.Local.ApiService.Tests.Component.Timesheets.Fakes.Repositories
             {
             }
 
+            await Task.Yield(); // Ensures the method is truly asynchronous
             return false;
         }
 
         public async Task<IEnumerable<T>> QueryAsync(GenericSpecification<T> expression, int take = 0)
-            => (take == 0 ?
+        {
+            var result = (take == 0 ?
                 _items.Select(x => x.Value).AsQueryable().Where(expression.Expression) :
                 _items.Select(x => x.Value).AsQueryable().Where(expression.Expression).Take(take)).ToList();
+
+            await Task.Yield(); // Ensures the method is truly asynchronous
+            return result;
+        }
 
         public async Task<bool> UpdateAsync(T item)
         {
@@ -39,6 +45,7 @@ namespace Azure.Local.ApiService.Tests.Component.Timesheets.Fakes.Repositories
                     return false;
 
                 _items[item.Id] = item;
+                await Task.Yield(); // Ensures the method is truly asynchronous
                 return true;
             }
             catch

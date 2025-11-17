@@ -47,7 +47,10 @@ namespace Azure.Local.ApiService.Test.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+                return new ObjectResult(ex.Message)
+                {
+                    StatusCode = (int)HttpStatusCode.InternalServerError
+                };
             }
         }
 
@@ -72,7 +75,10 @@ namespace Azure.Local.ApiService.Test.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+                return new ObjectResult(ex.Message)
+                {
+                    StatusCode = (int)HttpStatusCode.InternalServerError
+                };
             }
         }
 
@@ -89,7 +95,10 @@ namespace Azure.Local.ApiService.Test.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+                return new ObjectResult(ex.Message)
+                {
+                    StatusCode = (int)HttpStatusCode.InternalServerError
+                };
             }
         }
 
@@ -106,7 +115,10 @@ namespace Azure.Local.ApiService.Test.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+                return new ObjectResult(ex.Message)
+                {
+                    StatusCode = (int)HttpStatusCode.InternalServerError
+                };
             }
         }
     }
