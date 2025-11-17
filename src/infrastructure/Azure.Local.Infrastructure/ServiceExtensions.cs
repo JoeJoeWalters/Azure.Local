@@ -21,9 +21,14 @@ namespace Azure.Local.Infrastructure
                         x.DatabaseId = configuration["CosmosDb:DatabaseId"] ?? string.Empty;
                         x.ContainerId = configuration["CosmosDb:ContainerId"] ?? string.Empty;
                     });
-            services.AddSingleton<IRepository<TimesheetRepositoryItem>, CosmosRepository<TimesheetRepositoryItem>>();
+            services.AddTimesheetPersistence();
 
-            // Register infrastructure services here
+            return services;
+        }
+
+        private static IServiceCollection AddTimesheetPersistence(this IServiceCollection services)
+        {
+            services.AddSingleton<IRepository<TimesheetRepositoryItem>, CosmosRepository<TimesheetRepositoryItem>>();
             return services;
         }
     }

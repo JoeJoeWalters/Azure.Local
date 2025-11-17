@@ -8,13 +8,16 @@ namespace Azure.Local.ApiService.Tests.Component.Setup
     public static class ServiceExtensions
     {
         public static IServiceCollection SetupBaseServices(this IServiceCollection services)
+        {            
+            services.AddTimesheetPersistence();
+            return services;
+        }
+
+        private static IServiceCollection AddTimesheetPersistence(this IServiceCollection services)
         {
             // Remove existing registrations setup in Program.cs or Infrastructure
             services.RemoveAll<IRepository<TimesheetRepositoryItem>>();
-
-            // Additional Test Services Setup
             services.AddSingleton<IRepository<TimesheetRepositoryItem>, FakeRepository<TimesheetRepositoryItem>>();
-
             return services;
         }
     }

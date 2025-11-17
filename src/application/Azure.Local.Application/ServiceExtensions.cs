@@ -8,9 +8,13 @@ namespace Azure.Local.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
         {
-            // Register application services here
-            services.AddSingleton<ITimesheetApplication, TimesheetApplication>();
+            services.AddTimesheetLogic();
+            return services;
+        }
 
+        private static IServiceCollection AddTimesheetLogic(this IServiceCollection services)
+        {
+            services.AddSingleton<ITimesheetApplication, TimesheetApplication>();
             return services;
         }
     }
