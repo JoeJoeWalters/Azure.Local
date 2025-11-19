@@ -19,7 +19,8 @@ namespace Azure.Local.Application.Timesheets.Helpers
             {
                 Units = item.Units,
                 From = item.From,
-                To = item.To
+                To = item.To,
+                Code = item.Code
             };
 
         public static TimesheetItem ToTimesheetItem(this TimesheetRepositoryItem item)
@@ -36,7 +37,8 @@ namespace Azure.Local.Application.Timesheets.Helpers
             {
                 Units = item.Units,
                 From = item.From,
-                To = item.To
+                To = item.To,
+                Code = item.Code
             };
     }
 }

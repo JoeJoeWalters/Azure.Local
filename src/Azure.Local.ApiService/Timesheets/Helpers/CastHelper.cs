@@ -24,7 +24,8 @@ namespace Azure.Local.ApiService.Test.Helpers
             {
                 Units = component.Units,
                 From = component.From,
-                To = component.To
+                To = component.To,
+                Code = component.Code
             };
         }
     }

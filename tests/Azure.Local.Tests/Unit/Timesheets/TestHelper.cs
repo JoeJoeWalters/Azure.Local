@@ -1,5 +1,4 @@
 ﻿using Azure.Local.Domain.Timesheets;
-using Azure.Local.Infrastructure.Timesheets;
 
 namespace Azure.Local.ApiService.Tests.Unit.Timesheets
 {
@@ -17,7 +16,8 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
                     {
                         From = DateTime.UtcNow.AddHours(-2),
                         To = DateTime.UtcNow,
-                        Units = 2
+                        Units = 2,
+                        Code = Guid.NewGuid().ToString()
                     }
                 }
             };
