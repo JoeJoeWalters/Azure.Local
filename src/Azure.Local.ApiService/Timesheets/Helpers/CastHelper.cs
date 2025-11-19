@@ -10,6 +10,7 @@ namespace Azure.Local.ApiService.Test.Helpers
             return new TimesheetItem
             {
                 Id = request.Id,
+                PersonId = request.PersonId,
                 From = request.From,
                 To = request.To,
                 Components = request.Components

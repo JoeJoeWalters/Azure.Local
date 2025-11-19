@@ -8,6 +8,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
             => new TimesheetItem
             {
                 Id = Guid.NewGuid().ToString(),
+                PersonId = Guid.NewGuid().ToString(),
                 From = DateTime.UtcNow.AddHours(-2),
                 To = DateTime.UtcNow,
                 Components = new List<TimesheetComponentItem>

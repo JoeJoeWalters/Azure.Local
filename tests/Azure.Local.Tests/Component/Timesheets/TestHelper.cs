@@ -12,6 +12,7 @@ namespace Azure.Local.ApiService.Tests.Component.Timesheets
             => new AddTimesheetHttpRequest()
             {
                 Id = Guid.NewGuid().ToString(),
+                PersonId = Guid.NewGuid().ToString(),
                 From = DateTime.UtcNow,
                 To = DateTime.UtcNow.AddDays(1),
                 Components = new List<AddTimesheetHttpRequestComponent>()

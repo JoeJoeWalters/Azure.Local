@@ -4,6 +4,7 @@ using Azure.Local.Application.Timesheets;
 using Azure.Local.Domain.Timesheets;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 using System.Net;
 
 namespace Azure.Local.ApiService.Test.Controllers
@@ -31,19 +32,14 @@ namespace Azure.Local.ApiService.Test.Controllers
         {
             var validationResult = _addTestItemHttpRequestValidator.Validate(request);
             if (!validationResult.IsValid)
-            {
                 return BadRequest(validationResult.Errors);
-            }
 
             TimesheetItem item = request.ToTimesheetItem();
 
             try
             {
                 var saveResult = await _timesheetApplication.AddAsync(item);
-                if (saveResult)
-                    return Ok();
-                else
-                    return Conflict();
+                return saveResult ? Ok() : Conflict();
             }
             catch (Exception ex)
             {
@@ -59,19 +55,14 @@ namespace Azure.Local.ApiService.Test.Controllers
         {
             var validationResult = _patchTestItemHttpRequestValidator.Validate(request);
             if (!validationResult.IsValid)
-            {
                 return BadRequest(validationResult.Errors);
-            }
 
             TimesheetItem item = request.ToTimesheetItem();
 
             try
             {
                 var saveResult = await _timesheetApplication.UpdateAsync(item);
-                if (saveResult)
-                    return Ok();
-                else
-                    return NotFound();
+                return saveResult ? Ok() : NotFound();
             }
             catch (Exception ex)
             {
@@ -88,10 +79,7 @@ namespace Azure.Local.ApiService.Test.Controllers
             try
             {
                 var result = await _timesheetApplication.GetAsync(id);
-                if (result != null)
-                    return new OkObjectResult(result);
-                else
-                    return NotFound();
+                return (result != null) ? new OkObjectResult(result) : NotFound();
             }
             catch (Exception ex)
             {
@@ -108,10 +96,7 @@ namespace Azure.Local.ApiService.Test.Controllers
             try
             {
                 var result = await _timesheetApplication.DeleteAsync(id);
-                if (result)
-                    return Ok();
-                else
-                    return NotFound();
+                return result? Ok() : NotFound();
             }
             catch (Exception ex)
             {

@@ -9,6 +9,7 @@ namespace Azure.Local.Application.Timesheets.Helpers
             => new TimesheetRepositoryItem
             {
                 Id = item.Id,
+                PersonId = item.PersonId,
                 From = item.From,
                 To = item.To,
                 Components = item.Components.Select(c => c.ToTimesheetComponentRepositoryItem()).ToList()
@@ -27,6 +28,7 @@ namespace Azure.Local.Application.Timesheets.Helpers
             => new TimesheetItem
             {
                 Id = item.Id,
+                PersonId = item.PersonId,
                 From = item.From,
                 To = item.To,
                 Components = item.Components.Select(c => c.ToTimesheetComponentItem()).ToList()
