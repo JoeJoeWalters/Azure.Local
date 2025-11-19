@@ -6,9 +6,9 @@
         
         }
 
-        public double Units { get; set; } = 0.0D;
-        public DateTime From { get; set; } = DateTime.MinValue;
-        public DateTime To { get; set; } = DateTime.MinValue;
-        public string Code { get; set; } = string.Empty;
+        public required double Units { get; set; }
+        public required DateTime From { get; set; }
+        public required DateTime To { get; set; }
+        public required string Code { get; set; }
     }
 }

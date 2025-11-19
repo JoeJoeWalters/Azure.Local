@@ -8,8 +8,8 @@ namespace Azure.Local.Infrastructure.Timesheets
             Id = Guid.NewGuid().ToString();
         }
 
-        public DateTime From { get; set; } = DateTime.MinValue;
-        public DateTime To { get; set; } = DateTime.MinValue; 
+        public required DateTime From { get; set; }
+        public required DateTime To { get; set; } 
         public List<TimesheetComponentRepositoryItem> Components { get; set; } = new List<TimesheetComponentRepositoryItem>();
     }
 }
