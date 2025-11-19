@@ -20,7 +20,8 @@ namespace Azure.Local.ApiService.Tests.Component.Timesheets
                         {
                             Units = 8.0,
                             From = DateTime.UtcNow,
-                            To = DateTime.UtcNow.AddDays(1)
+                            To = DateTime.UtcNow.AddDays(1),
+                            Code = Guid.NewGuid().ToString()
                         }
                     }
             };
