@@ -18,9 +18,8 @@ namespace Azure.Local.ApiService.Tests.Component.Timesheets
         public async Task AddEndpoint_ReturnsOk()
         {
             // Arrange
-            AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest();
             var request = new HttpRequestMessage(HttpMethod.Post, _endpoint);
-            request.Content = JsonContent.Create(requestBody);
+            request.Content = JsonContent.Create(TestHelper.GenerateAddTimesheetHttpRequest());
 
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
 
