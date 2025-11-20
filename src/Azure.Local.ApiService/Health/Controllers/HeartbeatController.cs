@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace Azure.Local.ApiService.Health.Controllers
 {
     [ApiController]
@@ -7,10 +5,7 @@ namespace Azure.Local.ApiService.Health.Controllers
     public class HeartbeatController : ControllerBase
     {
         [HttpGet]
-        public IActionResult Get()
-        {
-            // Always returns 200 OK
-            return Ok();
-        }
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Get() => Ok();
     }
 }

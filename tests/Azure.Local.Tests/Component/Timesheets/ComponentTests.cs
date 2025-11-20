@@ -1,5 +1,4 @@
-﻿using AwesomeAssertions;
-using Azure.Local.ApiService.Test.Contracts;
+﻿using Azure.Local.ApiService.Test.Contracts;
 using Azure.Local.ApiService.Tests.Component.Setup;
 using System.Net.Http.Json;
 

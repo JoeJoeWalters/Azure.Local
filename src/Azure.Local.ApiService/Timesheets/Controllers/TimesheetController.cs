@@ -3,9 +3,6 @@ using Azure.Local.ApiService.Test.Helpers;
 using Azure.Local.Application.Timesheets;
 using Azure.Local.Domain.Timesheets;
 using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Cosmos.Serialization.HybridRow;
-using System.Net;
 
 namespace Azure.Local.ApiService.Test.Controllers
 {
