@@ -35,9 +35,11 @@ public partial class Program
         builder.Services.AddControllers();
 
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+        /*
         builder.Services.AddOpenApi(options => 
                 options.OpenApiVersion = Microsoft.OpenApi.OpenApiSpecVersion.OpenApi3_1
             );
+        */
 
         var app = builder.Build();
 
@@ -46,7 +48,7 @@ public partial class Program
 
         if (app.Environment.IsDevelopment())
         {
-            app.MapOpenApi();
+            //app.MapOpenApi();
         }
 
         // Map controller endpoints
