@@ -1,8 +1,10 @@
 ﻿using Azure.Local.ApiService.Test.Contracts;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Json;
 
 namespace Azure.Local.ApiService.Tests.Component.Timesheets
 {
+    [ExcludeFromCodeCoverage]
     public static class TestHelper
     {
         public static AddTimesheetHttpRequest GeneratePatchTimesheetHttpRequest()

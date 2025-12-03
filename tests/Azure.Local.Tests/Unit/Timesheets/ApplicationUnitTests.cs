@@ -1,9 +1,11 @@
 ﻿using Azure.Local.ApiService.Tests.Component.Timesheets.Fakes.Repositories;
 using Azure.Local.Application.Timesheets;
 using Azure.Local.Infrastructure.Timesheets;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Local.ApiService.Tests.Unit.Timesheets
 {
+    [ExcludeFromCodeCoverage]
     public class ApplicationUnitTests
     {
         private readonly ITimesheetApplication _application;

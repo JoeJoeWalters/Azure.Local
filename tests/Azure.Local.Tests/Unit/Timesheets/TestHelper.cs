@@ -1,7 +1,9 @@
 ﻿using Azure.Local.Domain.Timesheets;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Local.ApiService.Tests.Unit.Timesheets
 {
+    [ExcludeFromCodeCoverage]
     public static class TestHelper
     {
         public static TimesheetItem CreateTestItem() 
