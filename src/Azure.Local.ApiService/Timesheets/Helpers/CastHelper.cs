@@ -1,4 +1,4 @@
-﻿using Azure.Local.ApiService.Test.Contracts;
+﻿using Azure.Local.ApiService.Timesheets.Contracts;
 using Azure.Local.Domain.Timesheets;
 
 namespace Azure.Local.ApiService.Test.Helpers

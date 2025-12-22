@@ -1,4 +1,4 @@
-﻿namespace Azure.Local.ApiService.Test.Contracts
+﻿namespace Azure.Local.ApiService.Timesheets.Contracts
 {
     public class AddTimesheetHttpRequest
     {
@@ -6,7 +6,7 @@
         public required string PersonId { get; set; }
         public required DateTime From { get; set; }
         public required DateTime To { get; set; }
-        public List<AddTimesheetHttpRequestComponent> Components { get; set; } = new List<AddTimesheetHttpRequestComponent>();
+        public List<AddTimesheetHttpRequestComponent> Components { get; set; } = [];
     }
 
     public class AddTimesheetHttpRequestComponent

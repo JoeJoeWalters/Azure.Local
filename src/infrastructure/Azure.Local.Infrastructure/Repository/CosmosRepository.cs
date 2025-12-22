@@ -16,7 +16,9 @@ namespace Azure.Local.Infrastructure.Repository
         private readonly CosmosClient _client;
         private readonly Container _container;
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
         public CosmosRepository(IOptions<CosmosRepositorySettings> connectionOptions)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
         {
             // Initialize Cosmos DB client and container but protect it from taking the app down
             // if it is running component tests without Cosmos DB available.
@@ -25,7 +27,7 @@ namespace Azure.Local.Infrastructure.Repository
                 // For local emulator or self-signed certificates, bypass certificate validation
                 // https://learn.microsoft.com/en-us/azure/cosmos-db/how-to-develop-emulator?tabs=windows%2Ccsharp&pivots=api-nosql
                 CosmosClientOptions options =
-                    new CosmosClientOptions
+                    new()
                     {
                         HttpClientFactory = () =>
                         {

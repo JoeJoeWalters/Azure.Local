@@ -1,4 +1,4 @@
-﻿using Azure.Local.ApiService.Test.Contracts;
+﻿using Azure.Local.ApiService.Timesheets.Contracts;
 using FluentValidation;
 
 namespace Azure.Local.ApiService.Test.Controllers.Validators

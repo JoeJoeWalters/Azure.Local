@@ -1,4 +1,4 @@
-﻿namespace Azure.Local.ApiService.Test.Contracts
+﻿namespace Azure.Local.ApiService.Timesheets.Contracts
 {
     public class PatchTimesheetHttpRequest : AddTimesheetHttpRequest
     {

@@ -1,8 +1,8 @@
-﻿using Azure.Local.ApiService.Test.Contracts;
+﻿using Azure.Local.ApiService.Timesheets.Contracts;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Json;
 
-namespace Azure.Local.ApiService.Tests.Component.Timesheets
+namespace Azure.Local.Tests.Component.Timesheets
 {
     [ExcludeFromCodeCoverage]
     public static class TestHelper
@@ -11,14 +11,14 @@ namespace Azure.Local.ApiService.Tests.Component.Timesheets
             => GenerateAddTimesheetHttpRequest();
 
         public static AddTimesheetHttpRequest GenerateAddTimesheetHttpRequest()
-            => new AddTimesheetHttpRequest()
+            => new()
             {
                 Id = Guid.NewGuid().ToString(),
                 PersonId = Guid.NewGuid().ToString(),
                 From = DateTime.UtcNow,
                 To = DateTime.UtcNow.AddDays(1),
-                Components = new List<AddTimesheetHttpRequestComponent>()
-                    {
+                Components =
+                    [
                         new AddTimesheetHttpRequestComponent()
                         {
                             Units = 8.0,
@@ -26,13 +26,15 @@ namespace Azure.Local.ApiService.Tests.Component.Timesheets
                             To = DateTime.UtcNow.AddDays(1),
                             Code = Guid.NewGuid().ToString()
                         }
-                    }
+                    ]
             };
 
         public static async Task<bool> AddTestItemAsync(HttpClient httpClient, string endpoint, AddTimesheetHttpRequest requestBody)
         {
-            var request = new HttpRequestMessage(HttpMethod.Post, endpoint);
-            request.Content = JsonContent.Create(requestBody);
+            var request = new HttpRequestMessage(HttpMethod.Post, endpoint)
+            {
+                Content = JsonContent.Create(requestBody)
+            };
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
             var response = await httpClient.SendAsync(request, cancelToken);
             return response.StatusCode == HttpStatusCode.OK;

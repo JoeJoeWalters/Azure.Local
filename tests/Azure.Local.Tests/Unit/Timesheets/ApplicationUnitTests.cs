@@ -1,14 +1,15 @@
-﻿using Azure.Local.ApiService.Tests.Component.Timesheets.Fakes.Repositories;
+﻿using Azure.Local.ApiService.Tests.Unit.Timesheets;
 using Azure.Local.Application.Timesheets;
 using Azure.Local.Infrastructure.Timesheets;
+using Azure.Local.Tests.Component.Timesheets.Fakes.Repositories;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.Local.ApiService.Tests.Unit.Timesheets
+namespace Azure.Local.Tests.Unit.Timesheets
 {
     [ExcludeFromCodeCoverage]
     public class ApplicationUnitTests
     {
-        private readonly ITimesheetApplication _application;
+        private readonly TimesheetApplication _application;
 
         public ApplicationUnitTests()
         {
@@ -62,7 +63,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
         {
             // Arrange
             var testItem = TestHelper.CreateTestItem();
-            var resultFirst = _application.AddAsync(testItem);
+            _ = _application.AddAsync(testItem);
 
             // Act
             var result = await _application.AddAsync(testItem);
@@ -89,7 +90,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
         {
             // Arrange
             var testItem = TestHelper.CreateTestItem();
-            var resultFirst = _application.AddAsync(testItem);
+            _ = _application.AddAsync(testItem);
 
             // Act
             var result = await _application.UpdateAsync(testItem);
@@ -116,7 +117,7 @@ namespace Azure.Local.ApiService.Tests.Unit.Timesheets
         {
             // Arrange
             var testItem = TestHelper.CreateTestItem();
-            var resultFirst = _application.AddAsync(testItem);
+            _ = _application.AddAsync(testItem);
 
             // Act
             var result = await _application.DeleteAsync(testItem.Id);

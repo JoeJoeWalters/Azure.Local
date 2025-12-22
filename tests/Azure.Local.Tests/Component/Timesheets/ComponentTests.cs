@@ -1,5 +1,6 @@
-﻿using Azure.Local.ApiService.Test.Contracts;
-using Azure.Local.ApiService.Tests.Component.Setup;
+﻿using Azure.Local.ApiService.Tests.Component.Setup;
+using Azure.Local.ApiService.Timesheets.Contracts;
+using Azure.Local.Tests.Component.Timesheets;
 using System.Net.Http.Json;
 
 namespace Azure.Local.ApiService.Tests.Component.Timesheets

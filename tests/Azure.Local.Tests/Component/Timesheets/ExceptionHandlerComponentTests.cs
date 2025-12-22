@@ -1,17 +1,13 @@
-﻿using Azure.Local.ApiService.Test.Contracts;
-using Azure.Local.ApiService.Tests.Component.Setup;
+﻿using Azure.Local.ApiService.Tests.Component.Setup;
 using Azure.Local.ApiService.Tests.Component.Timesheets.Setup;
+using Azure.Local.ApiService.Timesheets.Contracts;
 using System.Net.Http.Json;
 
-namespace Azure.Local.ApiService.Tests.Component.Timesheets
+namespace Azure.Local.Tests.Component.Timesheets
 {
-    public class ExceptionHandlerComponentTests : ComponentTestBase<ApiServiceWebApplicationFactoryExceptionHandling>
+    public class ExceptionHandlerComponentTests(ApiServiceWebApplicationFactoryExceptionHandling factory) : ComponentTestBase<ApiServiceWebApplicationFactoryExceptionHandling>(factory)
     {
         private const string _endpoint = "/timesheet";
-
-        public ExceptionHandlerComponentTests(ApiServiceWebApplicationFactoryExceptionHandling factory) : base(factory)
-        {
-        }
 
         ~ExceptionHandlerComponentTests() => Dispose();
 
@@ -20,8 +16,10 @@ namespace Azure.Local.ApiService.Tests.Component.Timesheets
         {
             // Arrange
             AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest();
-            var request = new HttpRequestMessage(HttpMethod.Post, _endpoint);
-            request.Content = JsonContent.Create(requestBody);
+            var request = new HttpRequestMessage(HttpMethod.Post, _endpoint)
+            {
+                Content = JsonContent.Create(requestBody)
+            };
 
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
 
@@ -37,8 +35,10 @@ namespace Azure.Local.ApiService.Tests.Component.Timesheets
         {
             // Arrange
             AddTimesheetHttpRequest requestBody = TestHelper.GeneratePatchTimesheetHttpRequest();
-            var request = new HttpRequestMessage(HttpMethod.Patch, _endpoint);
-            request.Content = JsonContent.Create(requestBody);
+            var request = new HttpRequestMessage(HttpMethod.Patch, _endpoint)
+            {
+                Content = JsonContent.Create(requestBody)
+            };
 
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
 

@@ -6,14 +6,9 @@ using Azure.Local.Infrastructure.Timesheets;
 
 namespace Azure.Local.Application.Timesheets
 {
-    public class TimesheetApplication : ITimesheetApplication
+    public class TimesheetApplication(IRepository<TimesheetRepositoryItem> repository) : ITimesheetApplication
     {
-        private readonly IRepository<TimesheetRepositoryItem> _repository;
-
-        public TimesheetApplication(IRepository<TimesheetRepositoryItem> repository)
-        {
-            _repository = repository;
-        }
+        private readonly IRepository<TimesheetRepositoryItem> _repository = repository;
 
         public Task<bool> AddAsync(TimesheetItem item)
         {

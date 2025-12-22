@@ -1,6 +1,6 @@
-﻿using Azure.Local.ApiService.Tests.Component.Timesheets.Fakes.Repositories;
-using Azure.Local.Infrastructure.Repository;
+﻿using Azure.Local.Infrastructure.Repository;
 using Azure.Local.Infrastructure.Timesheets;
+using Azure.Local.Tests.Component.Timesheets.Fakes.Repositories;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Azure.Local.ApiService.Tests.Component.Setup
