@@ -1,4 +1,4 @@
-﻿namespace Azure.Local.ApiService.Test.Controllers.Validators
+﻿namespace Azure.Local.ApiService.Timesheets.Controllers.Validators
 {
     public class PatchTimesheetHttpRequestValidator : AddTimesheetHttpRequestValidator
     {

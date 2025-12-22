@@ -1,6 +1,6 @@
 ﻿using Azure.Local.ApiService.Tests.Component.Setup;
-using Azure.Local.ApiService.Tests.Component.Timesheets.Fakes.Applications;
 using Azure.Local.Application.Timesheets;
+using Azure.Local.Tests.Component.Timesheets.Fakes.Applications;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;

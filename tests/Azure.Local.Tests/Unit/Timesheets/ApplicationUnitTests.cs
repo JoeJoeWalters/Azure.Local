@@ -1,5 +1,4 @@
-﻿using Azure.Local.ApiService.Tests.Unit.Timesheets;
-using Azure.Local.Application.Timesheets;
+﻿using Azure.Local.Application.Timesheets;
 using Azure.Local.Infrastructure.Timesheets;
 using Azure.Local.Tests.Component.Timesheets.Fakes.Repositories;
 using System.Diagnostics.CodeAnalysis;
@@ -22,11 +21,12 @@ namespace Azure.Local.Tests.Unit.Timesheets
         public void GetById_Exists_ShouldBeSuccess()
         {
             // Arrange
-            var testItem = TestHelper.CreateTestItem();
-            _ = _application.AddAsync(testItem);
+            string personId = Guid.NewGuid().ToString();
+            var testItem = TestHelper.CreateTestItem(personId);
+            _ = _application.AddAsync(personId, testItem);
 
             // Act
-            var result = _application.GetAsync(testItem.Id);
+            var result = _application.GetAsync(personId, testItem.Id);
 
             // Assert   
             result.Should().NotBeNull();
@@ -37,9 +37,10 @@ namespace Azure.Local.Tests.Unit.Timesheets
         public async Task GetById_NotExists_ShouldBeFailure()
         {
             // Arrange
+            string personId = Guid.NewGuid().ToString();
 
             // Act
-            var result = await _application.GetAsync(Guid.NewGuid().ToString());
+            var result = await _application.GetAsync(personId, Guid.NewGuid().ToString());
 
             // Assert   
             result.Should().BeNull();
@@ -49,10 +50,11 @@ namespace Azure.Local.Tests.Unit.Timesheets
         public async Task AddNewItem_NotExists_ShouldBeSuccess()
         {
             // Arrange
-            var testItem = TestHelper.CreateTestItem();
+            string personId = Guid.NewGuid().ToString();
+            var testItem = TestHelper.CreateTestItem(personId);
 
             // Act
-            var result = await _application.AddAsync(testItem);
+            var result = await _application.AddAsync(personId, testItem);
 
             // Assert   
             result.Should().BeTrue();
@@ -62,11 +64,12 @@ namespace Azure.Local.Tests.Unit.Timesheets
         public async Task AddNewItem_Exists_ShouldBeFailure()
         {
             // Arrange
-            var testItem = TestHelper.CreateTestItem();
-            _ = _application.AddAsync(testItem);
+            string personId = Guid.NewGuid().ToString();
+            var testItem = TestHelper.CreateTestItem(personId);
+            _ = _application.AddAsync(personId, testItem);
 
             // Act
-            var result = await _application.AddAsync(testItem);
+            var result = await _application.AddAsync(personId, testItem);
 
             // Assert
             result.Should().BeFalse();
@@ -76,10 +79,11 @@ namespace Azure.Local.Tests.Unit.Timesheets
         public async Task UpdateItem_NotExists_ShouldBeFailure()
         {
             // Arrange
-            var testItem = TestHelper.CreateTestItem();
+            string personId = Guid.NewGuid().ToString();
+            var testItem = TestHelper.CreateTestItem(personId);
 
             // Act
-            var result = await _application.UpdateAsync(testItem);
+            var result = await _application.UpdateAsync(personId, testItem);
 
             // Assert   
             result.Should().BeFalse();
@@ -89,11 +93,12 @@ namespace Azure.Local.Tests.Unit.Timesheets
         public async Task UpdateItem_Exists_ShouldBeSuccess()
         {
             // Arrange
-            var testItem = TestHelper.CreateTestItem();
-            _ = _application.AddAsync(testItem);
+            string personId = Guid.NewGuid().ToString();
+            var testItem = TestHelper.CreateTestItem(personId);
+            _ = _application.AddAsync(personId, testItem);
 
             // Act
-            var result = await _application.UpdateAsync(testItem);
+            var result = await _application.UpdateAsync(personId, testItem);
 
             // Assert   
             result.Should().BeTrue();
@@ -103,10 +108,11 @@ namespace Azure.Local.Tests.Unit.Timesheets
         public async Task DeleteItem_NotExists_ShouldBeFailure()
         {
             // Arrange
-            var testItem = TestHelper.CreateTestItem();
+            string personId = Guid.NewGuid().ToString();
+            var testItem = TestHelper.CreateTestItem(personId);
 
             // Act
-            var result = await _application.DeleteAsync(testItem.Id);
+            var result = await _application.DeleteAsync(personId, testItem.Id);
 
             // Assert   
             result.Should().BeFalse();
@@ -116,11 +122,12 @@ namespace Azure.Local.Tests.Unit.Timesheets
         public async Task DeleteItem_Exists_ShouldBeSuccess()
         {
             // Arrange
-            var testItem = TestHelper.CreateTestItem();
-            _ = _application.AddAsync(testItem);
+            string personId = Guid.NewGuid().ToString();
+            var testItem = TestHelper.CreateTestItem(personId);
+            _ = _application.AddAsync(personId, testItem);
 
             // Act
-            var result = await _application.DeleteAsync(testItem.Id);
+            var result = await _application.DeleteAsync(personId, testItem.Id);
 
             // Assert   
             result.Should().BeTrue();

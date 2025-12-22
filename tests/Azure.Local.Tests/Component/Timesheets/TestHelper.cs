@@ -10,20 +10,29 @@ namespace Azure.Local.Tests.Component.Timesheets
         public static AddTimesheetHttpRequest GeneratePatchTimesheetHttpRequest()
             => GenerateAddTimesheetHttpRequest();
 
+        public static AddTimesheetHttpRequest GeneratePatchTimesheetHttpRequest(string personId)
+            => GenerateAddTimesheetHttpRequest(personId);
+
         public static AddTimesheetHttpRequest GenerateAddTimesheetHttpRequest()
+            => GenerateAddTimesheetHttpRequest(Guid.NewGuid().ToString(), DateTime.UtcNow, DateTime.UtcNow.AddDays(1));
+
+        public static AddTimesheetHttpRequest GenerateAddTimesheetHttpRequest(string personId)
+            => GenerateAddTimesheetHttpRequest(personId, DateTime.UtcNow, DateTime.UtcNow.AddDays(1));
+
+        public static AddTimesheetHttpRequest GenerateAddTimesheetHttpRequest(string personId, DateTime from, DateTime to)
             => new()
             {
                 Id = Guid.NewGuid().ToString(),
-                PersonId = Guid.NewGuid().ToString(),
-                From = DateTime.UtcNow,
-                To = DateTime.UtcNow.AddDays(1),
+                PersonId = personId,
+                From = from,
+                To = to,
                 Components =
                     [
                         new AddTimesheetHttpRequestComponent()
                         {
                             Units = 8.0,
-                            From = DateTime.UtcNow,
-                            To = DateTime.UtcNow.AddDays(1),
+                            From = from,
+                            To = to,
                             Code = Guid.NewGuid().ToString()
                         }
                     ]

@@ -7,7 +7,7 @@ namespace Azure.Local.Tests.Component.Timesheets
 {
     public class ExceptionHandlerComponentTests(ApiServiceWebApplicationFactoryExceptionHandling factory) : ComponentTestBase<ApiServiceWebApplicationFactoryExceptionHandling>(factory)
     {
-        private const string _endpoint = "/timesheet";
+        private const string _endpoint = "/person/{personId}/timesheet/item";
 
         ~ExceptionHandlerComponentTests() => Dispose();
 
@@ -15,8 +15,9 @@ namespace Azure.Local.Tests.Component.Timesheets
         public async Task AddEndpoint_ReturnsInternalServerError()
         {
             // Arrange
-            AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest();
-            var request = new HttpRequestMessage(HttpMethod.Post, _endpoint)
+            string personId = Guid.NewGuid().ToString();
+            AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest(personId);
+            var request = new HttpRequestMessage(HttpMethod.Post, _endpoint.Replace("{personId}", personId))
             {
                 Content = JsonContent.Create(requestBody)
             };
@@ -34,8 +35,9 @@ namespace Azure.Local.Tests.Component.Timesheets
         public async Task PatchEndpoint_ReturnsInternalServerError()
         {
             // Arrange
-            AddTimesheetHttpRequest requestBody = TestHelper.GeneratePatchTimesheetHttpRequest();
-            var request = new HttpRequestMessage(HttpMethod.Patch, _endpoint)
+            string personId = Guid.NewGuid().ToString();
+            AddTimesheetHttpRequest requestBody = TestHelper.GeneratePatchTimesheetHttpRequest(personId);
+            var request = new HttpRequestMessage(HttpMethod.Patch, _endpoint.Replace("{personId}", personId))
             {
                 Content = JsonContent.Create(requestBody)
             };
@@ -53,9 +55,10 @@ namespace Azure.Local.Tests.Component.Timesheets
         public async Task GetEndpoint_ReturnsInternalServerError()
         {
             // Arrange
-            AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest();
-            await TestHelper.AddTestItemAsync(_client, _endpoint, requestBody);
-            var request = new HttpRequestMessage(HttpMethod.Get, $"{_endpoint}/{requestBody.Id}");
+            string personId = Guid.NewGuid().ToString();
+            AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest(personId);
+            await TestHelper.AddTestItemAsync(_client, _endpoint.Replace("{personId}", personId), requestBody);
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_endpoint.Replace("{personId}", personId)}/{requestBody.Id}");
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
 
             // Act
@@ -69,9 +72,10 @@ namespace Azure.Local.Tests.Component.Timesheets
         public async Task DeleteEndpoint_ReturnsInternalServerError()
         {
             // Arrange
-            AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest();
-            await TestHelper.AddTestItemAsync(_client, _endpoint, requestBody);
-            var request = new HttpRequestMessage(HttpMethod.Delete, $"{_endpoint}/{requestBody.Id}");
+            string personId = Guid.NewGuid().ToString();
+            AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest(personId);
+            await TestHelper.AddTestItemAsync(_client, _endpoint.Replace("{personId}", personId), requestBody);
+            var request = new HttpRequestMessage(HttpMethod.Delete, $"{_endpoint.Replace("{personId}", personId)}/{requestBody.Id}");
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
 
             // Act

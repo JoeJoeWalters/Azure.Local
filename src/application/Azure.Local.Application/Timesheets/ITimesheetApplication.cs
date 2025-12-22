@@ -4,9 +4,10 @@ namespace Azure.Local.Application.Timesheets
 {
     public interface ITimesheetApplication
     {
-        Task<bool> AddAsync(TimesheetItem item);
-        Task<bool> UpdateAsync(TimesheetItem item);
-        Task<TimesheetItem?> GetAsync(string id);
-        Task<bool> DeleteAsync(string id);
+        Task<bool> AddAsync(string personId, TimesheetItem item);
+        Task<bool> UpdateAsync(string personId, TimesheetItem item);
+        Task<TimesheetItem?> GetAsync(string personId, string id);
+        Task<bool> DeleteAsync(string personId, string id);
+        Task<List<TimesheetItem>> SearchAsync(string personId, DateTime fromDate, DateTime toDate);
     }
 }

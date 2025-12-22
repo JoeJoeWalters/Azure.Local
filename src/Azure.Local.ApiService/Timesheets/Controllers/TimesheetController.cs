@@ -4,29 +4,25 @@ using Azure.Local.Application.Timesheets;
 using Azure.Local.Domain.Timesheets;
 using FluentValidation;
 
-namespace Azure.Local.ApiService.Test.Controllers
+namespace Azure.Local.ApiService.Timesheets.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class TimesheetController : ControllerBase
+    [Route("person")]
+    public class TimesheetController(
+        ITimesheetApplication timesheetApplication,
+        IValidator<AddTimesheetHttpRequest> addTestItemHttpRequestValidator,
+        IValidator<PatchTimesheetHttpRequest> patchTestItemHttpRequestValidator) : ControllerBase
     {
-        private readonly ITimesheetApplication _timesheetApplication;
-        private readonly IValidator<AddTimesheetHttpRequest> _addTestItemHttpRequestValidator;
-        private readonly IValidator<PatchTimesheetHttpRequest> _patchTestItemHttpRequestValidator;
+        private readonly ITimesheetApplication _timesheetApplication = timesheetApplication;
+        private readonly IValidator<AddTimesheetHttpRequest> _addTestItemHttpRequestValidator = addTestItemHttpRequestValidator;
+        private readonly IValidator<PatchTimesheetHttpRequest> _patchTestItemHttpRequestValidator = patchTestItemHttpRequestValidator;
 
-        public TimesheetController(
-            ITimesheetApplication timesheetApplication,
-            IValidator<AddTimesheetHttpRequest> addTestItemHttpRequestValidator,
-            IValidator<PatchTimesheetHttpRequest> patchTestItemHttpRequestValidator)
+        [HttpPost("{personId}/timesheet/item")]
+        public async Task<IActionResult> Post([FromRoute] string personId, AddTimesheetHttpRequest request)
         {
-            _timesheetApplication = timesheetApplication;
-            _addTestItemHttpRequestValidator = addTestItemHttpRequestValidator;
-            _patchTestItemHttpRequestValidator = patchTestItemHttpRequestValidator;
-        }
+            if (request.PersonId != personId)
+                return BadRequest("PersonId in URL does not match PersonId in request body.");
 
-        [HttpPost]
-        public async Task<IActionResult> Post(AddTimesheetHttpRequest request)
-        {
             var validationResult = _addTestItemHttpRequestValidator.Validate(request);
             if (!validationResult.IsValid)
                 return BadRequest(validationResult.Errors);
@@ -35,7 +31,7 @@ namespace Azure.Local.ApiService.Test.Controllers
 
             try
             {
-                var saveResult = await _timesheetApplication.AddAsync(item);
+                var saveResult = await _timesheetApplication.AddAsync(personId, item);
                 return saveResult ? Ok() : Conflict();
             }
             catch (Exception ex)
@@ -47,9 +43,12 @@ namespace Azure.Local.ApiService.Test.Controllers
             }
         }
 
-        [HttpPatch]
-        public async Task<IActionResult> Patch(PatchTimesheetHttpRequest request)
+        [HttpPatch("{personId}/timesheet/item")]
+        public async Task<IActionResult> Patch([FromRoute] string personId, PatchTimesheetHttpRequest request)
         {
+            if (request.PersonId != personId)
+                return BadRequest("PersonId in URL does not match PersonId in request body.");
+
             var validationResult = _patchTestItemHttpRequestValidator.Validate(request);
             if (!validationResult.IsValid)
                 return BadRequest(validationResult.Errors);
@@ -58,7 +57,7 @@ namespace Azure.Local.ApiService.Test.Controllers
 
             try
             {
-                var saveResult = await _timesheetApplication.UpdateAsync(item);
+                var saveResult = await _timesheetApplication.UpdateAsync(personId, item);
                 return saveResult ? Ok() : NotFound();
             }
             catch (Exception ex)
@@ -70,12 +69,12 @@ namespace Azure.Local.ApiService.Test.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(string id)
+        [HttpGet("{personId}/timesheet/item/{id}")]
+        public async Task<IActionResult> Get([FromRoute] string personId, [FromRoute] string id)
         {
             try
             {
-                var result = await _timesheetApplication.GetAsync(id);
+                var result = await _timesheetApplication.GetAsync(personId, id);
                 return (result != null) ? new OkObjectResult(result) : NotFound();
             }
             catch (Exception ex)
@@ -87,13 +86,30 @@ namespace Azure.Local.ApiService.Test.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(string id)
+        [HttpGet("{personId}/timesheet/search")]
+        public async Task<IActionResult> Search([FromRoute] string personId, [FromQuery] DateTime fromDate, [FromQuery] DateTime toDate)
         {
             try
             {
-                var result = await _timesheetApplication.DeleteAsync(id);
-                return result? Ok() : NotFound();
+                // Always a result (unless exception) but could be empty list
+                return new OkObjectResult(await _timesheetApplication.SearchAsync(personId, fromDate, toDate));
+            }
+            catch (Exception ex)
+            {
+                return new ObjectResult(ex.Message)
+                {
+                    StatusCode = (int)HttpStatusCode.InternalServerError
+                };
+            }
+        }
+
+        [HttpDelete("{personId}/timesheet/item/{id}")]
+        public async Task<IActionResult> Delete(string personId, string id)
+        {
+            try
+            {
+                var result = await _timesheetApplication.DeleteAsync(personId, id);
+                return result ? Ok() : NotFound();
             }
             catch (Exception ex)
             {
