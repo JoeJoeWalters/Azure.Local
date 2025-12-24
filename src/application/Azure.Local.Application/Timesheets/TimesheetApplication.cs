@@ -1,0 +1,48 @@
+﻿using Azure.Local.Application.Timesheets.Helpers;
+using Azure.Local.Domain.Timesheets;
+using Azure.Local.Infrastructure.Repository;
+using Azure.Local.Infrastructure.Repository.Specifications;
+using Azure.Local.Infrastructure.Repository.Specifications.Timesheets;
+using Azure.Local.Infrastructure.Timesheets;
+
+namespace Azure.Local.Application.Timesheets
+{
+    public class TimesheetApplication(IRepository<TimesheetRepositoryItem> repository) : ITimesheetApplication
+    {
+        private readonly IRepository<TimesheetRepositoryItem> _repository = repository;
+
+        public Task<bool> AddAsync(string personId, TimesheetItem item)
+        {
+            return _repository.AddAsync(item.ToTimesheetRepositoryItem());
+        }
+
+        public Task<bool> UpdateAsync(string personId, TimesheetItem item)
+        {
+            return _repository.UpdateAsync(item.ToTimesheetRepositoryItem());
+        }
+
+        public Task<TimesheetItem?> GetAsync(string personId, string id)
+        {
+            var queryResult = _repository.QueryAsync(new GetByIdSpecification(id), 1);
+            if (queryResult.Result.Any())
+                return Task.FromResult(queryResult.Result?.First().ToTimesheetItem());
+            else
+                return Task.FromResult((TimesheetItem?)null);
+        }
+
+        public Task<bool> DeleteAsync(string personId, string id)
+        {
+            return _repository.DeleteAsync(new DeleteByIdSpecification(id));
+        }
+
+        public Task<List<TimesheetItem>> SearchAsync(string personId, DateTime fromDate, DateTime toDate)
+        {
+            var queryResult = _repository.QueryAsync(new TimesheetSearchSpecification(personId, fromDate, toDate));
+            return Task.FromResult(
+                (queryResult.Result != null) ?
+                    queryResult.Result.Select(item => item.ToTimesheetItem()).ToList() :
+                    new List<TimesheetItem>()
+                );
+        }
+    }
+}

@@ -1,0 +1,8 @@
+<RunSettings>
+  <xUnit>
+    <AppDomain>denied</AppDomain>
+    <ParallelizeTestCollections>false</ParallelizeTestCollections>
+  </xUnit>
+</RunSettings>	
+
+<!--<InterceptorsNamespaces>$(InterceptorsNamespaces);Microsoft.AspNetCore.OpenApi.Generated;Microsoft.AspNetCore.OpenApi.SourceGenerators</InterceptorsNamespaces>-->
