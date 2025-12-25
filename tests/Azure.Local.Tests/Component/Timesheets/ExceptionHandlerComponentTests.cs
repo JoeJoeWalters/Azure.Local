@@ -1,10 +1,12 @@
 ﻿using Azure.Local.ApiService.Tests.Component.Setup;
 using Azure.Local.ApiService.Tests.Component.Timesheets.Setup;
 using Azure.Local.ApiService.Timesheets.Contracts;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Json;
 
 namespace Azure.Local.Tests.Component.Timesheets
 {
+    [ExcludeFromCodeCoverage]
     public class ExceptionHandlerComponentTests(ApiServiceWebApplicationFactoryExceptionHandling factory) : ComponentTestBase<ApiServiceWebApplicationFactoryExceptionHandling>(factory)
     {
         private const string _endpoint = "/person/{personId}/timesheet/item";

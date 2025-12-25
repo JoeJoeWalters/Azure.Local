@@ -148,5 +148,19 @@ namespace Azure.Local.Tests.Unit.Timesheets
             result.Should().NotBeNull();
             result.Should().HaveCount(1);
         }
+
+        [Fact]
+        public async Task SearchItems_NotExists_ShouldBeEmptyList()
+        {
+            // Arrange
+            string personId = Guid.NewGuid().ToString();
+
+            // Act
+            var result = await _application.SearchAsync(personId, DateTime.UtcNow, DateTime.UtcNow.AddDays(1));
+
+            // Assert   
+            result.Should().NotBeNull();
+            result.Should().HaveCount(0);
+        }
     }
 }
