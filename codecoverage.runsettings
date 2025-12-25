@@ -1,8 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <RunSettings>
-  <xUnit>
-    <AppDomain>denied</AppDomain>
-    <ParallelizeTestCollections>false</ParallelizeTestCollections>
-  </xUnit>
-</RunSettings>	
-
-<!--<InterceptorsNamespaces>$(InterceptorsNamespaces);Microsoft.AspNetCore.OpenApi.Generated;Microsoft.AspNetCore.OpenApi.SourceGenerators</InterceptorsNamespaces>-->
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat Code Coverage">
+        <Configuration>
+          <ExcludeByAttribute>GeneratedCodeAttribute,CompilerGeneratedAttribute</ExcludeByAttribute>
+          <ExcludeByAttribute>**/Microsoft.AspNetCore.OpenApi.Generated/**</ExcludeByAttribute>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>

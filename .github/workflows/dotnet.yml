@@ -36,7 +36,7 @@ jobs:
           name: unittestresults
           path: ${{ github.workspace }}/unittests
     - name: Run Tests For Coverage
-      run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ${{ github.workspace }}/coverage      
+      run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ${{ github.workspace }}/coverage --settings:./codecoverage.runsettings      
     - name: Combine Coverage Reports as Cobertura # This is because one report is produced per project, and we want one result for all of them.
       uses: danielpalme/ReportGenerator-GitHub-Action@5.2.4
       with:
