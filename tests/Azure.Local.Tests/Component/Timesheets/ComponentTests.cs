@@ -235,10 +235,9 @@ namespace Azure.Local.Tests.Component.Timesheets
             var result = response.GetTimesheetItems();
             result.Should().NotBeNull();
             result.Should().HaveCount(timesheets);
-            foreach(var timesheetId in timesheetIds)
-            {
+            timesheetIds.ForEach(timesheetId => {
                 result!.Any(t => t.Id == timesheetId).Should().BeTrue();
-            }
+            });            
         }
 
     }
