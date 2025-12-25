@@ -25,7 +25,7 @@ namespace Azure.Local.Application.Timesheets
         {
             var queryResult = _repository.QueryAsync(new GetByIdSpecification(id), 1);
             if (queryResult.Result.Any())
-                return Task.FromResult(queryResult.Result?.First().ToTimesheetItem());
+                return Task.FromResult((TimesheetItem?)queryResult.Result.First().ToTimesheetItem());
             else
                 return Task.FromResult((TimesheetItem?)null);
         }
@@ -38,11 +38,7 @@ namespace Azure.Local.Application.Timesheets
         public Task<List<TimesheetItem>> SearchAsync(string personId, DateTime fromDate, DateTime toDate)
         {
             var queryResult = _repository.QueryAsync(new TimesheetSearchSpecification(personId, fromDate, toDate));
-            return Task.FromResult(
-                (queryResult.Result != null) ?
-                    queryResult.Result.Select(item => item.ToTimesheetItem()).ToList() :
-                    new List<TimesheetItem>()
-                );
+            return Task.FromResult(queryResult.Result.Select(item => item.ToTimesheetItem()).ToList());
         }
     }
 }

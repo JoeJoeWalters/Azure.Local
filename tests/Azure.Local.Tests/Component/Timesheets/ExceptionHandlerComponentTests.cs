@@ -6,7 +6,6 @@ using System.Net.Http.Json;
 
 namespace Azure.Local.Tests.Component.Timesheets
 {
-    [ExcludeFromCodeCoverage]
     public class ExceptionHandlerComponentTests(ApiServiceWebApplicationFactoryExceptionHandling factory) : ComponentTestBase<ApiServiceWebApplicationFactoryExceptionHandling>(factory)
     {
         private const string _endpoint = "/person/{personId}/timesheet/item";

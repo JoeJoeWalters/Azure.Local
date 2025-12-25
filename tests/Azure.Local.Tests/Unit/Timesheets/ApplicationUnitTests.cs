@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Local.Tests.Unit.Timesheets
 {
-    [ExcludeFromCodeCoverage]
     public class ApplicationUnitTests
     {
         private readonly TimesheetApplication _application;

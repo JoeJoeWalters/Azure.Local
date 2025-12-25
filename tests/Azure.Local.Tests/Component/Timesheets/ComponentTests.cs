@@ -5,7 +5,6 @@ using System.Net.Http.Json;
 
 namespace Azure.Local.Tests.Component.Timesheets
 {
-    [ExcludeFromCodeCoverage]
     public class ComponentTests(ApiServiceWebApplicationFactoryBase factory) : ComponentTestBase<ApiServiceWebApplicationFactoryBase>(factory)
     {
         private const string _endpoint = "/person/{personId}/timesheet/item";
