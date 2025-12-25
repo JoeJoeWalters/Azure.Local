@@ -7,6 +7,7 @@ namespace Azure.Local.Tests.Component.Timesheets
     public class ComponentTests(ApiServiceWebApplicationFactoryBase factory) : ComponentTestBase<ApiServiceWebApplicationFactoryBase>(factory)
     {
         private const string _endpoint = "/person/{personId}/timesheet/item";
+        private const string _searchEndpoint = "/person/{personId}/timesheet/search";
 
         ~ComponentTests() => Dispose();
 
@@ -223,7 +224,7 @@ namespace Azure.Local.Tests.Component.Timesheets
                 await TestHelper.AddTestItemAsync(_client, _endpoint.Replace("{personId}", personId), requestBody);
             }
 
-            var request = new HttpRequestMessage(HttpMethod.Get, $"{_endpoint.Replace("{personId}", personId).Replace("/item", string.Empty)}/search?fromDate={fromDate.ToString("o")}&toDate={fromDate.AddDays(timesheets).ToString("o")}");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_searchEndpoint.Replace("{personId}", personId)}?fromDate={fromDate.ToString("o")}&toDate={fromDate.AddDays(timesheets).ToString("o")}");
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
 
             // Act

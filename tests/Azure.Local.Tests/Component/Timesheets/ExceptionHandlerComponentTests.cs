@@ -8,6 +8,7 @@ namespace Azure.Local.Tests.Component.Timesheets
     public class ExceptionHandlerComponentTests(ApiServiceWebApplicationFactoryExceptionHandling factory) : ComponentTestBase<ApiServiceWebApplicationFactoryExceptionHandling>(factory)
     {
         private const string _endpoint = "/person/{personId}/timesheet/item";
+        private const string _searchEndpoint = "/person/{personId}/timesheet/search";
 
         ~ExceptionHandlerComponentTests() => Dispose();
 
@@ -76,6 +77,23 @@ namespace Azure.Local.Tests.Component.Timesheets
             AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest(personId);
             await TestHelper.AddTestItemAsync(_client, _endpoint.Replace("{personId}", personId), requestBody);
             var request = new HttpRequestMessage(HttpMethod.Delete, $"{_endpoint.Replace("{personId}", personId)}/{requestBody.Id}");
+            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
+
+            // Act
+            var response = await _client.SendAsync(request, cancelToken);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
+        }
+
+        [Fact]
+        public async Task SearchEndpoint_ReturnsInternalServerError()
+        {
+            // Arrange
+            string personId = Guid.NewGuid().ToString();
+            AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest(personId);
+            await TestHelper.AddTestItemAsync(_client, _endpoint.Replace("{personId}", personId), requestBody);
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_searchEndpoint.Replace("{personId}", personId)}");
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
 
             // Act
