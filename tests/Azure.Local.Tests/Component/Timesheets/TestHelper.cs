@@ -1,4 +1,5 @@
-﻿using Azure.Local.ApiService.Timesheets.Contracts;
+﻿using Azure.Local.ApiService.Test.Helpers;
+using Azure.Local.ApiService.Timesheets.Contracts;
 using Azure.Local.Domain.Timesheets;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Json;
@@ -9,11 +10,14 @@ namespace Azure.Local.Tests.Component.Timesheets
     [ExcludeFromCodeCoverage]
     public static class TestHelper
     {
-        public static AddTimesheetHttpRequest GeneratePatchTimesheetHttpRequest()
-            => GenerateAddTimesheetHttpRequest();
+        public static PatchTimesheetHttpRequest GeneratePatchTimesheetHttpRequest()
+            => GenerateAddTimesheetHttpRequest().ToPatchTimesheetHttpRequest();
 
-        public static AddTimesheetHttpRequest GeneratePatchTimesheetHttpRequest(string personId)
-            => GenerateAddTimesheetHttpRequest(personId);
+        public static PatchTimesheetHttpRequest GeneratePatchTimesheetHttpRequest(AddTimesheetHttpRequest addRequest)
+            => addRequest.ToPatchTimesheetHttpRequest();
+
+        public static PatchTimesheetHttpRequest GeneratePatchTimesheetHttpRequest(string personId)
+            => GenerateAddTimesheetHttpRequest(personId).ToPatchTimesheetHttpRequest();
 
         public static AddTimesheetHttpRequest GenerateAddTimesheetHttpRequest()
             => GenerateAddTimesheetHttpRequest(Guid.NewGuid().ToString(), DateTime.UtcNow, DateTime.UtcNow.AddDays(1));
@@ -30,7 +34,7 @@ namespace Azure.Local.Tests.Component.Timesheets
                 To = to,
                 Components =
                     [
-                        new AddTimesheetHttpRequestComponent()
+                        new TimesheetHttpRequestComponent()
                         {
                             Units = 8.0,
                             From = from,

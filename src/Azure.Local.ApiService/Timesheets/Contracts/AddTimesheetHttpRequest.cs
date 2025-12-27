@@ -6,14 +6,6 @@
         public required string PersonId { get; set; }
         public required DateTime From { get; set; }
         public required DateTime To { get; set; }
-        public List<AddTimesheetHttpRequestComponent> Components { get; set; } = [];
-    }
-
-    public class AddTimesheetHttpRequestComponent
-    {
-        public required double Units { get; set; }
-        public required DateTime From { get; set; }
-        public required DateTime To { get; set; }
-        public required string Code { get; set; }
+        public List<TimesheetHttpRequestComponent> Components { get; set; } = [];
     }
 }

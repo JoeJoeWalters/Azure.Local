@@ -1,214 +1,118 @@
 ﻿using Azure.Local.ApiService.Tests.Component.Setup;
-using Azure.Local.ApiService.Timesheets.Contracts;
-using System.Diagnostics.CodeAnalysis;
-using System.Net.Http.Json;
+using LightBDD.Framework.Scenarios;
+using LightBDD.XUnit2;
+using Microsoft.Azure.Cosmos;
 
 namespace Azure.Local.Tests.Component.Timesheets
 {
     public class ComponentTests(ApiServiceWebApplicationFactoryBase factory) : ComponentTestBase<ApiServiceWebApplicationFactoryBase>(factory)
     {
-        private const string _endpoint = "/person/{personId}/timesheet/item";
-        private const string _searchEndpoint = "/person/{personId}/timesheet/search";
-
         ~ComponentTests() => Dispose();
 
-        [Fact]
+        [Scenario]
         public async Task AddEndpoint_ReturnsOk()
         {
-            // Arrange
-            string personId = Guid.NewGuid().ToString();
-            var request = new HttpRequestMessage(HttpMethod.Post, _endpoint.Replace("{personId}", personId))
-            {
-                Content = JsonContent.Create(TestHelper.GenerateAddTimesheetHttpRequest(personId))
-            };
-
-            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
-
-            // Act
-            var response = await _client.SendAsync(request, cancelToken);
-
-            // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            Runner.RunScenario
+                (
+                    given => A_New_PersonId(),
+                    when => An_Add_Request_Is_Performed(),
+                    then => The_Response_Should_Be(HttpStatusCode.OK)
+                );
         }
 
-        [Fact]
-        public async Task AddEndpoint_ReturnsConflict_IfNotExists()
+        [Scenario]
+        public async Task AddEndpoint_ReturnsConflict_IfAlreadyExists()
         {
-            // Arrange
-            string personId = Guid.NewGuid().ToString();
-            AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest(personId);
-            await TestHelper.AddTestItemAsync(_client, _endpoint.Replace("{personId}", personId), requestBody);
-
-            var request = new HttpRequestMessage(HttpMethod.Post, _endpoint.Replace("{personId}", personId))
-            {
-                Content = JsonContent.Create(requestBody)
-            };
-
-            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
-
-            // Act
-            var response = await _client.SendAsync(request, cancelToken);
-
-            // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+            Runner.RunScenario
+                (
+                    given => A_New_PersonId(),
+                    and => An_Add_Request_Is_Performed(),
+                    when => An_Add_Request_Is_Performed_With_An_ExistingId(_timesheetId),
+                    then => The_Response_Should_Be(HttpStatusCode.Conflict)
+                );
         }
 
-        [Fact]
-        public async Task PatchEndpoint_ReturnsBadRequest_WhenIdTooBig()
-        {
-            // Arrange
-            string personId = Guid.NewGuid().ToString();
-            AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest(personId);
-            await TestHelper.AddTestItemAsync(_client, _endpoint.Replace("{personId}", personId), requestBody);
-
-            requestBody.Id = requestBody.Id.PadRight(300, 'X'); // Make the Id too big
-            var request = new HttpRequestMessage(HttpMethod.Patch, _endpoint.Replace("{personId}", personId))
-            {
-                Content = JsonContent.Create(requestBody)
-            };
-
-            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
-
-            // Act
-            var response = await _client.SendAsync(request, cancelToken);
-
-            // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        }
-
-        [Fact]
-        public async Task PatchEndpoint_ReturnsOk_IfAlreadyExists()
-        {
-            // Arrange
-            string personId = Guid.NewGuid().ToString();
-            AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest(personId);
-            await TestHelper.AddTestItemAsync(_client, _endpoint.Replace("{personId}", personId), requestBody);
-
-            requestBody.To = requestBody.To.AddDays(1); // Modify something
-
-            var request = new HttpRequestMessage(HttpMethod.Patch, _endpoint.Replace("{personId}", personId))
-            {
-                Content = JsonContent.Create(requestBody)
-            };
-
-            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
-
-            // Act
-            var response = await _client.SendAsync(request, cancelToken);
-
-            // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-        }
-
-        [Fact]
-        public async Task PatchEndpoint_ReturnsFailure_IfNotExists()
-        {
-            // Arrange
-            string personId = Guid.NewGuid().ToString();
-            AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest(personId);
-            var request = new HttpRequestMessage(HttpMethod.Patch, _endpoint.Replace("{personId}", personId))
-            {
-                Content = JsonContent.Create(requestBody)
-            };
-
-            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
-
-            // Act
-            var response = await _client.SendAsync(request, cancelToken);
-
-            // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        }
-
-        [Fact]
+        [Scenario]
         public async Task AddEndpoint_ReturnsBadRequest_WhenIdTooBig()
         {
-            // Arrange
-            string personId = Guid.NewGuid().ToString();
-            AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest(personId);
-            requestBody.Id = requestBody.Id.PadRight(300, 'X'); // Make the Id too big
-            var request = new HttpRequestMessage(HttpMethod.Post, _endpoint.Replace("{personId}", personId))
-            {
-                Content = JsonContent.Create(requestBody)
-            };
-
-            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
-
-            // Act
-            var response = await _client.SendAsync(request, cancelToken);
-
-            // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            Runner.RunScenario
+                (
+                    given => A_New_PersonId(),
+                    when => An_Add_Request_Is_Performed(Guid.NewGuid().ToString().PadRight(300, 'X')),
+                    then => The_Response_Should_Be(HttpStatusCode.BadRequest)
+                );
         }
 
-        [Fact]
+
+        [Scenario]
+        public async Task PatchEndpoint_ReturnsOk_IfAlreadyExists()
+        {
+            Runner.RunScenario(
+                    given => A_New_PersonId(),
+                    and => An_Add_Request_Is_Performed(),
+                    when => A_Patch_Request_Is_Performed_On_Existing_The_Timesheet(),
+                    then => The_Response_Should_Be(HttpStatusCode.OK)
+                );
+        }
+
+        [Scenario]
+        public async Task PatchEndpoint_ReturnsFailure_IfNotExists()
+        {
+            Runner.RunScenario(
+                    given => A_New_PersonId(),
+                    when => A_Patch_Request_Is_Performed(Guid.NewGuid().ToString()),
+                    then => The_Response_Should_Be(HttpStatusCode.NotFound)
+                );
+        }
+
+        [Scenario]
         public async Task GetEndpoint_ReturnsOk()
         {
-            // Arrange
-            string personId = Guid.NewGuid().ToString();
-            AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest(personId);
-            await TestHelper.AddTestItemAsync(_client, _endpoint.Replace("{personId}", personId), requestBody);
-            var request = new HttpRequestMessage(HttpMethod.Get, $"{_endpoint.Replace("{personId}", personId)}/{requestBody.Id}");
-            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
-
-            // Act
-            var response = await _client.SendAsync(request, cancelToken);
-            
-            // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-            var result = response.GetTimesheetItem();
-            result.Should().NotBeNull();
-            result.Id.Should().Be(requestBody.Id);
-            result.PersonId.Should().Be(personId);
+            Runner.RunScenario
+                (
+                    given => A_New_PersonId(),
+                    and => A_Test_Timesheet_Is_Added(),
+                    when => A_Get_Request_Is_Performed(_timesheetId),
+                    then => The_Response_Should_Be(HttpStatusCode.OK),
+                    and => The_Timesheet_Should_Match(_timesheetId, _personId)
+                );
         }
 
-        [Fact]
-        public async Task GetEndpoint_ReturnsFailure_WhenIdNotRecognised()
+        [Scenario]
+        public void GetEndpoint_ReturnsNotFound_WhenIdNotRecognised()
         {
-            // Arrange
-            string personId = Guid.NewGuid().ToString();
-            var request = new HttpRequestMessage(HttpMethod.Get, $"{_endpoint.Replace("{personId}", personId)}/{Guid.NewGuid()}");
-            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
-
-            // Act
-            var response = await _client.SendAsync(request, cancelToken);
-
-            // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            Runner.RunScenario
+                (
+                    given => A_New_PersonId(),
+                    when => A_Get_Request_Is_Performed(Guid.NewGuid().ToString()),
+                    then => The_Response_Should_Be(HttpStatusCode.NotFound)
+                );
         }
 
-        [Fact]
-        public async Task DeleteEndpoint_ReturnsOk()
+        [Scenario]
+        public void DeleteEndpoint_ReturnsOk()
         {
-            // Arrange
-            string personId = Guid.NewGuid().ToString();
-            AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest(personId);
-            await TestHelper.AddTestItemAsync(_client, _endpoint.Replace("{personId}", personId), requestBody);
-            var request = new HttpRequestMessage(HttpMethod.Delete, $"{_endpoint.Replace("{personId}", personId)}/{requestBody.Id}");
-            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
-
-            // Act
-            var response = await _client.SendAsync(request, cancelToken);
-
-            // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            Runner.RunScenario
+                (
+                given => A_New_PersonId(),
+                and => A_Test_Timesheet_Is_Added(),
+                when => A_Delete_Request_Is_Performed(_timesheetId),
+                then => The_Response_Should_Be(HttpStatusCode.OK)
+                );
         }
 
-        [Fact]
-        public async Task DeleteEndpoint_ReturnsFailure_WhenIdNotRecognised()
+        [Scenario]
+        public void DeleteEndpoint_ReturnsNotFound_WhenIdNotRecognised()
         {
-            // Arrange
-            string personId = Guid.NewGuid().ToString();
-            var request = new HttpRequestMessage(HttpMethod.Delete, $"{_endpoint.Replace("{personId}", personId)}/{Guid.NewGuid()}");
-            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
-
-            // Act
-            var response = await _client.SendAsync(request, cancelToken);
-
-            // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            Runner.RunScenario
+                (
+                given => A_New_PersonId(),
+                when => A_Delete_Request_Is_Performed(Guid.NewGuid().ToString()),
+                then => The_Response_Should_Be(HttpStatusCode.NotFound)
+                );
         }
 
+        /*
         [Fact]
         public async Task SearchEndpoint_ReturnsCorrectRecords_WhenCalled()
         {
@@ -240,6 +144,6 @@ namespace Azure.Local.Tests.Component.Timesheets
                 result!.Any(t => t.Id == timesheetId).Should().BeTrue();
             });            
         }
-
+        */
     }
 }

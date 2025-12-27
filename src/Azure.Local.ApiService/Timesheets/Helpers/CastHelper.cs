@@ -1,5 +1,6 @@
 ﻿using Azure.Local.ApiService.Timesheets.Contracts;
 using Azure.Local.Domain.Timesheets;
+using System.Text.Json;
 
 namespace Azure.Local.ApiService.Test.Helpers
 {
@@ -19,7 +20,7 @@ namespace Azure.Local.ApiService.Test.Helpers
             };
         }
 
-        public static TimesheetComponentItem ToTimesheetComponentItem(this AddTimesheetHttpRequestComponent component)
+        public static TimesheetComponentItem ToTimesheetComponentItem(this TimesheetHttpRequestComponent component)
         {
             return new TimesheetComponentItem
             {
@@ -28,6 +29,30 @@ namespace Azure.Local.ApiService.Test.Helpers
                 To = component.To,
                 Code = component.Code
             };
+        }
+
+        public static PatchTimesheetHttpRequest ToPatchTimesheetHttpRequest(this AddTimesheetHttpRequest item)
+        {
+            return new PatchTimesheetHttpRequest
+            {
+                Id = item.Id,
+                PersonId = item.PersonId,
+                From = item.From,
+                To = item.To,
+                Components = item.Components
+                                .Select(c => c.Clone())
+                                .ToList()
+            };
+        }
+        public static T Clone<T>(this T source)
+        {
+            var serialized = JsonSerializer.Serialize(source);
+            var deserialized = JsonSerializer.Deserialize<T>(serialized);
+            if (deserialized is null)
+            {
+                throw new InvalidOperationException($"Deserialization of type {typeof(T).FullName} resulted in null.");
+            }
+            return deserialized;
         }
     }
 }

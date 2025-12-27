@@ -38,7 +38,7 @@ namespace Azure.Local.Tests.Component.Timesheets
         {
             // Arrange
             string personId = Guid.NewGuid().ToString();
-            AddTimesheetHttpRequest requestBody = TestHelper.GeneratePatchTimesheetHttpRequest(personId);
+            PatchTimesheetHttpRequest requestBody = TestHelper.GeneratePatchTimesheetHttpRequest(personId);
             var request = new HttpRequestMessage(HttpMethod.Patch, _endpoint.Replace("{personId}", personId))
             {
                 Content = JsonContent.Create(requestBody)
