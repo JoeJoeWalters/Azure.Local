@@ -1,9 +1,11 @@
-﻿using Azure.Local.ApiService.Timesheets.Contracts;
+﻿using Azure.Local.ApiService.Test.Helpers;
+using Azure.Local.ApiService.Timesheets.Contracts;
 using Azure.Local.Tests.Component.Timesheets;
+using Google.Protobuf.WellKnownTypes;
 using LightBDD.XUnit2;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Azure.Cosmos;
 using System.Net.Http.Json;
-using Azure.Local.ApiService.Test.Helpers;
 
 [assembly: LightBddScope]
 namespace Azure.Local.ApiService.Tests.Component.Setup
@@ -18,6 +20,7 @@ namespace Azure.Local.ApiService.Tests.Component.Setup
 
         protected string _personId = string.Empty;
         protected string _timesheetId = string.Empty;
+        protected List<string> _timesheetIds;
         protected AddTimesheetHttpRequest _addRequestBody;
         protected PatchTimesheetHttpRequest _patchRequestBody;
         protected HttpRequestMessage _request;
@@ -138,6 +141,39 @@ namespace Azure.Local.ApiService.Tests.Component.Setup
             result.Should().NotBeNull();
             result.Id.Should().Be(timesheetId);
             result.PersonId.Should().Be(personId);
+        }
+
+        protected void Multiple_Timesheets_Are_Added(DateTime from, int count)
+        {
+            _timesheetIds = [];
+            for (int t = 0; t < count; t++)
+            {
+                AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest(_personId, from.AddDays(t), from.AddDays(t + 1));
+                _timesheetIds.Add(requestBody.Id);
+                _ = TestHelper.AddTestItemAsync(_client, _endpoint.Replace("{personId}", _personId), requestBody).Result;
+            }
+        }
+
+        protected void A_Search_Request_Is_Performed(DateTime from, DateTime to)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_searchEndpoint.Replace("{personId}", _personId)}?fromDate={from.ToString("o")}&toDate={to.ToString("o")}");
+            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
+
+            // Act
+            _response = _client.SendAsync(request, cancelToken).Result;
+        }
+
+        protected void Timesheets_Should_Be_Found(int count)
+        {
+            var result = _response.GetTimesheetItems();
+            result.Should().NotBeNull();
+            result.Should().HaveCount(count);
+
+            var foundCount = 0;
+            _timesheetIds.ForEach(timesheetId => {
+                foundCount += result!.Any(t => t.Id == timesheetId) ? 1 : 0;
+            });
+            foundCount.Should().Be(count);
         }
 
         public void Dispose()

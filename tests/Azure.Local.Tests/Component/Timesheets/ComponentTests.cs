@@ -1,4 +1,5 @@
 ﻿using Azure.Local.ApiService.Tests.Component.Setup;
+using Google.Protobuf.WellKnownTypes;
 using LightBDD.Framework.Scenarios;
 using LightBDD.XUnit2;
 using Microsoft.Azure.Cosmos;
@@ -112,38 +113,19 @@ namespace Azure.Local.Tests.Component.Timesheets
                 );
         }
 
-        /*
-        [Fact]
-        public async Task SearchEndpoint_ReturnsCorrectRecords_WhenCalled()
+        [Scenario]
+        public void SearchEndpoint_ReturnsCorrectRecords_WhenCalled()
         {
-            // Arrange
-            string personId = Guid.NewGuid().ToString();
-            int timesheets = 7;
-            List<string> timesheetIds = [];
-            DateTime fromDate = DateTime.UtcNow;
+            DateTime timeStamp = DateTime.UtcNow;
 
-            for (int t = 0; t < timesheets; t++)
-            {
-                AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest(personId, fromDate.AddDays(t), fromDate.AddDays(t+1));
-                timesheetIds.Add(requestBody.Id);
-                await TestHelper.AddTestItemAsync(_client, _endpoint.Replace("{personId}", personId), requestBody);
-            }
-
-            var request = new HttpRequestMessage(HttpMethod.Get, $"{_searchEndpoint.Replace("{personId}", personId)}?fromDate={fromDate.ToString("o")}&toDate={fromDate.AddDays(timesheets).ToString("o")}");
-            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
-
-            // Act
-            var response = await _client.SendAsync(request, cancelToken);
-
-            // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-            var result = response.GetTimesheetItems();
-            result.Should().NotBeNull();
-            result.Should().HaveCount(timesheets);
-            timesheetIds.ForEach(timesheetId => {
-                result!.Any(t => t.Id == timesheetId).Should().BeTrue();
-            });            
+            Runner.RunScenario
+                (
+                given => A_New_PersonId(),
+                and => Multiple_Timesheets_Are_Added(timeStamp, 7),
+                when => A_Search_Request_Is_Performed(timeStamp, timeStamp.AddDays(7)),
+                then => The_Response_Should_Be(HttpStatusCode.OK),
+                and => Timesheets_Should_Be_Found(7)
+                );
         }
-        */
     }
 }
