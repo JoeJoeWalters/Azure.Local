@@ -15,19 +15,19 @@ namespace Azure.Local.Tests.Component.Timesheets
             PropertyNameCaseInsensitive = true
         };
 
-        public static PatchTimesheetHttpRequest GeneratePatchTimesheetHttpRequest()
+        public static PatchTimesheetHttpRequest? GeneratePatchTimesheetHttpRequest()
             => GenerateAddTimesheetHttpRequest().ToPatchTimesheetHttpRequest();
 
-        public static PatchTimesheetHttpRequest GeneratePatchTimesheetHttpRequest(AddTimesheetHttpRequest addRequest)
+        public static PatchTimesheetHttpRequest? GeneratePatchTimesheetHttpRequest(AddTimesheetHttpRequest addRequest)
             => addRequest.ToPatchTimesheetHttpRequest();
 
-        public static PatchTimesheetHttpRequest GeneratePatchTimesheetHttpRequest(string personId)
+        public static PatchTimesheetHttpRequest? GeneratePatchTimesheetHttpRequest(string personId)
             => GenerateAddTimesheetHttpRequest(personId).ToPatchTimesheetHttpRequest();
 
-        public static AddTimesheetHttpRequest GenerateAddTimesheetHttpRequest()
+        public static AddTimesheetHttpRequest? GenerateAddTimesheetHttpRequest()
             => GenerateAddTimesheetHttpRequest(Guid.NewGuid().ToString(), DateTime.UtcNow, DateTime.UtcNow.AddDays(1));
 
-        public static AddTimesheetHttpRequest GenerateAddTimesheetHttpRequest(string personId)
+        public static AddTimesheetHttpRequest? GenerateAddTimesheetHttpRequest(string personId)
             => GenerateAddTimesheetHttpRequest(personId, DateTime.UtcNow, DateTime.UtcNow.AddDays(1));
 
         public static AddTimesheetHttpRequest GenerateAddTimesheetHttpRequest(string personId, DateTime from, DateTime to)

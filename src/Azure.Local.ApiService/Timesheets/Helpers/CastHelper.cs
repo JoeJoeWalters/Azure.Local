@@ -29,8 +29,11 @@ namespace Azure.Local.ApiService.Timesheets.Helpers
             };
         }
 
-        public static PatchTimesheetHttpRequest ToPatchTimesheetHttpRequest(this AddTimesheetHttpRequest item)
+        public static PatchTimesheetHttpRequest? ToPatchTimesheetHttpRequest(this AddTimesheetHttpRequest? item)
         {
+            if (item is null)
+                return null;
+
             return new PatchTimesheetHttpRequest
             {
                 Id = item.Id,

@@ -19,18 +19,15 @@ namespace Azure.Local.Tests.Component.Setup
 
         protected string _personId = string.Empty;
         protected string _timesheetId = string.Empty;
-        protected List<string> _timesheetIds;
-        protected AddTimesheetHttpRequest _addRequestBody;
-        protected PatchTimesheetHttpRequest _patchRequestBody;
-        protected HttpRequestMessage _request;
-        protected HttpResponseMessage _response;
+        protected List<string> _timesheetIds = [];
+        protected AddTimesheetHttpRequest? _addRequestBody;
+        protected PatchTimesheetHttpRequest? _patchRequestBody;
+        protected HttpRequestMessage? _request;
+        protected HttpResponseMessage? _response;
 
         protected ComponentTestBase(T factory)
         {
             _factory = factory;
-            //_factory.WithWebHostBuilder(builder =>
-            //{
-            //});
             _client = _factory.CreateDefaultClient();
             _client.DefaultRequestHeaders.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
             _client.DefaultRequestHeaders.Add("Accept", "application/json");
@@ -51,6 +48,7 @@ namespace Azure.Local.Tests.Component.Setup
         {
             _timesheetId = string.Empty;
             _addRequestBody = TestHelper.GenerateAddTimesheetHttpRequest(_personId);
+            _addRequestBody.Should().NotBeNull();
             var addResult = TestHelper.AddTestItemAsync(_client, _endpoint.Replace("{personId}", _personId), _addRequestBody).Result;
             addResult.Should().BeTrue();
             _timesheetId = _addRequestBody.Id;
@@ -69,6 +67,8 @@ namespace Azure.Local.Tests.Component.Setup
         protected void A_Patch_Request_Is_Performed(string? timesheetId)
         {
             _patchRequestBody = TestHelper.GeneratePatchTimesheetHttpRequest(_personId);
+            _patchRequestBody.Should().NotBeNull();
+
             if (timesheetId != null)
             {
                 _patchRequestBody.Id = timesheetId;
@@ -112,6 +112,8 @@ namespace Azure.Local.Tests.Component.Setup
         protected void An_Add_Request_Is_Performed(string? timesheetId)
         {
             _addRequestBody = TestHelper.GenerateAddTimesheetHttpRequest(_personId);
+            _addRequestBody.Should().NotBeNull();
+
             if (timesheetId != null)
             {
                 _addRequestBody.Id = timesheetId;
@@ -131,7 +133,7 @@ namespace Azure.Local.Tests.Component.Setup
 
         protected void The_Response_Should_Be(HttpStatusCode expectedStatusCode)
         {
-            _response.StatusCode.Should().Be(expectedStatusCode);
+            _response?.StatusCode.Should().Be(expectedStatusCode);
         }
 
         protected void The_Timesheet_Should_Match(string timesheetId, string personId)
