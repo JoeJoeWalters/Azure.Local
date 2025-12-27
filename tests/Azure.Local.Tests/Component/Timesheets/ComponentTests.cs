@@ -1,17 +1,16 @@
 ﻿using Azure.Local.ApiService.Tests.Component.Setup;
-using Google.Protobuf.WellKnownTypes;
 using LightBDD.Framework.Scenarios;
 using LightBDD.XUnit2;
-using Microsoft.Azure.Cosmos;
 
 namespace Azure.Local.Tests.Component.Timesheets
 {
+    [Collection("NoParallelization")]
     public class ComponentTests(ApiServiceWebApplicationFactoryBase factory) : ComponentTestBase<ApiServiceWebApplicationFactoryBase>(factory)
     {
         ~ComponentTests() => Dispose();
 
         [Scenario]
-        public async Task AddEndpoint_ReturnsOk()
+        public void AddEndpoint_ReturnsOk()
         {
             Runner.RunScenario
                 (
@@ -22,7 +21,7 @@ namespace Azure.Local.Tests.Component.Timesheets
         }
 
         [Scenario]
-        public async Task AddEndpoint_ReturnsConflict_IfAlreadyExists()
+        public void AddEndpoint_ReturnsConflict_IfAlreadyExists()
         {
             Runner.RunScenario
                 (
@@ -34,7 +33,7 @@ namespace Azure.Local.Tests.Component.Timesheets
         }
 
         [Scenario]
-        public async Task AddEndpoint_ReturnsBadRequest_WhenIdTooBig()
+        public void AddEndpoint_ReturnsBadRequest_WhenIdTooBig()
         {
             Runner.RunScenario
                 (
@@ -46,7 +45,7 @@ namespace Azure.Local.Tests.Component.Timesheets
 
 
         [Scenario]
-        public async Task PatchEndpoint_ReturnsOk_IfAlreadyExists()
+        public void PatchEndpoint_ReturnsOk_IfAlreadyExists()
         {
             Runner.RunScenario(
                     given => A_New_PersonId(),
@@ -57,7 +56,7 @@ namespace Azure.Local.Tests.Component.Timesheets
         }
 
         [Scenario]
-        public async Task PatchEndpoint_ReturnsFailure_IfNotExists()
+        public void PatchEndpoint_ReturnsFailure_IfNotExists()
         {
             Runner.RunScenario(
                     given => A_New_PersonId(),
@@ -67,7 +66,7 @@ namespace Azure.Local.Tests.Component.Timesheets
         }
 
         [Scenario]
-        public async Task GetEndpoint_ReturnsOk()
+        public void GetEndpoint_ReturnsOk()
         {
             Runner.RunScenario
                 (
