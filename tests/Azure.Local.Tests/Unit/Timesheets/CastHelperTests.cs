@@ -9,7 +9,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
         public void Cast_AddTimesheetHttpRequest_To_PatchTimesheetHttpRequest_ShouldMatch()
         {
             // ARRANGE
-            AddTimesheetHttpRequest source = new AddTimesheetHttpRequest()
+            AddTimesheetHttpRequest source = new()
             {
                 Id = Guid.NewGuid().ToString(),
                 From = DateTime.UtcNow,
@@ -52,7 +52,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
         public void Cast_AddTimesheetHttpRequest_To_TimesheetItem_WithNullComponent_ShouldThrowError()
         {
             // ARRANGE
-            AddTimesheetHttpRequest source = new AddTimesheetHttpRequest()
+            AddTimesheetHttpRequest source = new()
             {
                 Id = Guid.NewGuid().ToString(),
                 From = DateTime.UtcNow,
@@ -60,7 +60,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
                 PersonId = Guid.NewGuid().ToString(),
                 Components =
                     [
-                        default(TimesheetHttpRequestComponent)!
+                        default!
                     ]
             };
 
