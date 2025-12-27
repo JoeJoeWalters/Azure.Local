@@ -1,0 +1,18 @@
+@page "/timesheet"
+@rendermode InteractiveServer
+
+<PageTitle>Timesheet</PageTitle>
+
+<div id="timesheet-app">
+    <!-- Vue.js will mount here -->
+</div>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Vue.js app will be initialized via the script in App.razor
+        }
+    }
+}

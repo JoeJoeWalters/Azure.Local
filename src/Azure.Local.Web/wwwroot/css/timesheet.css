@@ -1,0 +1,201 @@
+/* Timesheet Page Styles */
+.timesheet-container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.timesheet-container h1 {
+    color: #2c3e50;
+    font-weight: 600;
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.timesheet-container .card {
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease;
+}
+
+.timesheet-container .card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.timesheet-container .card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 8px 8px 0 0 !important;
+    padding: 1rem 1.5rem;
+}
+
+.timesheet-container .card-header h5 {
+    margin: 0;
+    font-weight: 500;
+}
+
+.timesheet-container .card-body {
+    padding: 1.5rem;
+}
+
+.timesheet-container .form-label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+.timesheet-container .form-control {
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+    padding: 0.625rem 0.75rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.timesheet-container .form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.timesheet-container .form-control:read-only {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}
+
+.timesheet-container .btn {
+    border-radius: 6px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.timesheet-container .btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+}
+
+.timesheet-container .btn-primary:hover {
+    background: linear-gradient(135deg, #5568d3 0%, #63408b 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+}
+
+.timesheet-container .btn-success {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    border: none;
+}
+
+.timesheet-container .btn-success:hover {
+    background: linear-gradient(135deg, #0e7c75 0%, #2dd164 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(17, 153, 142, 0.3);
+}
+
+.timesheet-container .btn-success:disabled {
+    background: linear-gradient(135deg, #6c757d 0%, #8e959c 100%);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.timesheet-container .btn-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #8e959c 100%);
+    border: none;
+}
+
+.timesheet-container .btn-secondary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #5a6268 0%, #7a8085 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
+}
+
+.timesheet-container .btn-danger {
+    background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+    border: none;
+}
+
+.timesheet-container .btn-danger:hover {
+    background: linear-gradient(135deg, #d32a3e 0%, #dc4a39 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(235, 51, 73, 0.3);
+}
+
+.timesheet-container .table {
+    margin-bottom: 0;
+}
+
+.timesheet-container .table thead th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6;
+    padding: 0.75rem;
+}
+
+.timesheet-container .table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.timesheet-container .table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.timesheet-container .table tbody td {
+    padding: 0.75rem;
+    vertical-align: middle;
+}
+
+.timesheet-container .alert {
+    border-radius: 8px;
+    border: none;
+    padding: 1rem 1.5rem;
+    animation: slideInDown 0.3s ease-out;
+}
+
+.timesheet-container .alert-danger {
+    background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+    color: white;
+}
+
+.timesheet-container .alert-success {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+}
+
+.timesheet-container .spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+    border-width: 0.15em;
+}
+
+/* Animations */
+@keyframes slideInDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .timesheet-container {
+        padding: 1rem;
+    }
+    
+    .timesheet-container h1 {
+        font-size: 1.75rem;
+    }
+    
+    .timesheet-container .btn-lg {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+    }
+    
+    .timesheet-container .table-responsive {
+        font-size: 0.875rem;
+    }
+}
