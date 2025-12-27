@@ -1,14 +1,13 @@
-﻿using Azure.Local.ApiService.Test.Helpers;
+﻿using Azure.Local.ApiService;
 using Azure.Local.ApiService.Timesheets.Contracts;
+using Azure.Local.ApiService.Timesheets.Helpers;
 using Azure.Local.Tests.Component.Timesheets;
-using Google.Protobuf.WellKnownTypes;
 using LightBDD.XUnit2;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Azure.Cosmos;
 using System.Net.Http.Json;
 
 [assembly: LightBddScope]
-namespace Azure.Local.ApiService.Tests.Component.Setup
+namespace Azure.Local.Tests.Component.Setup
 {
     public abstract class ComponentTestBase<T> : FeatureFixture, IClassFixture<T>, IDisposable where T: WebApplicationFactory<Program>
     {
@@ -156,7 +155,7 @@ namespace Azure.Local.ApiService.Tests.Component.Setup
 
         protected void A_Search_Request_Is_Performed(DateTime from, DateTime to)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"{_searchEndpoint.Replace("{personId}", _personId)}?fromDate={from.ToString("o")}&toDate={to.ToString("o")}");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_searchEndpoint.Replace("{personId}", _personId)}?fromDate={from:o}&toDate={to:o}");
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
 
             // Act

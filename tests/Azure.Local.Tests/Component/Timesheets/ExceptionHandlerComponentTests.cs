@@ -1,5 +1,5 @@
-﻿using Azure.Local.ApiService.Tests.Component.Setup;
-using Azure.Local.ApiService.Tests.Component.Timesheets.Setup;
+﻿using Azure.Local.ApiService.Tests.Component.Timesheets.Setup;
+using Azure.Local.Tests.Component.Setup;
 using LightBDD.Framework.Scenarios;
 using LightBDD.XUnit2;
 

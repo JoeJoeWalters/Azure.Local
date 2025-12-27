@@ -2,7 +2,7 @@
 using Azure.Local.Domain.Timesheets;
 using System.Text.Json;
 
-namespace Azure.Local.ApiService.Test.Helpers
+namespace Azure.Local.ApiService.Timesheets.Helpers
 {
     public static class CastHelper
     {
@@ -14,9 +14,7 @@ namespace Azure.Local.ApiService.Test.Helpers
                 PersonId = request.PersonId,
                 From = request.From,
                 To = request.To,
-                Components = request.Components
-                                .Select(c => c.ToTimesheetComponentItem())
-                                .ToList()
+                Components = [.. request.Components.Select(c => c.ToTimesheetComponentItem())]
             };
         }
 
@@ -39,20 +37,16 @@ namespace Azure.Local.ApiService.Test.Helpers
                 PersonId = item.PersonId,
                 From = item.From,
                 To = item.To,
-                Components = item.Components
-                                .Select(c => c.Clone())
-                                .ToList()
+                Components = [.. item.Components.Select(c => c.Clone())]
             };
         }
         public static T Clone<T>(this T source)
         {
             var serialized = JsonSerializer.Serialize(source);
             var deserialized = JsonSerializer.Deserialize<T>(serialized);
-            if (deserialized is null)
-            {
-                throw new InvalidOperationException($"Deserialization of type {typeof(T).FullName} resulted in null.");
-            }
-            return deserialized;
+            return deserialized is null
+                ? throw new InvalidOperationException($"Deserialization of type {typeof(T).FullName} resulted in null.")
+                : deserialized;
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using Azure.Local.ApiService.Test.Helpers;
-using Azure.Local.ApiService.Timesheets.Contracts;
+﻿using Azure.Local.ApiService.Timesheets.Contracts;
+using Azure.Local.ApiService.Timesheets.Helpers;
 using Azure.Local.Domain.Timesheets;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Json;
@@ -10,6 +10,11 @@ namespace Azure.Local.Tests.Component.Timesheets
     [ExcludeFromCodeCoverage]
     public static class TestHelper
     {
+        private static readonly JsonSerializerOptions jsonSerializerOptions = new()
+        {
+            PropertyNameCaseInsensitive = true
+        };
+
         public static PatchTimesheetHttpRequest GeneratePatchTimesheetHttpRequest()
             => GenerateAddTimesheetHttpRequest().ToPatchTimesheetHttpRequest();
 
@@ -61,10 +66,7 @@ namespace Azure.Local.Tests.Component.Timesheets
             {
                 return JsonSerializer.Deserialize<TimesheetItem>(
                     message!.Content.ReadAsStringAsync().GetAwaiter().GetResult(),
-                    new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
+                    jsonSerializerOptions);
             }
             catch
             {
@@ -77,10 +79,7 @@ namespace Azure.Local.Tests.Component.Timesheets
             {
                 return JsonSerializer.Deserialize<List<TimesheetItem>>(
                     message!.Content.ReadAsStringAsync().GetAwaiter().GetResult(),
-                    new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
+                    jsonSerializerOptions);
             }
             catch
             {
