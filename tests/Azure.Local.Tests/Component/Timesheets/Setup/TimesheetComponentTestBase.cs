@@ -8,7 +8,7 @@ using Azure.Local.Tests.Component.Timesheets.Helpers;
 
 namespace Azure.Local.Tests.Component.Timesheets
 {
-    public abstract class TimesheetComponentTestBase<T>(T factory) : ComponentTestBase<T>(factory) where T: WebApplicationFactory<Program>
+    public abstract class TimesheetComponentTestBase<T>(T factory) : ComponentTestBase<T>(factory) where T : WebApplicationFactory<Program>
     {
         private const string _endpoint = "/person/{personId}/timesheet/item";
         private const string _searchEndpoint = "/person/{personId}/timesheet/search";
@@ -25,7 +25,6 @@ namespace Azure.Local.Tests.Component.Timesheets
         {
             Dispose();
         }
-
 
         protected void A_New_PersonId()
         {
@@ -94,7 +93,7 @@ namespace Azure.Local.Tests.Component.Timesheets
         protected void An_Add_Request_Is_Performed_With_An_ExistingId(string timesheetId)
             => An_Add_Request_Is_Performed(timesheetId);
 
-        protected void An_Add_Request_Is_Performed() 
+        protected void An_Add_Request_Is_Performed()
             => An_Add_Request_Is_Performed(null);
 
         protected void An_Add_Request_Is_Performed(string? timesheetId)
@@ -159,7 +158,8 @@ namespace Azure.Local.Tests.Component.Timesheets
             result.Should().HaveCount(count);
 
             var foundCount = 0;
-            _timesheetIds.ForEach(timesheetId => {
+            _timesheetIds.ForEach(timesheetId =>
+            {
                 foundCount += result!.Any(t => t.Id == timesheetId) ? 1 : 0;
             });
             foundCount.Should().Be(count);

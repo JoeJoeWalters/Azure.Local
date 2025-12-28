@@ -1,11 +1,10 @@
 ﻿using Azure.Local.Tests.Component.Setup;
-using Azure.Local.Tests.Component.Timesheets;
 
 namespace Azure.Local.Tests.Component.Heartbeat
 {
-    public class ComponentTests(ApiServiceWebApplicationFactoryBase factory) : TimesheetComponentTestBase<ApiServiceWebApplicationFactoryBase>(factory)
+    public class ComponentTests(ApiServiceWebApplicationFactoryBase factory) : ComponentTestBase<ApiServiceWebApplicationFactoryBase>(factory)
     {
-        [Fact] // Explicitly qualify the attribute to avoid ambiguity
+        [Fact]
         public async Task HeartbeatEndpoint_ReturnsOk()
         {
             // Arrange

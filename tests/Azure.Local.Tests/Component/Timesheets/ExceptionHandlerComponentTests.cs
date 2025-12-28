@@ -1,5 +1,4 @@
-﻿using Azure.Local.Tests.Component.Setup;
-using Azure.Local.Tests.Component.Timesheets.Setup;
+﻿using Azure.Local.Tests.Component.Timesheets.Setup;
 using LightBDD.Framework.Scenarios;
 using LightBDD.XUnit2;
 

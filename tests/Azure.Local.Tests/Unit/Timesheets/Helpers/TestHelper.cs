@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.CodeDom.Compiler;
 
-namespace Azure.Local.Tests.Unit.Timesheets
+namespace Azure.Local.Tests.Unit.Timesheets.Helpers
 {
     [GeneratedCodeAttribute("System.Text.RegularExpressions.Generator", "8.0.8.47906")]
 
