@@ -2,13 +2,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Microsoft.Extensions.Hosting;
+namespace Azure.Local.ServiceDefaults;
 
 [ExcludeFromCodeCoverage]
 

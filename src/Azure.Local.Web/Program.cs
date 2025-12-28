@@ -1,5 +1,6 @@
 namespace Azure.Local.Web
 {
+    using Azure.Local.ServiceDefaults;
     using Azure.Local.Web.Components;
     using System.Diagnostics.CodeAnalysis;
 
