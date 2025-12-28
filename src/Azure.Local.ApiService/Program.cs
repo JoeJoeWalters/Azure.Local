@@ -23,7 +23,7 @@ namespace Azure.Local.ApiService
 
             // Set up dependent api services
             builder.Services
-                .AddApplication(builder.Configuration)
+                .AddApplication()
                 .AddInfrastructure(builder.Configuration);
 
             // Register validators

@@ -3,7 +3,7 @@ using Azure.Local.Infrastructure.Timesheets;
 using Azure.Local.Tests.Component.Timesheets.Fakes.Repositories;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Azure.Local.ApiService.Tests.Component.Setup
+namespace Azure.Local.Tests.Component.Setup
 {
     public static class ServiceExtensions
     {

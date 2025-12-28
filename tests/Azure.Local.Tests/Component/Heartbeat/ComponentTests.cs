@@ -1,5 +1,4 @@
 ﻿using AwesomeAssertions;
-using Azure.Local.ApiService.Tests.Component.Setup;
 using Azure.Local.Tests.Component.Setup;
 
 namespace Azure.Local.ApiService.Tests.Component.Heartbeat

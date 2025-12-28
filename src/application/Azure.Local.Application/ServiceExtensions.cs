@@ -6,7 +6,7 @@ namespace Azure.Local.Application
 {
     public static class ServiceExtensions
     {
-        public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddApplication(this IServiceCollection services)//, IConfiguration configuration)
         {
             services.AddTimesheetLogic();
             return services;

@@ -11,6 +11,6 @@ namespace Azure.Local.Infrastructure.Timesheets
         public required string PersonId { get; set; }
         public required DateTime From { get; set; }
         public required DateTime To { get; set; } 
-        public List<TimesheetComponentRepositoryItem> Components { get; set; } = new List<TimesheetComponentRepositoryItem>();
+        public List<TimesheetComponentRepositoryItem> Components { get; set; } = [];
     }
 }

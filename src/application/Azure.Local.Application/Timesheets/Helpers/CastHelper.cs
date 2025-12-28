@@ -6,17 +6,17 @@ namespace Azure.Local.Application.Timesheets.Helpers
     public static class CastHelper
     {
         public static TimesheetRepositoryItem ToTimesheetRepositoryItem(this TimesheetItem item)
-            => new TimesheetRepositoryItem
+            => new()
             {
                 Id = item.Id,
                 PersonId = item.PersonId,
                 From = item.From,
                 To = item.To,
-                Components = item.Components.Select(c => c.ToTimesheetComponentRepositoryItem()).ToList()
+                Components = [.. item.Components.Select(c => c.ToTimesheetComponentRepositoryItem())]
             };
 
         public static TimesheetComponentRepositoryItem ToTimesheetComponentRepositoryItem(this TimesheetComponentItem item)
-            => new TimesheetComponentRepositoryItem
+            => new()
             {
                 Units = item.Units,
                 From = item.From,
@@ -25,17 +25,17 @@ namespace Azure.Local.Application.Timesheets.Helpers
             };
 
         public static TimesheetItem ToTimesheetItem(this TimesheetRepositoryItem item)
-            => new TimesheetItem
+            => new()
             {
                 Id = item.Id,
                 PersonId = item.PersonId,
                 From = item.From,
                 To = item.To,
-                Components = item.Components.Select(c => c.ToTimesheetComponentItem()).ToList()
+                Components = [.. item.Components.Select(c => c.ToTimesheetComponentItem())]
             };
 
         public static TimesheetComponentItem ToTimesheetComponentItem(this TimesheetComponentRepositoryItem item)
-            => new TimesheetComponentItem
+            => new()
             {
                 Units = item.Units,
                 From = item.From,
