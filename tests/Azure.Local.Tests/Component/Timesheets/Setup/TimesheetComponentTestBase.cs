@@ -1,10 +1,10 @@
 ﻿using Azure.Local.ApiService;
 using Azure.Local.ApiService.Timesheets.Contracts;
 using Azure.Local.ApiService.Timesheets.Helpers;
-using Azure.Local.Tests.Component.Timesheets;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net.Http.Json;
 using Azure.Local.Tests.Component.Setup;
+using Azure.Local.Tests.Component.Timesheets.Helpers;
 
 namespace Azure.Local.Tests.Component.Timesheets
 {

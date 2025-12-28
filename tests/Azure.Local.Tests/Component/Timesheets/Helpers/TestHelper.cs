@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace Azure.Local.Tests.Component.Timesheets
+namespace Azure.Local.Tests.Component.Timesheets.Helpers
 {
     [ExcludeFromCodeCoverage]
     public static class TestHelper
