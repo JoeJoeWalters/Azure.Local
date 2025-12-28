@@ -1,14 +1,10 @@
-﻿using AwesomeAssertions;
-using Azure.Local.Tests.Component.Setup;
+﻿using Azure.Local.Tests.Component.Setup;
+using Azure.Local.Tests.Component.Timesheets;
 
-namespace Azure.Local.ApiService.Tests.Component.Heartbeat
+namespace Azure.Local.Tests.Component.Heartbeat
 {
-    public class ComponentTests : ComponentTestBase<ApiServiceWebApplicationFactoryBase>
+    public class ComponentTests(ApiServiceWebApplicationFactoryBase factory) : TimesheetComponentTestBase<ApiServiceWebApplicationFactoryBase>(factory)
     {
-        public ComponentTests(ApiServiceWebApplicationFactoryBase factory) : base(factory)
-        {
-        }
-
         [Fact] // Explicitly qualify the attribute to avoid ambiguity
         public async Task HeartbeatEndpoint_ReturnsOk()
         {

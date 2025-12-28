@@ -5,7 +5,7 @@ using LightBDD.XUnit2;
 namespace Azure.Local.Tests.Component.Timesheets
 {
     [Collection("NoParallelization")]
-    public class ComponentTests(ApiServiceWebApplicationFactoryBase factory) : ComponentTestBase<ApiServiceWebApplicationFactoryBase>(factory)
+    public class ComponentTests(ApiServiceWebApplicationFactoryBase factory) : TimesheetComponentTestBase<ApiServiceWebApplicationFactoryBase>(factory)
     {
         ~ComponentTests() => Dispose();
 

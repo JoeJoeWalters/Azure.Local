@@ -6,11 +6,8 @@ using LightBDD.XUnit2;
 namespace Azure.Local.Tests.Component.Timesheets
 {
     [Collection("NoParallelization")]
-    public class ExceptionHandlerComponentTests(ApiServiceWebApplicationFactoryExceptionHandling factory) : ComponentTestBase<ApiServiceWebApplicationFactoryExceptionHandling>(factory)
+    public class ExceptionHandlerComponentTests(ApiServiceWebApplicationFactoryExceptionHandling factory) : TimesheetComponentTestBase<ApiServiceWebApplicationFactoryExceptionHandling>(factory)
     {
-        private const string _endpoint = "/person/{personId}/timesheet/item";
-        private const string _searchEndpoint = "/person/{personId}/timesheet/search";
-
         ~ExceptionHandlerComponentTests() => Dispose();
 
         [Scenario]
