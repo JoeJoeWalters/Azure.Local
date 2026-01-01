@@ -12,12 +12,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Azure.Local.ApiService\Azure.Local.ApiService.csproj" />
+    <ProjectReference Include="..\Azure.Local.Functions\Azure.Local.Functions.csproj" />
     <ProjectReference Include="..\Azure.Local.Web\Azure.Local.Web.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.AppHost" Version="13.1.0" />
     <PackageReference Include="Aspire.Hosting.Azure.CosmosDB" Version="13.1.0" />
+    <PackageReference Include="Aspire.Hosting.Azure.Functions" Version="13.1.0" />
+    <PackageReference Include="Aspire.Hosting.Azure.ServiceBus" Version="13.1.0" />
     <PackageReference Include="Aspire.Hosting.Azure.Storage" Version="13.1.0" />
     <PackageReference Include="Aspire.Hosting.Redis" Version="13.1.0" />
   </ItemGroup>

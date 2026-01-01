@@ -25,11 +25,17 @@ var storage = builder.AddAzureStorage("storageaccount").RunAsEmulator(
                         }
                     );
 
-//var orders = cosmos.AddCosmosDatabase("orders");
-//var details = orders.AddContainer("details", "/id");
+var servicebus = builder.AddAzureServiceBus("servicebus").RunAsEmulator();
+
 
 var apiService = builder.AddProject<Projects.Azure_Local_ApiService>("apiservice")
     .WithHttpHealthCheck("/health");
+
+var functionApp = builder.AddAzureFunctionsProject<Projects.Azure_Local_Functions>("functionapp")
+    .WithReference(servicebus)
+    .WaitFor(servicebus)
+    .WithReference(cosmos)
+    .WaitFor(cosmos);
 
 builder.AddProject<Projects.Azure_Local_Web>("webfrontend")
     .WithExternalHttpEndpoints()
