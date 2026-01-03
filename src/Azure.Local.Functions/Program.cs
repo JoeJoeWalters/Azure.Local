@@ -1,19 +1,14 @@
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Azure.Local.Functions
-{
-    internal class Program
+var host = new HostBuilder()
+    //.ConfigureFunctionsWebApplication()
+    .ConfigureServices(services =>
     {
-        static void Main(string[] args)
-        {
-            FunctionsDebugger.Enable();
+        services.AddApplicationInsightsTelemetryWorkerService();
+        services.ConfigureFunctionsApplicationInsights();
+    })
+    .Build();
 
-            var host = new HostBuilder()
-                .ConfigureFunctionsWorkerDefaults()
-                .Build();
-
-            host.Run();
-        }
-    }
-}
+host.Run();

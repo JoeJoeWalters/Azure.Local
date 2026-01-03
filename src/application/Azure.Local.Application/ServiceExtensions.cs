@@ -1,4 +1,5 @@
 ﻿using Azure.Local.Application.Timesheets;
+using Azure.Local.Infrastructure.Timesheets.FileProcessing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Azure.Local.Application
@@ -16,6 +17,7 @@ namespace Azure.Local.Application
             private IServiceCollection AddTimesheetLogic()
             {
                 services.AddSingleton<ITimesheetApplication, TimesheetApplication>();
+                services.AddSingleton<ITimesheetFileProcessor, TimesheetFileProcessor>();
                 return services;
             }
         }

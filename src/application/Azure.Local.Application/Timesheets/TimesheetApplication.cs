@@ -4,10 +4,11 @@ using Azure.Local.Infrastructure.Repository;
 using Azure.Local.Infrastructure.Repository.Specifications;
 using Azure.Local.Infrastructure.Repository.Specifications.Timesheets;
 using Azure.Local.Infrastructure.Timesheets;
+using Azure.Local.Infrastructure.Timesheets.FileProcessing;
 
 namespace Azure.Local.Application.Timesheets
 {
-    public class TimesheetApplication(IRepository<TimesheetRepositoryItem> repository) : ITimesheetApplication
+    public class TimesheetApplication(IRepository<TimesheetRepositoryItem> repository, ITimesheetFileProcessor fileProcessor) : ITimesheetApplication
     {
         private readonly IRepository<TimesheetRepositoryItem> _repository = repository;
 
@@ -34,5 +35,8 @@ namespace Azure.Local.Application.Timesheets
             var queryResult = _repository.QueryAsync(new TimesheetSearchSpecification(personId, fromDate, toDate));
             return Task.FromResult(queryResult.Result.Select(item => item.ToTimesheetItem()).ToList());
         }
+
+        public Task<TimesheetItem?> ProcessFileAsync(Stream stream)
+            => fileProcessor.ProcessFileAsync(stream);
     }
 }
