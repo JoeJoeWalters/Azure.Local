@@ -12,14 +12,10 @@ namespace Azure.Local.Application.Timesheets
         private readonly IRepository<TimesheetRepositoryItem> _repository = repository;
 
         public Task<bool> AddAsync(string personId, TimesheetItem item)
-        {
-            return _repository.AddAsync(item.ToTimesheetRepositoryItem());
-        }
+            => _repository.AddAsync(item.ToTimesheetRepositoryItem());
 
         public Task<bool> UpdateAsync(string personId, TimesheetItem item)
-        {
-            return _repository.UpdateAsync(item.ToTimesheetRepositoryItem());
-        }
+            => _repository.UpdateAsync(item.ToTimesheetRepositoryItem());
 
         public Task<TimesheetItem?> GetAsync(string personId, string id)
         {
@@ -31,9 +27,7 @@ namespace Azure.Local.Application.Timesheets
         }
 
         public Task<bool> DeleteAsync(string personId, string id)
-        {
-            return _repository.DeleteAsync(new DeleteByIdSpecification(id));
-        }
+            => _repository.DeleteAsync(new DeleteByIdSpecification(id));        
 
         public Task<List<TimesheetItem>> SearchAsync(string personId, DateTime fromDate, DateTime toDate)
         {
