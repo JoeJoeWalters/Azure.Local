@@ -5,7 +5,7 @@ namespace Azure.Local.Infrastructure.Timesheets.FileProcessing
 {
     public class TimesheetFileProcessor(IRepository<TimesheetRepositoryItem> repository) : ITimesheetFileProcessor
     {
-        public Task<TimesheetItem?> ProcessFileAsync(Stream stream)
+        public Task<TimesheetItem?> ProcessFileAsync(Stream fileStream, TimesheetFileTypes fileType)
         {
             repository.AddAsync(new TimesheetRepositoryItem() { From = DateTime.UtcNow, PersonId = Guid.NewGuid().ToString(), To = DateTime.UtcNow });
 

@@ -36,7 +36,7 @@ namespace Azure.Local.Application.Timesheets
             return Task.FromResult(queryResult.Result.Select(item => item.ToTimesheetItem()).ToList());
         }
 
-        public Task<TimesheetItem?> ProcessFileAsync(Stream stream)
-            => fileProcessor.ProcessFileAsync(stream);
+        public Task<TimesheetItem?> ProcessFileAsync(Stream stream, TimesheetFileTypes fileType)
+            => fileProcessor.ProcessFileAsync(stream, fileType);
     }
 }
