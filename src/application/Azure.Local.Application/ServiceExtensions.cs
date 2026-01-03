@@ -5,16 +5,19 @@ namespace Azure.Local.Application
 {
     public static class ServiceExtensions
     {
-        public static IServiceCollection AddApplication(this IServiceCollection services)//, IConfiguration configuration)
+        extension(IServiceCollection services) 
         {
-            services.AddTimesheetLogic();
-            return services;
-        }
+            public IServiceCollection AddApplication()
+            {
+                services.AddTimesheetLogic();
+                return services;
+            }
 
-        private static IServiceCollection AddTimesheetLogic(this IServiceCollection services)
-        {
-            services.AddSingleton<ITimesheetApplication, TimesheetApplication>();
-            return services;
+            private IServiceCollection AddTimesheetLogic()
+            {
+                services.AddSingleton<ITimesheetApplication, TimesheetApplication>();
+                return services;
+            }
         }
     }
 }
