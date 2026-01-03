@@ -7,18 +7,21 @@ namespace Azure.Local.Tests.Component.Setup
 {
     public static class ServiceExtensions
     {
-        public static IServiceCollection SetupBaseServices(this IServiceCollection services)
-        {            
-            services.AddTimesheetPersistence();
-            return services;
-        }
-
-        private static IServiceCollection AddTimesheetPersistence(this IServiceCollection services)
+        extension(IServiceCollection services)
         {
-            // Remove existing registrations setup in Program.cs or Infrastructure
-            services.RemoveAll<IRepository<TimesheetRepositoryItem>>();
-            services.AddSingleton<IRepository<TimesheetRepositoryItem>, FakeRepository<TimesheetRepositoryItem>>();
-            return services;
+            public IServiceCollection SetupBaseServices()
+            {
+                services.AddTimesheetPersistence();
+                return services;
+            }
+
+            private IServiceCollection AddTimesheetPersistence()
+            {
+                // Remove existing registrations setup in Program.cs or Infrastructure
+                services.RemoveAll<IRepository<TimesheetRepositoryItem>>();
+                services.AddSingleton<IRepository<TimesheetRepositoryItem>, FakeRepository<TimesheetRepositoryItem>>();
+                return services;
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Azure.Local.Application.Timesheets;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Azure.Local.Application

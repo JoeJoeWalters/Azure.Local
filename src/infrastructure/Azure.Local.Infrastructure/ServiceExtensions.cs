@@ -10,26 +10,29 @@ namespace Azure.Local.Infrastructure
 
     public static class ServiceExtensions
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        extension(IServiceCollection services)
         {
-            // Configure Cosmos DB Repository with Options pattern so it can be injected
-            // and the test runner can override it if needed.
-            services.AddOptions<CosmosRepositorySettings>()
-                .Configure(x => 
-                    { 
-                        x.ConnectionString = configuration["CosmosDb:ConnectionString"] ?? string.Empty; 
-                        x.DatabaseId = configuration["CosmosDb:DatabaseId"] ?? string.Empty;
-                        x.ContainerId = configuration["CosmosDb:ContainerId"] ?? string.Empty;
-                    });
-            services.AddTimesheetPersistence();
+            public IServiceCollection AddInfrastructure(IConfiguration configuration)
+            {
+                // Configure Cosmos DB Repository with Options pattern so it can be injected
+                // and the test runner can override it if needed.
+                services.AddOptions<CosmosRepositorySettings>()
+                    .Configure(x =>
+                        {
+                            x.ConnectionString = configuration["CosmosDb:ConnectionString"] ?? string.Empty;
+                            x.DatabaseId = configuration["CosmosDb:DatabaseId"] ?? string.Empty;
+                            x.ContainerId = configuration["CosmosDb:ContainerId"] ?? string.Empty;
+                        });
+                services.AddTimesheetPersistence();
 
-            return services;
-        }
+                return services;
+            }
 
-        private static IServiceCollection AddTimesheetPersistence(this IServiceCollection services)
-        {
-            services.AddSingleton<IRepository<TimesheetRepositoryItem>, CosmosRepository<TimesheetRepositoryItem>>();
-            return services;
+            private IServiceCollection AddTimesheetPersistence()
+            {
+                services.AddSingleton<IRepository<TimesheetRepositoryItem>, CosmosRepository<TimesheetRepositoryItem>>();
+                return services;
+            }
         }
     }
 }
