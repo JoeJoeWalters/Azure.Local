@@ -74,11 +74,13 @@ namespace Azure.Local.Tests.Unit.Timesheets
             result.Should().NotBeNull();
             result!.PersonId.Should().Be(personId);
             result.Components.Should().HaveCount(4);
+            
             result.From.Should().Be(DateTime.Parse("2025-12-29 09:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind));
             result.To.Should().Be(DateTime.Parse("2025-12-31 17:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind));
             
             result.Components[0].Units.Should().Be(7.5);
             result.Components[0].Code.Should().Be("c8ba72eb-bef7-494c-8d21-f5915f4f71a5");
+
             result.Components[1].Units.Should().Be(4);
             result.Components[1].Code.Should().Be("c8ba72eb-bef7-494c-8d21-f5915f4f71a4");
         }
