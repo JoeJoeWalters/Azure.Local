@@ -64,10 +64,9 @@ namespace Azure.Local.Tests.Unit.Timesheets
             var converter = new StandardCsvFileConverter();
             var personId = "c8ba72eb-bef7-494c-8d21-f5915f4f71a9";
             var testFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Unit", "Timesheets", "TestFiles", "FileProcessing", "StandardCSV.csv");
-            
-            using var fileStream = File.OpenRead(testFilePath);
 
             // Act
+            using var fileStream = File.OpenRead(testFilePath);
             var result = await converter.ConvertAsync(personId, fileStream);
 
             // Assert
