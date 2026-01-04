@@ -9,22 +9,21 @@ namespace Azure.Local.Tests.Unit.Timesheets.Helpers
         public static TimesheetItem CreateTestItem() => CreateTestItem(Guid.NewGuid().ToString());
 
         public static TimesheetItem CreateTestItem(string personId) 
-            => new TimesheetItem
+            => new()
             {
                 Id = Guid.NewGuid().ToString(),
                 PersonId = personId,
                 From = DateTime.UtcNow.AddHours(-2),
                 To = DateTime.UtcNow,
-                Components = new List<TimesheetComponentItem>
-                {
-                    new TimesheetComponentItem
-                    {
+                Components =
+                [
+                    new() {
                         From = DateTime.UtcNow.AddHours(-2),
                         To = DateTime.UtcNow,
                         Units = 2,
                         Code = Guid.NewGuid().ToString()
                     }
-                }
+                ]
             };
     }
 }

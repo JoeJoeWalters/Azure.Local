@@ -6,7 +6,7 @@ using Azure.Local.Tests.Component.Timesheets.Helpers;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net.Http.Json;
 
-namespace Azure.Local.Tests.Component.Timesheets
+namespace Azure.Local.Tests.Component.Timesheets.Setup
 {
     [ExcludeFromCodeCoverage]
     public abstract class TimesheetComponentTestBase<T>(T factory) : ComponentTestBase<T>(factory) where T : WebApplicationFactory<Program>
