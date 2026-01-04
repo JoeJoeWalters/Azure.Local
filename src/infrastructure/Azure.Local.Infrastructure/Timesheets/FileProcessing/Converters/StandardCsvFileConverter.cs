@@ -1,4 +1,7 @@
 using Azure.Local.Domain.Timesheets;
+using CsvHelper;
+using CsvHelper.Configuration;
+using System.Globalization;
 
 namespace Azure.Local.Infrastructure.Timesheets.FileProcessing.Converters
 {
@@ -10,36 +13,55 @@ namespace Azure.Local.Infrastructure.Timesheets.FileProcessing.Converters
                 return null;
 
             using var reader = new StreamReader(fileStream);
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HasHeaderRecord = true,
+            };
             
-            // Read header line
-            var headerLine = await reader.ReadLineAsync();
-            if (string.IsNullOrWhiteSpace(headerLine))
+            using var csv = new CsvReader(reader, config);
+            csv.Context.TypeConverterOptionsCache.GetOptions<DateTime>().DateTimeStyle = DateTimeStyles.None;
+            csv.Context.TypeConverterOptionsCache.GetOptions<DateTime>().Formats = new[] { "dd-MM-yyyy HH:mm" };
+            
+            var records = new List<CsvRecord>();
+            await foreach (var record in csv.GetRecordsAsync<CsvRecord>())
+            {
+                if (record.PersonId == personId)
+                {
+                    records.Add(record);
+                }
+            }
+
+            if (records.Count == 0)
                 return null;
 
-            // TODO: Implement CSV parsing logic based on your CSV format
-            // This is a placeholder implementation
             var timesheetItem = new TimesheetItem
             {
                 PersonId = personId,
-                From = DateTime.UtcNow,
-                To = DateTime.UtcNow.AddDays(7)
+                From = records.Min(r => r.From),
+                To = records.Max(r => r.To)
             };
 
-            // Read data lines
-#pragma warning disable CA2024 // Do not use 'StreamReader.EndOfStream' in async methods
-            while (!reader.EndOfStream)
+            foreach (var record in records)
             {
-                var line = await reader.ReadLineAsync();
-                if (!string.IsNullOrWhiteSpace(line))
+                timesheetItem.Components.Add(new TimesheetComponentItem
                 {
-                    // Parse CSV line and add components to timesheetItem
-                    // var fields = line.Split(',');
-                    // timesheetItem.Components.Add(new TimesheetComponentItem { ... });
-                }
+                    From = record.From,
+                    To = record.To,
+                    Units = record.Units,
+                    Code = record.Code
+                });
             }
-#pragma warning restore CA2024 // Do not use 'StreamReader.EndOfStream' in async methods
 
             return timesheetItem;
+        }
+
+        private class CsvRecord
+        {
+            public string PersonId { get; set; } = string.Empty;
+            public DateTime From { get; set; }
+            public DateTime To { get; set; }
+            public double Units { get; set; }
+            public string Code { get; set; } = string.Empty;
         }
     }
 }
