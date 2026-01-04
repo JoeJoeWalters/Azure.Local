@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <Content Include="Unit\Timesheets\TestFiles\FileProcessing\StandardCSV.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
