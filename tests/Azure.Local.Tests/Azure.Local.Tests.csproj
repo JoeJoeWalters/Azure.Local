@@ -14,6 +14,10 @@
     <None Remove="TestResults\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Unit\Timesheets\TestFiles\FileProcessing\StandardCSV.csv" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.Testing" Version="13.1.0" />
@@ -45,6 +49,12 @@
     <Using Include="Aspire.Hosting.ApplicationModel" />
     <Using Include="Aspire.Hosting.Testing" />
     <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Unit\Timesheets\TestFiles\FileProcessing\StandardCSV.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
