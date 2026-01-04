@@ -63,6 +63,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
             // Arrange
             var converter = new StandardCsvFileConverter();
             var personId = "c8ba72eb-bef7-494c-8d21-f5915f4f71a9";
+            var bankHolidayUnitCode = "c8ba72eb-bef7-494c-8d21-f5915f4f71a6";
             var dailyUnitCode = "c8ba72eb-bef7-494c-8d21-f5915f4f71a5";
             var overtimeUnitCode = "c8ba72eb-bef7-494c-8d21-f5915f4f71a4";
             var testFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Unit", "Timesheets", "TestFiles", "FileProcessing", "StandardCSV.csv");
@@ -79,6 +80,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
             result.From.Should().Be(DateTime.Parse("2025-12-29 09:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind));
             result.To.Should().Be(DateTime.Parse("2025-12-31 17:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind));
 
+            result.Components.Where(t => t.Code == bankHolidayUnitCode && t.Units == 7.5).Should().HaveCount(1);
             result.Components.Where(t => t.Code == dailyUnitCode && t.Units == 7.5).Should().HaveCountGreaterThan(1);
             result.Components.Where(t => t.Code == overtimeUnitCode && t.Units == 4).Should().HaveCount(1);
         }
