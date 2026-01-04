@@ -1,5 +1,7 @@
 ﻿using Azure.Local.Infrastructure.Repository;
 using Azure.Local.Infrastructure.Timesheets;
+using Azure.Local.Infrastructure.Timesheets.FileProcessing;
+using Azure.Local.Infrastructure.Timesheets.FileProcessing.Converters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
@@ -24,6 +26,7 @@ namespace Azure.Local.Infrastructure
                             x.ContainerId = configuration["CosmosDb:ContainerId"] ?? string.Empty;
                         });
                 services.AddTimesheetPersistence();
+                services.AddFileProcessing();
 
                 return services;
             }
@@ -31,6 +34,14 @@ namespace Azure.Local.Infrastructure
             private IServiceCollection AddTimesheetPersistence()
             {
                 services.AddSingleton<IRepository<TimesheetRepositoryItem>, CosmosRepository<TimesheetRepositoryItem>>();
+                return services;
+            }
+
+            private IServiceCollection AddFileProcessing()
+            {
+                services.AddSingleton<IFileConverterFactory, FileConverterFactory>();
+                services.AddTransient<StandardCsvFileConverter>();
+                services.AddSingleton<ITimesheetFileProcessor, TimesheetFileProcessor>();
                 return services;
             }
         }

@@ -1,6 +1,7 @@
 ﻿using Azure.Local.Application.Timesheets;
 using Azure.Local.Infrastructure.Timesheets;
 using Azure.Local.Infrastructure.Timesheets.FileProcessing;
+using Azure.Local.Tests.Component.Timesheets.Fakes.Converters;
 using Azure.Local.Tests.Component.Timesheets.Fakes.Repositories;
 using Azure.Local.Tests.Unit.Timesheets.Helpers;
 
@@ -15,7 +16,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
             FakeRepository<TimesheetRepositoryItem> _repository = new();
             _application = new TimesheetApplication(
                 repository: _repository,
-                fileProcessor: new TimesheetFileProcessor(_repository)
+                fileProcessor: new TimesheetFileProcessor(_repository, new FakeFileConverterFactory())
             );
         }
 

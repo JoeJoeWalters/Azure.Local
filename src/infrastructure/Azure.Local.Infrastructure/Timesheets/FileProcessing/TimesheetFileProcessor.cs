@@ -1,15 +1,33 @@
 ﻿using Azure.Local.Domain.Timesheets;
 using Azure.Local.Infrastructure.Repository;
+using Azure.Local.Infrastructure.Timesheets.FileProcessing.Converters;
 
 namespace Azure.Local.Infrastructure.Timesheets.FileProcessing
 {
-    public class TimesheetFileProcessor(IRepository<TimesheetRepositoryItem> repository) : ITimesheetFileProcessor
+    public class TimesheetFileProcessor(
+        IRepository<TimesheetRepositoryItem> repository,
+        IFileConverterFactory converterFactory) : ITimesheetFileProcessor
     {
-        public Task<TimesheetItem?> ProcessFileAsync(Stream fileStream, TimesheetFileTypes fileType)
+        public async Task<TimesheetItem?> ProcessFileAsync(Stream fileStream, TimesheetFileTypes fileType)
         {
-            repository.AddAsync(new TimesheetRepositoryItem() { From = DateTime.UtcNow, PersonId = Guid.NewGuid().ToString(), To = DateTime.UtcNow });
+            ArgumentNullException.ThrowIfNull(fileStream);
 
-            throw new NotImplementedException();
+            var converter = converterFactory.CreateConverter(fileType);
+            var timesheetItem = await converter.ConvertAsync(fileStream);
+
+            if (timesheetItem != null)
+            {
+                var repositoryItem = new TimesheetRepositoryItem
+                {
+                    From = timesheetItem.From,
+                    PersonId = timesheetItem.PersonId,
+                    To = timesheetItem.To
+                };
+
+                await repository.AddAsync(repositoryItem);
+            }
+
+            return timesheetItem;
         }
     }
 }
