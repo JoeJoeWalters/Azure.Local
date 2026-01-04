@@ -2,13 +2,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Azure.Local.Infrastructure.Timesheets.FileProcessing.Converters
 {
-    public class FileConverterFactory(IServiceProvider serviceProvider) : IFileConverterFactory
+    public class FileConverterFactory() : IFileConverterFactory
     {
         public IFileConverter CreateConverter(TimesheetFileTypes fileType)
         {
             return fileType switch
             {
-                TimesheetFileTypes.StandardCSVTemplate => serviceProvider.GetRequiredService<StandardCsvFileConverter>(),
+                TimesheetFileTypes.StandardCSVTemplate => new StandardCsvFileConverter(),
                 TimesheetFileTypes.None => throw new ArgumentException("File type cannot be None", nameof(fileType)),
                 _ => throw new NotSupportedException($"File type '{fileType}' is not supported")
             };

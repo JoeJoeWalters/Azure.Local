@@ -40,7 +40,6 @@ namespace Azure.Local.Infrastructure
             private IServiceCollection AddFileProcessing()
             {
                 services.AddSingleton<IFileConverterFactory, FileConverterFactory>();
-                services.AddTransient<StandardCsvFileConverter>();
                 services.AddSingleton<ITimesheetFileProcessor, TimesheetFileProcessor>();
                 return services;
             }
