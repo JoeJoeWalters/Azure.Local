@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Azure.Local.Tests.Component.Setup
 {
+    [ExcludeFromCodeCoverage]
     public static class ServiceExtensions
     {
         extension(IServiceCollection services)

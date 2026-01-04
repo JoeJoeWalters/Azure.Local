@@ -3,6 +3,7 @@ using Azure.Local.Infrastructure.Timesheets.FileProcessing.Converters;
 
 namespace Azure.Local.Tests.Component.Timesheets.Fakes.Converters
 {
+    [ExcludeFromCodeCoverage]
     public class FakeFileConverter : IFileConverter
     {
         public Task<TimesheetItem?> ConvertAsync(Stream fileStream)

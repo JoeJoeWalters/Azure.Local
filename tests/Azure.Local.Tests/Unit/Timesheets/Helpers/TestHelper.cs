@@ -1,11 +1,8 @@
 ﻿using Azure.Local.Domain.Timesheets;
 using System.Diagnostics.CodeAnalysis;
-using System.CodeDom.Compiler;
 
 namespace Azure.Local.Tests.Unit.Timesheets.Helpers
 {
-    [GeneratedCodeAttribute("System.Text.RegularExpressions.Generator", "8.0.8.47906")]
-
     [ExcludeFromCodeCoverage]
     public static class TestHelper
     {

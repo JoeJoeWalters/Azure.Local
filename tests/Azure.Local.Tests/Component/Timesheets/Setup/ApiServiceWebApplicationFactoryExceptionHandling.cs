@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Azure.Local.Tests.Component.Timesheets.Setup
 {
+    [ExcludeFromCodeCoverage]
     public class ApiServiceWebApplicationFactoryExceptionHandling : WebApplicationFactory<Program>
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)

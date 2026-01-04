@@ -4,6 +4,7 @@ using Azure.Local.Infrastructure.Timesheets.FileProcessing;
 
 namespace Azure.Local.Tests.Component.Timesheets.Fakes.Applications
 {
+    [ExcludeFromCodeCoverage]
     public class FakeFailingTimesheetApplication : ITimesheetApplication
     {
         public Task<bool> AddAsync(string personId, TimesheetItem item) => throw new NotImplementedException();

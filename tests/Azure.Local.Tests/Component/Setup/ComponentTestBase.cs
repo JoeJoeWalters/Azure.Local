@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 [assembly: LightBddScope]
 namespace Azure.Local.Tests.Component.Setup
 {
+    [ExcludeFromCodeCoverage]
     public abstract class ComponentTestBase<T> : FeatureFixture, IClassFixture<T>, IDisposable where T: WebApplicationFactory<Program>
     {
         protected readonly T _factory;

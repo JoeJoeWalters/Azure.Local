@@ -4,6 +4,7 @@ using LightBDD.XUnit2;
 
 namespace Azure.Local.Tests.Component.Timesheets
 {
+    [ExcludeFromCodeCoverage]
     [Collection("NoParallelization")]
     public class ExceptionHandlerComponentTests(ApiServiceWebApplicationFactoryExceptionHandling factory) : TimesheetComponentTestBase<ApiServiceWebApplicationFactoryExceptionHandling>(factory)
     {

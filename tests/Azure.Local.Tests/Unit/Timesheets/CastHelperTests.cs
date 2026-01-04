@@ -1,8 +1,10 @@
 ﻿using Azure.Local.ApiService.Timesheets.Contracts;
 using Azure.Local.ApiService.Timesheets.Helpers;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Local.Tests.Unit.Timesheets
 {
+    [ExcludeFromCodeCoverage]
     public class CastHelperTests
     {
         [Fact]

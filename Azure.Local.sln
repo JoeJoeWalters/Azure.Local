@@ -26,6 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "utils", "utils", "{2C4C5DD3
 	ProjectSection(SolutionItems) = preProject
 		utils\clean.bat = utils\clean.bat
 		utils\cosmosrenew.bat = utils\cosmosrenew.bat
+		utils\stryker.bat = utils\stryker.bat
 		utils\tests.bat = utils\tests.bat
 	EndProjectSection
 EndProject

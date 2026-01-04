@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.TestHost;
 
 namespace Azure.Local.Tests.Component.Setup
 {
+    [ExcludeFromCodeCoverage]
     public class ApiServiceWebApplicationFactoryBase : WebApplicationFactory<Program>
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)

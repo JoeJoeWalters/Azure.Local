@@ -3,7 +3,8 @@ using Azure.Local.Infrastructure.Repository.Specifications;
 
 namespace Azure.Local.Tests.Component.Timesheets.Fakes.Repositories
 {
-	public class FakeRepository<T> : IRepository<T> where T : RepositoryItem
+    [ExcludeFromCodeCoverage]
+    public class FakeRepository<T> : IRepository<T> where T : RepositoryItem
     {
 		private readonly Dictionary<string, T> _items;
 

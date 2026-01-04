@@ -1,13 +1,14 @@
 ﻿using Azure.Local.ApiService;
 using Azure.Local.ApiService.Timesheets.Contracts;
 using Azure.Local.ApiService.Timesheets.Helpers;
-using Microsoft.AspNetCore.Mvc.Testing;
-using System.Net.Http.Json;
 using Azure.Local.Tests.Component.Setup;
 using Azure.Local.Tests.Component.Timesheets.Helpers;
+using Microsoft.AspNetCore.Mvc.Testing;
+using System.Net.Http.Json;
 
 namespace Azure.Local.Tests.Component.Timesheets
 {
+    [ExcludeFromCodeCoverage]
     public abstract class TimesheetComponentTestBase<T>(T factory) : ComponentTestBase<T>(factory) where T : WebApplicationFactory<Program>
     {
         private const string _endpoint = "/person/{personId}/timesheet/item";
