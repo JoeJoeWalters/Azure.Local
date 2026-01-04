@@ -38,6 +38,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Local.Application", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Local.Functions", "src\Azure.Local.Functions\Azure.Local.Functions.csproj", "{5393E0C8-AC0D-4F90-9384-08A77026FEA8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{E25E5914-BB5D-4884-A4B7-7175D7A2E38C}"
+	ProjectSection(SolutionItems) = preProject
+		.github\dependabot.yml = .github\dependabot.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{DC091B43-FBE2-4B53-83B3-669129793556}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dependabot-build.yml = .github\workflows\dependabot-build.yml
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +108,7 @@ Global
 		{88386D7E-2675-42A6-934B-DA953652AA28} = {9280BEC9-6A49-47C7-BD1E-E56F3EC51BF9}
 		{9AD4D6C2-35D8-44C9-8A8C-7E83BAD1E0E5} = {A50AD01E-A8E2-4B07-8410-AEE535B01465}
 		{5393E0C8-AC0D-4F90-9384-08A77026FEA8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{DC091B43-FBE2-4B53-83B3-669129793556} = {E25E5914-BB5D-4884-A4B7-7175D7A2E38C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A56F5EDE-F36A-409C-B1EB-EED101B17A30}
