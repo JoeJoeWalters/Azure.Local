@@ -29,6 +29,8 @@ var servicebus = builder.AddAzureServiceBus("servicebus").RunAsEmulator();
 
 
 var apiService = builder.AddProject<Projects.Azure_Local_ApiService>("apiservice")
+    .WithReference(cosmos)
+    .WaitFor(cosmos)
     .WithHttpHealthCheck("/health");
 
 var functionApp = builder.AddAzureFunctionsProject<Projects.Azure_Local_Functions>("functionapp")
