@@ -10,6 +10,6 @@ namespace Azure.Local.Application.Timesheets
         Task<TimesheetItem?> GetAsync(string personId, string id);
         Task<bool> DeleteAsync(string personId, string id);
         Task<List<TimesheetItem>> SearchAsync(string personId, DateTime fromDate, DateTime toDate);
-        Task<TimesheetItem?> ProcessFileAsync(Stream stream, TimesheetFileTypes fileType);
+        Task<TimesheetItem?> ProcessFileAsync(string personId, Stream stream, TimesheetFileTypes fileType);
     }
 }

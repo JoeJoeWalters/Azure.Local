@@ -8,12 +8,12 @@ namespace Azure.Local.Infrastructure.Timesheets.FileProcessing
         IRepository<TimesheetRepositoryItem> repository,
         IFileConverterFactory converterFactory) : ITimesheetFileProcessor
     {
-        public async Task<TimesheetItem?> ProcessFileAsync(Stream fileStream, TimesheetFileTypes fileType)
+        public async Task<TimesheetItem?> ProcessFileAsync(string personId, Stream fileStream, TimesheetFileTypes fileType)
         {
             ArgumentNullException.ThrowIfNull(fileStream);
 
             var converter = converterFactory.CreateConverter(fileType);
-            var timesheetItem = await converter.ConvertAsync(fileStream);
+            var timesheetItem = await converter.ConvertAsync(personId, fileStream);
 
             if (timesheetItem != null)
             {

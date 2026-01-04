@@ -166,5 +166,26 @@ namespace Azure.Local.Tests.Unit.Timesheets
             result.Should().NotBeNull();
             result.Should().HaveCount(0);
         }
+
+        [Fact]
+        public async Task ProcessFile_ValidFile_ShouldBeSuccess()
+        {
+            // Arrange
+            string personId = Guid.NewGuid().ToString();
+            string fileContent = "Id,From,To,PersonId,Components\n" +
+                                 "1,2024-01-01,2024-01-07," + personId + ",[{\"Units\":8,\"From\":\"2024-01-01\",\"To\":\"2024-01-01\",\"Code\":\"TEST\"}]";
+            using var stream = new MemoryStream();
+            using var writer = new StreamWriter(stream);
+            writer.Write(fileContent);
+            writer.Flush();
+            stream.Position = 0;
+
+            // Act
+            var result = await _application.ProcessFileAsync(personId, stream, TimesheetFileTypes.StandardCSVTemplate);
+
+            // Assert   
+            result.Should().NotBeNull();
+            result.PersonId.Should().Be(personId);
+        }
     }
 }

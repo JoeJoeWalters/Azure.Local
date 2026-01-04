@@ -6,11 +6,11 @@ namespace Azure.Local.Tests.Component.Timesheets.Fakes.Converters
     [ExcludeFromCodeCoverage]
     public class FakeFileConverter : IFileConverter
     {
-        public Task<TimesheetItem?> ConvertAsync(Stream fileStream)
+        public Task<TimesheetItem?> ConvertAsync(string personId, Stream fileStream)
         {
             var timesheetItem = new TimesheetItem
             {
-                PersonId = Guid.NewGuid().ToString(),
+                PersonId = personId,
                 From = DateTime.UtcNow,
                 To = DateTime.UtcNow.AddDays(7)
             };

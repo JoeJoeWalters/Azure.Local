@@ -4,7 +4,7 @@ namespace Azure.Local.Infrastructure.Timesheets.FileProcessing.Converters
 {
     public class StandardCsvFileConverter : IFileConverter
     {
-        public async Task<TimesheetItem?> ConvertAsync(Stream fileStream)
+        public async Task<TimesheetItem?> ConvertAsync(string personId, Stream fileStream)
         {
             if (fileStream == null || !fileStream.CanRead)
                 return null;
@@ -20,7 +20,7 @@ namespace Azure.Local.Infrastructure.Timesheets.FileProcessing.Converters
             // This is a placeholder implementation
             var timesheetItem = new TimesheetItem
             {
-                PersonId = Guid.NewGuid().ToString(),
+                PersonId = personId,
                 From = DateTime.UtcNow,
                 To = DateTime.UtcNow.AddDays(7)
             };
