@@ -34,11 +34,16 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
           name: unittestresults
-          path: ${{ github.workspace }}/unittests
+          path: ${{ github.workspace }}/unittests    
+    - name: Upload Feature Results
+      uses: actions/upload-artifact@v4
+      with:
+          name: featureresults
+          path: ${{ github.workspace }}/**/Reports/FeaturesReport.html
     - name: Run Tests For Coverage
       run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ${{ github.workspace }}/coverage --settings:./codecoverage.runsettings      
     - name: Combine Coverage Reports as Cobertura # This is because one report is produced per project, and we want one result for all of them.
-      uses: danielpalme/ReportGenerator-GitHub-Action@5.2.4
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.5.0
       with:
         reports: "**/*.cobertura.xml" # REQUIRED # The coverage reports that should be parsed (separated by semicolon). Globbing is supported.
         targetdir: "${{ github.workspace }}" # REQUIRED # The directory where the generated report should be saved.
