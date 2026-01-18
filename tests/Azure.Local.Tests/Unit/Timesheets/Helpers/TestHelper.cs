@@ -21,7 +21,8 @@ namespace Azure.Local.Tests.Unit.Timesheets.Helpers
                         From = DateTime.UtcNow.AddHours(-2),
                         To = DateTime.UtcNow,
                         Units = 2,
-                        TimeCode = Guid.NewGuid().ToString()
+                        TimeCode = Guid.NewGuid().ToString(),
+                        ProjectCode = Guid.NewGuid().ToString()
                     }
                 ]
             };

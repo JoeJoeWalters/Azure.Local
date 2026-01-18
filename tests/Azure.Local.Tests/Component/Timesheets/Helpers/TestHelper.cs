@@ -43,7 +43,8 @@ namespace Azure.Local.Tests.Component.Timesheets.Helpers
                             Units = 8.0,
                             From = from,
                             To = to,
-                            TimeCode = Guid.NewGuid().ToString()
+                            TimeCode = Guid.NewGuid().ToString(),
+                            ProjectCode = Guid.NewGuid().ToString()
                         }
                     ]
             };
