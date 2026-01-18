@@ -11,6 +11,7 @@ class TimesheetViewModel {
         
         this.newComponent = {
             timeCode: '',
+            projectCode: '',
             units: 0,
             from: this.getDefaultFromDate(),
             to: this.getDefaultToDate()
@@ -48,6 +49,7 @@ class TimesheetViewModel {
         
         this.timesheet.components.push({
             timeCode: this.newComponent.timeCode,
+            projectCode: this.newComponent.projectCode,
             units: parseFloat(this.newComponent.units),
             from: this.newComponent.from,
             to: this.newComponent.to
@@ -56,6 +58,7 @@ class TimesheetViewModel {
         // Reset form
         this.newComponent = {
             timeCode: '',
+            projectCode: '',
             units: 0,
             from: this.getDefaultFromDate(),
             to: this.getDefaultToDate()
@@ -91,6 +94,7 @@ class TimesheetViewModel {
                 to: new Date(this.timesheet.to).toISOString(),
                 components: this.timesheet.components.map(c => ({
                     timeCode: c.timeCode,
+                    projectCode: c.projectCode,
                     units: c.units,
                     from: new Date(c.from).toISOString(),
                     to: new Date(c.to).toISOString()

@@ -110,6 +110,15 @@ const TimesheetApp = {
                                 placeholder="e.g., DEV, MEETING">
                         </div>
                         <div class="col-md-3">
+                            <label for="componentProjectCode" class="form-label">Project Code</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="componentProjectCode"
+                                v-model="newComponent.projectCode"
+                                placeholder="e.g., DEV, MEETING">
+                        </div>
+                        <div class="col-md-3">
                             <label for="componentUnits" class="form-label">Units (Hours)</label>
                             <input 
                                 type="number" 
@@ -159,6 +168,7 @@ const TimesheetApp = {
                             <thead>
                                 <tr>
                                     <th>Time Code</th>
+                                    <th>Project Code</th>
                                     <th>Units</th>
                                     <th>From</th>
                                     <th>To</th>
@@ -168,6 +178,7 @@ const TimesheetApp = {
                             <tbody>
                                 <tr v-for="(component, index) in timesheet.components" :key="index">
                                     <td>{{ component.timeCode }}</td>
+                                    <td>{{ component.projectCode }}</td>
                                     <td>{{ component.units }}</td>
                                     <td>{{ formatDateTime(component.from) }}</td>
                                     <td>{{ formatDateTime(component.to) }}</td>
