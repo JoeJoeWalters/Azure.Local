@@ -10,7 +10,7 @@ class TimesheetViewModel {
         };
         
         this.newComponent = {
-            code: '',
+            timeCode: '',
             units: 0,
             from: this.getDefaultFromDate(),
             to: this.getDefaultToDate()
@@ -41,13 +41,13 @@ class TimesheetViewModel {
     }
     
     addComponent() {
-        if (!this.newComponent.code || this.newComponent.units <= 0) {
+        if (!this.newComponent.timeCode || this.newComponent.units <= 0) {
             this.errorMessage = 'Please fill in all component fields correctly.';
             return;
         }
         
         this.timesheet.components.push({
-            code: this.newComponent.code,
+            timeCode: this.newComponent.timeCode,
             units: parseFloat(this.newComponent.units),
             from: this.newComponent.from,
             to: this.newComponent.to
@@ -55,7 +55,7 @@ class TimesheetViewModel {
         
         // Reset form
         this.newComponent = {
-            code: '',
+            timeCode: '',
             units: 0,
             from: this.getDefaultFromDate(),
             to: this.getDefaultToDate()
@@ -90,7 +90,7 @@ class TimesheetViewModel {
                 from: new Date(this.timesheet.from).toISOString(),
                 to: new Date(this.timesheet.to).toISOString(),
                 components: this.timesheet.components.map(c => ({
-                    code: c.code,
+                    timeCode: c.timeCode,
                     units: c.units,
                     from: new Date(c.from).toISOString(),
                     to: new Date(c.to).toISOString()

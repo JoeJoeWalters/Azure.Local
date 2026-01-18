@@ -80,9 +80,9 @@ namespace Azure.Local.Tests.Unit.Timesheets
             result.From.Should().Be(DateTime.Parse("2025-12-29 09:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind));
             result.To.Should().Be(DateTime.Parse("2025-12-31 17:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind));
 
-            result.Components.Where(t => t.Code == bankHolidayUnitCode && t.Units == 7.5).Should().HaveCount(1);
-            result.Components.Where(t => t.Code == dailyUnitCode && t.Units == 7.5).Should().HaveCountGreaterThan(1);
-            result.Components.Where(t => t.Code == overtimeUnitCode && t.Units == 4).Should().HaveCount(1);
+            result.Components.Where(t => t.TimeCode == bankHolidayUnitCode && t.Units == 7.5).Should().HaveCount(1);
+            result.Components.Where(t => t.TimeCode == dailyUnitCode && t.Units == 7.5).Should().HaveCountGreaterThan(1);
+            result.Components.Where(t => t.TimeCode == overtimeUnitCode && t.Units == 4).Should().HaveCount(1);
         }
 
         [Fact]

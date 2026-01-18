@@ -23,7 +23,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
                             Units = 8,
                             From = DateTime.UtcNow,
                             To = DateTime.UtcNow,
-                            Code = "TEST"
+                            TimeCode = "TEST"
                         }
                     ]
             };

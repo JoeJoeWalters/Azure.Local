@@ -48,7 +48,7 @@ namespace Azure.Local.Infrastructure.Timesheets.FileProcessing.Converters
                     From = record.From,
                     To = record.To,
                     Units = record.Units,
-                    Code = record.Code
+                    TimeCode = record.TimeCode
                 });
             }
 
@@ -61,7 +61,7 @@ namespace Azure.Local.Infrastructure.Timesheets.FileProcessing.Converters
             public DateTime From { get; set; }
             public DateTime To { get; set; }
             public double Units { get; set; }
-            public string Code { get; set; } = string.Empty;
+            public string TimeCode { get; set; } = string.Empty;
         }
     }
 }

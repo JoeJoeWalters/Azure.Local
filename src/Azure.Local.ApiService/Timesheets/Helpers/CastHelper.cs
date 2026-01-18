@@ -30,7 +30,7 @@ namespace Azure.Local.ApiService.Timesheets.Helpers
                     Units = component.Units,
                     From = component.From,
                     To = component.To,
-                    Code = component.Code
+                    TimeCode = component.TimeCode
                 };
             }
         }

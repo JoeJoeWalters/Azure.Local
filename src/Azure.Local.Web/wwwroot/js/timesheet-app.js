@@ -101,12 +101,12 @@ const TimesheetApp = {
                 <div class="card-body">
                     <div class="row g-3">
                         <div class="col-md-3">
-                            <label for="componentCode" class="form-label">Code</label>
+                            <label for="componentTimeCode" class="form-label">Time Code</label>
                             <input 
                                 type="text" 
                                 class="form-control" 
-                                id="componentCode" 
-                                v-model="newComponent.code"
+                                id="componentTimeCode" 
+                                v-model="newComponent.timeCode"
                                 placeholder="e.g., DEV, MEETING">
                         </div>
                         <div class="col-md-3">
@@ -158,7 +158,7 @@ const TimesheetApp = {
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>Code</th>
+                                    <th>Time Code</th>
                                     <th>Units</th>
                                     <th>From</th>
                                     <th>To</th>
@@ -167,7 +167,7 @@ const TimesheetApp = {
                             </thead>
                             <tbody>
                                 <tr v-for="(component, index) in timesheet.components" :key="index">
-                                    <td>{{ component.code }}</td>
+                                    <td>{{ component.timeCode }}</td>
                                     <td>{{ component.units }}</td>
                                     <td>{{ formatDateTime(component.from) }}</td>
                                     <td>{{ formatDateTime(component.to) }}</td>

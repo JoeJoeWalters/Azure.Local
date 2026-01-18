@@ -26,7 +26,7 @@ namespace Azure.Local.Application.Timesheets.Helpers
                     Units = item.Units,
                     From = item.From,
                     To = item.To,
-                    Code = item.Code
+                    TimeCode = item.TimeCode
                 };
         }
 
@@ -51,7 +51,7 @@ namespace Azure.Local.Application.Timesheets.Helpers
                     Units = item.Units,
                     From = item.From,
                     To = item.To,
-                    Code = item.Code
+                    TimeCode = item.TimeCode
                 };
         }
     }
