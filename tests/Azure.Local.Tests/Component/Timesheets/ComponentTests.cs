@@ -12,9 +12,9 @@ namespace Azure.Local.Tests.Component.Timesheets
         ~ComponentTests() => Dispose();
 
         [Scenario]
-        public void AddEndpoint_ReturnsOk()
+        public async Task AddEndpoint_ReturnsOk()
         {
-            Runner.RunScenario
+            _ = Runner.RunScenarioAsync
                 (
                     given => A_New_PersonId(),
                     when => An_Add_Request_Is_Performed(),
@@ -23,9 +23,9 @@ namespace Azure.Local.Tests.Component.Timesheets
         }
 
         [Scenario]
-        public void AddEndpoint_ReturnsConflict_IfAlreadyExists()
+        public async Task AddEndpoint_ReturnsConflict_IfAlreadyExists()
         {
-            Runner.RunScenario
+            _ = Runner.RunScenarioAsync
                 (
                     given => A_New_PersonId(),
                     and => An_Add_Request_Is_Performed(),
@@ -35,9 +35,9 @@ namespace Azure.Local.Tests.Component.Timesheets
         }
 
         [Scenario]
-        public void AddEndpoint_ReturnsBadRequest_WhenIdTooBig()
+        public async Task AddEndpoint_ReturnsBadRequest_WhenIdTooBig()
         {
-            Runner.RunScenario
+            _ = Runner.RunScenarioAsync
                 (
                     given => A_New_PersonId(),
                     when => An_Add_Request_Is_Performed(Guid.NewGuid().ToString().PadRight(300, 'X')),
@@ -47,9 +47,9 @@ namespace Azure.Local.Tests.Component.Timesheets
 
 
         [Scenario]
-        public void PatchEndpoint_ReturnsOk_IfAlreadyExists()
+        public async Task PatchEndpoint_ReturnsOk_IfAlreadyExists()
         {
-            Runner.RunScenario(
+            _ = Runner.RunScenarioAsync(
                     given => A_New_PersonId(),
                     and => An_Add_Request_Is_Performed(),
                     when => A_Patch_Request_Is_Performed_On_Existing_The_Timesheet(),
@@ -58,9 +58,9 @@ namespace Azure.Local.Tests.Component.Timesheets
         }
 
         [Scenario]
-        public void PatchEndpoint_ReturnsFailure_IfNotExists()
+        public async Task PatchEndpoint_ReturnsFailure_IfNotExists()
         {
-            Runner.RunScenario(
+            _ = Runner.RunScenarioAsync(
                     given => A_New_PersonId(),
                     when => A_Patch_Request_Is_Performed(Guid.NewGuid().ToString()),
                     then => The_Response_Should_Be(HttpStatusCode.NotFound)
@@ -68,9 +68,9 @@ namespace Azure.Local.Tests.Component.Timesheets
         }
 
         [Scenario]
-        public void GetEndpoint_ReturnsOk()
+        public async Task GetEndpoint_ReturnsOk()
         {
-            Runner.RunScenario
+            _ = Runner.RunScenarioAsync
                 (
                     given => A_New_PersonId(),
                     and => A_Test_Timesheet_Is_Added(),
@@ -81,9 +81,9 @@ namespace Azure.Local.Tests.Component.Timesheets
         }
 
         [Scenario]
-        public void GetEndpoint_ReturnsNotFound_WhenIdNotRecognised()
+        public async Task GetEndpoint_ReturnsNotFound_WhenIdNotRecognised()
         {
-            Runner.RunScenario
+            _ = Runner.RunScenarioAsync
                 (
                     given => A_New_PersonId(),
                     when => A_Get_Request_Is_Performed(Guid.NewGuid().ToString()),
@@ -92,9 +92,9 @@ namespace Azure.Local.Tests.Component.Timesheets
         }
 
         [Scenario]
-        public void DeleteEndpoint_ReturnsOk()
+        public async Task DeleteEndpoint_ReturnsOk()
         {
-            Runner.RunScenario
+            _ = Runner.RunScenarioAsync
                 (
                 given => A_New_PersonId(),
                 and => A_Test_Timesheet_Is_Added(),
@@ -104,9 +104,9 @@ namespace Azure.Local.Tests.Component.Timesheets
         }
 
         [Scenario]
-        public void DeleteEndpoint_ReturnsNotFound_WhenIdNotRecognised()
+        public async Task DeleteEndpoint_ReturnsNotFound_WhenIdNotRecognised()
         {
-            Runner.RunScenario
+            _ = Runner.RunScenarioAsync
                 (
                 given => A_New_PersonId(),
                 when => A_Delete_Request_Is_Performed(Guid.NewGuid().ToString()),
@@ -115,11 +115,11 @@ namespace Azure.Local.Tests.Component.Timesheets
         }
 
         [Scenario]
-        public void SearchEndpoint_ReturnsCorrectRecords_WhenCalled()
+        public async Task SearchEndpoint_ReturnsCorrectRecords_WhenCalled()
         {
             DateTime timeStamp = DateTime.UtcNow;
 
-            Runner.RunScenario
+            _ = Runner.RunScenarioAsync
                 (
                 given => A_New_PersonId(),
                 and => Multiple_Timesheets_Are_Added(timeStamp, 7),

@@ -11,9 +11,9 @@ namespace Azure.Local.Tests.Component.Timesheets
         ~ExceptionHandlerComponentTests() => Dispose();
 
         [Scenario]
-        public void AddEndpoint_ReturnsInternalServerError()
+        public async Task AddEndpoint_ReturnsInternalServerError()
         {
-            Runner.RunScenario
+            _ = Runner.RunScenarioAsync
                 (
                     given => A_New_PersonId(),
                     when => An_Add_Request_Is_Performed(),
@@ -22,9 +22,9 @@ namespace Azure.Local.Tests.Component.Timesheets
         }
 
         [Scenario]
-        public void PatchEndpoint_ReturnsInternalServerError()
+        public async Task PatchEndpoint_ReturnsInternalServerError()
         {
-            Runner.RunScenario
+            _ = Runner.RunScenarioAsync
                 (
                     given => A_New_PersonId(),
                     when => A_Patch_Request_Is_Performed(),
@@ -33,9 +33,9 @@ namespace Azure.Local.Tests.Component.Timesheets
         }
 
         [Scenario]
-        public void GetEndpoint_ReturnsInternalServerError()
+        public async Task GetEndpoint_ReturnsInternalServerError()
         {
-            Runner.RunScenario
+            _ = Runner.RunScenarioAsync
                 (
                     given => A_New_PersonId(),
                     when => A_Get_Request_Is_Performed(Guid.NewGuid().ToString()),
@@ -44,9 +44,9 @@ namespace Azure.Local.Tests.Component.Timesheets
         }
 
         [Scenario]
-        public void DeleteEndpoint_ReturnsInternalServerError()
+        public async Task DeleteEndpoint_ReturnsInternalServerError()
         {
-            Runner.RunScenario
+            _ = Runner.RunScenarioAsync
                 (
                     given => A_New_PersonId(),
                     when => A_Delete_Request_Is_Performed(Guid.NewGuid().ToString()),
@@ -55,11 +55,11 @@ namespace Azure.Local.Tests.Component.Timesheets
         }
 
         [Scenario]
-        public void SearchEndpoint_ReturnsInternalServerError()
+        public async Task SearchEndpoint_ReturnsInternalServerError()
         {
             DateTime timeStamp = DateTime.UtcNow;
 
-            Runner.RunScenario
+            _ = Runner.RunScenarioAsync
                 (
                 given => A_New_PersonId(),
                 when => A_Search_Request_Is_Performed(timeStamp, timeStamp.AddDays(7)),
