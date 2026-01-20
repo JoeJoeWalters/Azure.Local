@@ -17,11 +17,11 @@ namespace Azure.Local.Infrastructure.Timesheets.FileProcessing.Converters
             {
                 HasHeaderRecord = true,
             };
-            
+
             using var csv = new CsvReader(reader, config);
             csv.Context.TypeConverterOptionsCache.GetOptions<DateTime>().DateTimeStyle = DateTimeStyles.AssumeUniversal;
             //csv.Context.TypeConverterOptionsCache.GetOptions<DateTime>().Formats = ["yyyy-MM-dd HH:mm:nn"];
-            
+
             var records = new List<CsvRecord>();
             await foreach (var record in csv.GetRecordsAsync<CsvRecord>())
             {

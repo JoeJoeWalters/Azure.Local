@@ -1,5 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
-
 namespace Azure.Local.Infrastructure.Timesheets.FileProcessing.Converters
 {
     public class FileConverterFactory() : IFileConverterFactory

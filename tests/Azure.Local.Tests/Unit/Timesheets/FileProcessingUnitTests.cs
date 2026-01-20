@@ -121,7 +121,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
             var converter = new StandardCsvFileConverter();
             var personId = "non-existent-person-id";
             var testFilePath = Path.Combine("Unit", "Timesheets", "TestFiles", "FileProcessing", "StandardCSV.csv");
-            
+
             using var fileStream = File.OpenRead(testFilePath);
 
             // Act

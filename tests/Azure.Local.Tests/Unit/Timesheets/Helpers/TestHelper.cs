@@ -1,5 +1,4 @@
 ﻿using Azure.Local.Domain.Timesheets;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Local.Tests.Unit.Timesheets.Helpers
 {
@@ -8,7 +7,7 @@ namespace Azure.Local.Tests.Unit.Timesheets.Helpers
     {
         public static TimesheetItem CreateTestItem() => CreateTestItem(Guid.NewGuid().ToString());
 
-        public static TimesheetItem CreateTestItem(string personId) 
+        public static TimesheetItem CreateTestItem(string personId)
             => new()
             {
                 Id = Guid.NewGuid().ToString(),

@@ -6,10 +6,10 @@ namespace Azure.Local.Tests.Component.Timesheets.Fakes.Repositories
     [ExcludeFromCodeCoverage]
     public class FakeRepository<T> : IRepository<T> where T : RepositoryItem
     {
-		private readonly Dictionary<string, T> _items;
+        private readonly Dictionary<string, T> _items;
 
         public FakeRepository()
-		{
+        {
             _items = [];
         }
 

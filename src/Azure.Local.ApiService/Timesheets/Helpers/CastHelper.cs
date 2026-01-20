@@ -6,8 +6,8 @@ namespace Azure.Local.ApiService.Timesheets.Helpers
 {
     public static class CastHelper
     {
-        extension(AddTimesheetHttpRequest request) 
-        { 
+        extension(AddTimesheetHttpRequest request)
+        {
             public TimesheetItem ToTimesheetItem()
             {
                 return new TimesheetItem

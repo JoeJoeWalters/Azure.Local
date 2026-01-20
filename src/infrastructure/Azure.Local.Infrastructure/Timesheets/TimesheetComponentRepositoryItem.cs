@@ -2,8 +2,9 @@
 {
     public class TimesheetComponentRepositoryItem
     {
-        public TimesheetComponentRepositoryItem() { 
-        
+        public TimesheetComponentRepositoryItem()
+        {
+
         }
 
         public required double Units { get; set; }
