@@ -53,7 +53,7 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
         }
 
         protected async Task A_Patch_Request_Is_Performed()
-            => A_Patch_Request_Is_Performed(Guid.NewGuid().ToString());
+            => await A_Patch_Request_Is_Performed(Guid.NewGuid().ToString());
 
         protected async Task A_Patch_Request_Is_Performed(string? timesheetId)
         {
@@ -98,10 +98,10 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
             await Task.CompletedTask;
         }
         protected async Task An_Add_Request_Is_Performed_With_An_ExistingId(string timesheetId)
-            => An_Add_Request_Is_Performed(timesheetId);
+            => await An_Add_Request_Is_Performed(timesheetId);
 
         protected async Task An_Add_Request_Is_Performed()
-            => An_Add_Request_Is_Performed(null);
+            => await An_Add_Request_Is_Performed(null);
 
         protected async Task An_Add_Request_Is_Performed(string? timesheetId)
         {
