@@ -1,6 +1,8 @@
 ﻿using Azure.Local.Infrastructure.Repository;
+using Azure.Local.Infrastructure.ServiceBus;
 using Azure.Local.Infrastructure.Timesheets;
 using Azure.Local.Tests.Component.Timesheets.Fakes.Repositories;
+using Azure.Local.Tests.Component.Timesheets.Fakes.ServiceBus;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Azure.Local.Tests.Component.Setup
@@ -13,6 +15,7 @@ namespace Azure.Local.Tests.Component.Setup
             public IServiceCollection SetupBaseServices()
             {
                 services.AddTimesheetPersistence();
+                services.AddServiceBus();
                 return services;
             }
 
@@ -21,6 +24,14 @@ namespace Azure.Local.Tests.Component.Setup
                 // Remove existing registrations setup in Program.cs or Infrastructure
                 services.RemoveAll<IRepository<TimesheetRepositoryItem>>();
                 services.AddSingleton<IRepository<TimesheetRepositoryItem>, FakeRepository<TimesheetRepositoryItem>>();
+                return services;
+            }
+
+            private IServiceCollection AddServiceBus()
+            {
+                // Remove existing registrations setup in Program.cs or Infrastructure
+                services.RemoveAll<IServiceBusClient>();
+                services.AddSingleton<IServiceBusClient, FakeServiceBusClient>();
                 return services;
             }
         }

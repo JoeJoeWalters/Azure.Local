@@ -1,5 +1,6 @@
 using Azure.Local.Application.Timesheets;
 using Azure.Local.Infrastructure.Repository;
+using Azure.Local.Infrastructure.ServiceBus;
 using Azure.Local.Infrastructure.Timesheets;
 using Azure.Local.Infrastructure.Timesheets.FileProcessing;
 using Microsoft.Azure.Functions.Worker;
@@ -31,7 +32,17 @@ var host = new HostBuilder()
                 x.ContainerId = config["CosmosDb:ContainerId"] ?? string.Empty;
             });
 
+        // Configure Service Bus with Options pattern so it can be injected
+        // and the test runner can override it if needed.
+        services.AddOptions<ServiceBusSettings>()
+            .Configure(x =>
+            {
+                x.ConnectionString = config["ServiceBus:ConnectionString"] ?? string.Empty;
+                x.QueueName = config["ServiceBus:QueueName"] ?? string.Empty;
+            });
+
         services.AddSingleton<IRepository<TimesheetRepositoryItem>, CosmosRepository<TimesheetRepositoryItem>>();
+        services.AddSingleton<IServiceBusClient, AzureServiceBusClient>();
 
         services.AddSingleton<ITimesheetApplication, TimesheetApplication>();
         services.AddSingleton<ITimesheetFileProcessor, TimesheetFileProcessor>();
