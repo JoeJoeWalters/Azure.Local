@@ -70,8 +70,9 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
                 Content = JsonContent.Create(_patchRequestBody)
             };
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
+
             // Act
-            _response = _client.SendAsync(request, cancelToken).Result;
+            _response = await _client.SendAsync(request, cancelToken);
             await Task.CompletedTask;
         }
 
