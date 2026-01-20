@@ -38,7 +38,7 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
             _timesheetId = string.Empty;
             _addRequestBody = TestHelper.GenerateAddTimesheetHttpRequest(_personId);
             _addRequestBody.Should().NotBeNull();
-            var addResult = TestHelper.AddTestItemAsync(_client, _endpoint.Replace("{personId}", _personId), _addRequestBody).Result;
+            var addResult = await TestHelper.AddTestItemAsync(_client, _endpoint.Replace("{personId}", _personId), _addRequestBody);
             addResult.Should().BeTrue();
             _timesheetId = _addRequestBody.Id;
             await Task.CompletedTask;
@@ -48,7 +48,7 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
         {
             _request = new HttpRequestMessage(HttpMethod.Get, $"{_endpoint.Replace("{personId}", _personId)}/{timesheetId}");
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
-            _response = _client.SendAsync(_request, cancelToken).Result;
+            _response = await _client.SendAsync(_request, cancelToken);
             await Task.CompletedTask;
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
 
             // Act
-            _response = _client.SendAsync(request, cancelToken).Result;
+            _response = await _client.SendAsync(request, cancelToken);
             await Task.CompletedTask;
         }
 
@@ -95,7 +95,7 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
         {
             _request = new HttpRequestMessage(HttpMethod.Delete, $"{_endpoint.Replace("{personId}", _personId)}/{timesheetId}");
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
-            _response = _client.SendAsync(_request, cancelToken).Result;
+            _response = await _client.SendAsync(_request, cancelToken);
             await Task.CompletedTask;
         }
         protected async Task An_Add_Request_Is_Performed_With_An_ExistingId(string timesheetId)
@@ -122,7 +122,7 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
 
             // Act
-            _response = _client.SendAsync(request, cancelToken).Result;
+            _response = await _client.SendAsync(request, cancelToken);
             _timesheetId = _addRequestBody.Id;
             await Task.CompletedTask;
         }
@@ -149,7 +149,7 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
             {
                 AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest(_personId, from.AddDays(t), from.AddDays(t + 1));
                 _timesheetIds.Add(requestBody.Id);
-                _ = TestHelper.AddTestItemAsync(_client, _endpoint.Replace("{personId}", _personId), requestBody).Result;
+                _ = await TestHelper.AddTestItemAsync(_client, _endpoint.Replace("{personId}", _personId), requestBody);
             }
             await Task.CompletedTask;
         }
@@ -160,7 +160,7 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
 
             // Act
-            _response = _client.SendAsync(request, cancelToken).Result;
+            _response = await _client.SendAsync(request, cancelToken);
             await Task.CompletedTask;
         }
 
