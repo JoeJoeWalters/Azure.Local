@@ -2,7 +2,7 @@ using Azure.Messaging.ServiceBus;
 using Microsoft.Extensions.Options;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.Local.Infrastructure.ServiceBus
+namespace Azure.Local.Infrastructure.Messaging
 {
     [ExcludeFromCodeCoverage]
     public class AzureServiceBusClient : IServiceBusClient
@@ -10,9 +10,7 @@ namespace Azure.Local.Infrastructure.ServiceBus
         private readonly ServiceBusClient _client;
         private readonly ServiceBusSender _sender;
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
         public AzureServiceBusClient(IOptions<ServiceBusSettings> connectionOptions)
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
         {
             // Initialize Service Bus client and sender but protect it from taking the app down
             // if it is running component tests without Service Bus available.

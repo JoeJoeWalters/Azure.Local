@@ -1,5 +1,5 @@
 ﻿using Azure.Local.Infrastructure.Repository;
-using Azure.Local.Infrastructure.ServiceBus;
+using Azure.Local.Infrastructure.Messaging;
 using Azure.Local.Infrastructure.Timesheets;
 using Azure.Local.Tests.Component.Timesheets.Fakes.Repositories;
 using Azure.Local.Tests.Component.Timesheets.Fakes.ServiceBus;

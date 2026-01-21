@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.Local.Infrastructure.ServiceBus
+namespace Azure.Local.Infrastructure.Messaging
 {
     [ExcludeFromCodeCoverage]
     public class ServiceBusSettings

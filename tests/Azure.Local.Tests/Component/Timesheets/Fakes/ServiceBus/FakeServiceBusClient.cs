@@ -1,4 +1,4 @@
-using Azure.Local.Infrastructure.ServiceBus;
+using Azure.Local.Infrastructure.Messaging;
 using System.Collections.Concurrent;
 
 namespace Azure.Local.Tests.Component.Timesheets.Fakes.ServiceBus
@@ -16,7 +16,7 @@ namespace Azure.Local.Tests.Component.Timesheets.Fakes.ServiceBus
         /// <summary>
         /// Gets all messages that have been sent (for test assertions).
         /// </summary>
-        public IEnumerable<FakeServiceBusMessage> SentMessages => _messages.ToArray();
+        public IEnumerable<FakeServiceBusMessage> SentMessages => [.. _messages];
 
         /// <summary>
         /// Gets the count of messages that have been sent.

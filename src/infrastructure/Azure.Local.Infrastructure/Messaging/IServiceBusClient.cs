@@ -1,4 +1,4 @@
-namespace Azure.Local.Infrastructure.ServiceBus
+namespace Azure.Local.Infrastructure.Messaging
 {
     /// <summary>
     /// Service Bus client abstraction for sending messages to queues/topics.
