@@ -11,11 +11,19 @@ namespace Azure.Local.ApiService.Timesheets.Controllers
     public class TimesheetController(
         ITimesheetApplication timesheetApplication,
         IValidator<AddTimesheetHttpRequest> addTestItemHttpRequestValidator,
-        IValidator<PatchTimesheetHttpRequest> patchTestItemHttpRequestValidator) : ControllerBase
+        IValidator<PatchTimesheetHttpRequest> patchTestItemHttpRequestValidator,
+        IValidator<SubmitTimesheetHttpRequest> submitTimesheetHttpRequestValidator,
+        IValidator<ApproveTimesheetHttpRequest> approveTimesheetHttpRequestValidator,
+        IValidator<RejectTimesheetHttpRequest> rejectTimesheetHttpRequestValidator,
+        IValidator<RecallTimesheetHttpRequest> recallTimesheetHttpRequestValidator) : ControllerBase
     {
         private readonly ITimesheetApplication _timesheetApplication = timesheetApplication;
         private readonly IValidator<AddTimesheetHttpRequest> _addTestItemHttpRequestValidator = addTestItemHttpRequestValidator;
         private readonly IValidator<PatchTimesheetHttpRequest> _patchTestItemHttpRequestValidator = patchTestItemHttpRequestValidator;
+        private readonly IValidator<SubmitTimesheetHttpRequest> _submitTimesheetHttpRequestValidator = submitTimesheetHttpRequestValidator;
+        private readonly IValidator<ApproveTimesheetHttpRequest> _approveTimesheetHttpRequestValidator = approveTimesheetHttpRequestValidator;
+        private readonly IValidator<RejectTimesheetHttpRequest> _rejectTimesheetHttpRequestValidator = rejectTimesheetHttpRequestValidator;
+        private readonly IValidator<RecallTimesheetHttpRequest> _recallTimesheetHttpRequestValidator = recallTimesheetHttpRequestValidator;
 
         [HttpPost("{personId}/timesheet/item")]
         public async Task<IActionResult> Post([FromRoute] string personId, AddTimesheetHttpRequest request)
@@ -119,6 +127,129 @@ namespace Azure.Local.ApiService.Timesheets.Controllers
             {
                 var result = await _timesheetApplication.DeleteAsync(personId, id);
                 return result ? Ok() : NotFound();
+            }
+            catch (Exception ex)
+            {
+                return new ObjectResult(ex.Message)
+                {
+                    StatusCode = (int)HttpStatusCode.InternalServerError
+                };
+            }
+        }
+
+        [HttpPost("{personId}/timesheet/item/{id}/submit")]
+        public async Task<IActionResult> Submit([FromRoute] string personId, [FromRoute] string id, SubmitTimesheetHttpRequest request)
+        {
+            var validationResult = _submitTimesheetHttpRequestValidator.Validate(request);
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult.Errors);
+
+            try
+            {
+                var result = await _timesheetApplication.SubmitAsync(personId, id, personId);
+                return result ? Ok(new { Message = "Timesheet submitted successfully." }) : NotFound();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return new ObjectResult(ex.Message)
+                {
+                    StatusCode = (int)HttpStatusCode.InternalServerError
+                };
+            }
+        }
+
+        [HttpPost("{personId}/timesheet/item/{id}/approve")]
+        public async Task<IActionResult> Approve([FromRoute] string personId, [FromRoute] string id, ApproveTimesheetHttpRequest request)
+        {
+            var validationResult = _approveTimesheetHttpRequestValidator.Validate(request);
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult.Errors);
+
+            try
+            {
+                // In real app, approvedBy should come from authenticated user
+                var result = await _timesheetApplication.ApproveAsync(personId, id, personId);
+                return result ? Ok(new { Message = "Timesheet approved successfully." }) : NotFound();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return new ObjectResult(ex.Message)
+                {
+                    StatusCode = (int)HttpStatusCode.InternalServerError
+                };
+            }
+        }
+
+        [HttpPost("{personId}/timesheet/item/{id}/reject")]
+        public async Task<IActionResult> Reject([FromRoute] string personId, [FromRoute] string id, RejectTimesheetHttpRequest request)
+        {
+            var validationResult = _rejectTimesheetHttpRequestValidator.Validate(request);
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult.Errors);
+
+            try
+            {
+                // In real app, rejectedBy should come from authenticated user
+                var result = await _timesheetApplication.RejectAsync(personId, id, personId, request.RejectionReason);
+                return result ? Ok(new { Message = "Timesheet rejected." }) : NotFound();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return new ObjectResult(ex.Message)
+                {
+                    StatusCode = (int)HttpStatusCode.InternalServerError
+                };
+            }
+        }
+
+        [HttpPost("{personId}/timesheet/item/{id}/recall")]
+        public async Task<IActionResult> Recall([FromRoute] string personId, [FromRoute] string id, RecallTimesheetHttpRequest request)
+        {
+            var validationResult = _recallTimesheetHttpRequestValidator.Validate(request);
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult.Errors);
+
+            try
+            {
+                var result = await _timesheetApplication.RecallAsync(personId, id, personId);
+                return result ? Ok(new { Message = "Timesheet recalled successfully." }) : NotFound();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return new ObjectResult(ex.Message)
+                {
+                    StatusCode = (int)HttpStatusCode.InternalServerError
+                };
+            }
+        }
+
+        [HttpPost("{personId}/timesheet/item/{id}/reopen")]
+        public async Task<IActionResult> Reopen([FromRoute] string personId, [FromRoute] string id)
+        {
+            try
+            {
+                var result = await _timesheetApplication.ReopenAsync(personId, id, personId);
+                return result ? Ok(new { Message = "Timesheet reopened to Draft status." }) : NotFound();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
             }
             catch (Exception ex)
             {

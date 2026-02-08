@@ -11,5 +11,12 @@ namespace Azure.Local.Application.Timesheets
         Task<bool> DeleteAsync(string personId, string id);
         Task<List<TimesheetItem>> SearchAsync(string personId, DateTime fromDate, DateTime toDate);
         Task<TimesheetItem?> ProcessFileAsync(string personId, Stream stream, TimesheetFileTypes fileType);
+
+        // Workflow methods
+        Task<bool> SubmitAsync(string personId, string timesheetId, string submittedBy);
+        Task<bool> ApproveAsync(string personId, string timesheetId, string approvedBy);
+        Task<bool> RejectAsync(string personId, string timesheetId, string rejectedBy, string reason);
+        Task<bool> RecallAsync(string personId, string timesheetId, string recalledBy);
+        Task<bool> ReopenAsync(string personId, string timesheetId, string reopenedBy);
     }
 }

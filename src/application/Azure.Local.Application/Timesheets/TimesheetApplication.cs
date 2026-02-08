@@ -1,4 +1,5 @@
 ﻿using Azure.Local.Application.Timesheets.Helpers;
+using Azure.Local.Application.Timesheets.Workflows;
 using Azure.Local.Domain.Timesheets;
 using Azure.Local.Infrastructure.Repository;
 using Azure.Local.Infrastructure.Repository.Specifications;
@@ -11,12 +12,16 @@ namespace Azure.Local.Application.Timesheets
     public class TimesheetApplication(IRepository<TimesheetRepositoryItem> repository, ITimesheetFileProcessor fileProcessor) : ITimesheetApplication
     {
         private readonly IRepository<TimesheetRepositoryItem> _repository = repository;
+        private readonly TimesheetWorkflow _workflow = new();
 
         public Task<bool> AddAsync(string personId, TimesheetItem item)
             => _repository.AddAsync(item.ToTimesheetRepositoryItem());
 
         public Task<bool> UpdateAsync(string personId, TimesheetItem item)
-            => _repository.UpdateAsync(item.ToTimesheetRepositoryItem());
+        {
+            item.ModifiedDate = DateTime.UtcNow;
+            return _repository.UpdateAsync(item.ToTimesheetRepositoryItem());
+        }
 
         public Task<TimesheetItem?> GetAsync(string personId, string id)
         {
@@ -38,5 +43,72 @@ namespace Azure.Local.Application.Timesheets
 
         public Task<TimesheetItem?> ProcessFileAsync(string personId, Stream stream, TimesheetFileTypes fileType)
             => fileProcessor.ProcessFileAsync(personId, stream, fileType);
+
+        // Workflow methods
+
+        public async Task<bool> SubmitAsync(string personId, string timesheetId, string submittedBy)
+        {
+            var timesheet = await GetAsync(personId, timesheetId);
+            if (timesheet == null)
+                return false;
+
+            var result = _workflow.Submit(timesheet, submittedBy);
+            if (!result.IsSuccess)
+                throw new InvalidOperationException(string.Join(", ", result.Errors));
+
+            return await UpdateAsync(personId, timesheet);
+        }
+
+        public async Task<bool> ApproveAsync(string personId, string timesheetId, string approvedBy)
+        {
+            var timesheet = await GetAsync(personId, timesheetId);
+            if (timesheet == null)
+                return false;
+
+            var result = _workflow.Approve(timesheet, approvedBy);
+            if (!result.IsSuccess)
+                throw new InvalidOperationException(string.Join(", ", result.Errors));
+
+            return await UpdateAsync(personId, timesheet);
+        }
+
+        public async Task<bool> RejectAsync(string personId, string timesheetId, string rejectedBy, string reason)
+        {
+            var timesheet = await GetAsync(personId, timesheetId);
+            if (timesheet == null)
+                return false;
+
+            var result = _workflow.Reject(timesheet, rejectedBy, reason);
+            if (!result.IsSuccess)
+                throw new InvalidOperationException(string.Join(", ", result.Errors));
+
+            return await UpdateAsync(personId, timesheet);
+        }
+
+        public async Task<bool> RecallAsync(string personId, string timesheetId, string recalledBy)
+        {
+            var timesheet = await GetAsync(personId, timesheetId);
+            if (timesheet == null)
+                return false;
+
+            var result = _workflow.Recall(timesheet, recalledBy);
+            if (!result.IsSuccess)
+                throw new InvalidOperationException(string.Join(", ", result.Errors));
+
+            return await UpdateAsync(personId, timesheet);
+        }
+
+        public async Task<bool> ReopenAsync(string personId, string timesheetId, string reopenedBy)
+        {
+            var timesheet = await GetAsync(personId, timesheetId);
+            if (timesheet == null)
+                return false;
+
+            var result = _workflow.Reopen(timesheet, reopenedBy);
+            if (!result.IsSuccess)
+                throw new InvalidOperationException(string.Join(", ", result.Errors));
+
+            return await UpdateAsync(personId, timesheet);
+        }
     }
 }
