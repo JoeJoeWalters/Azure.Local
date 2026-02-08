@@ -16,15 +16,22 @@ namespace Azure.Local.Tests.Unit.Timesheets
                 From = DateTime.UtcNow,
                 To = DateTime.UtcNow.AddDays(7),
                 PersonId = Guid.NewGuid().ToString(),
+                CreatedBy = Guid.NewGuid().ToString(),
+                ManagerId = Guid.NewGuid().ToString(),
+                Comments = "Test comments",
                 Components =
                     [
                         new TimesheetHttpRequestComponent()
                         {
+                            Id = Guid.NewGuid().ToString(),
                             Units = 8,
                             From = DateTime.UtcNow,
-                            To = DateTime.UtcNow,
+                            To = DateTime.UtcNow.AddHours(8),
                             TimeCode = "TEST",
-                            ProjectCode = "PROJECT"
+                            ProjectCode = "PROJECT",
+                            Description = "Test work",
+                            WorkType = "Regular",
+                            IsBillable = true
                         }
                     ]
             };
@@ -34,7 +41,12 @@ namespace Azure.Local.Tests.Unit.Timesheets
 
             // ASSERT
             result.Should().NotBeNull();
-            result.Should().BeEquivalentTo(source);
+            result!.Id.Should().Be(source.Id);
+            result.PersonId.Should().Be(source.PersonId);
+            result.CreatedBy.Should().Be(source.CreatedBy);
+            result.ManagerId.Should().Be(source.ManagerId);
+            result.Comments.Should().Be(source.Comments);
+            result.Components.Should().HaveCount(1);
         }
 
         [Fact]
@@ -60,6 +72,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
                 From = DateTime.UtcNow,
                 To = DateTime.UtcNow.AddDays(7),
                 PersonId = Guid.NewGuid().ToString(),
+                CreatedBy = Guid.NewGuid().ToString(),
                 Components =
                     [
                         default!

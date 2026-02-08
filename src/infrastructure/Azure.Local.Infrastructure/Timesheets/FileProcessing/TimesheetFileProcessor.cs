@@ -21,7 +21,26 @@ namespace Azure.Local.Infrastructure.Timesheets.FileProcessing
                 {
                     From = timesheetItem.From,
                     PersonId = timesheetItem.PersonId,
-                    To = timesheetItem.To
+                    To = timesheetItem.To,
+                    CreatedBy = timesheetItem.CreatedBy,
+                    CreatedDate = timesheetItem.CreatedDate,
+                    ModifiedDate = timesheetItem.ModifiedDate,
+                    Status = timesheetItem.Status,
+                    ManagerId = timesheetItem.ManagerId,
+                    Comments = timesheetItem.Comments,
+                    Components = [.. timesheetItem.Components.Select(c => new TimesheetComponentRepositoryItem
+                    {
+                        Id = c.Id,
+                        From = c.From,
+                        To = c.To,
+                        Units = c.Units,
+                        TimeCode = c.TimeCode,
+                        ProjectCode = c.ProjectCode,
+                        Description = c.Description,
+                        WorkType = c.WorkType,
+                        IsBillable = c.IsBillable,
+                        IsLocked = c.IsLocked
+                    })]
                 };
 
                 await repository.AddAsync(repositoryItem);

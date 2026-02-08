@@ -38,7 +38,11 @@ namespace Azure.Local.Infrastructure.Timesheets.FileProcessing.Converters
             {
                 PersonId = personId,
                 From = records.Min(r => r.From),
-                To = records.Max(r => r.To)
+                To = records.Max(r => r.To),
+                CreatedBy = personId,
+                CreatedDate = DateTime.UtcNow,
+                ModifiedDate = DateTime.UtcNow,
+                Status = TimesheetStatus.Draft
             };
 
             foreach (var record in records)

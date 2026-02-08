@@ -36,15 +36,19 @@ namespace Azure.Local.Tests.Component.Timesheets.Helpers
                 PersonId = personId,
                 From = from,
                 To = to,
+                CreatedBy = personId,
                 Components =
                     [
                         new TimesheetHttpRequestComponent()
                         {
+                            Id = Guid.NewGuid().ToString(),
                             Units = 8.0,
                             From = from,
                             To = to,
                             TimeCode = Guid.NewGuid().ToString(),
-                            ProjectCode = Guid.NewGuid().ToString()
+                            ProjectCode = Guid.NewGuid().ToString(),
+                            WorkType = "Regular",
+                            IsBillable = true
                         }
                     ]
             };
@@ -60,11 +64,11 @@ namespace Azure.Local.Tests.Component.Timesheets.Helpers
             return response.StatusCode == HttpStatusCode.OK;
         }
 
-        public static TimesheetItem? GetTimesheetItem(this HttpResponseMessage? message)
+        public static TimesheetResponse? GetTimesheetItem(this HttpResponseMessage? message)
         {
             try
             {
-                return JsonSerializer.Deserialize<TimesheetItem>(
+                return JsonSerializer.Deserialize<TimesheetResponse>(
                     message!.Content.ReadAsStringAsync().GetAwaiter().GetResult(),
                     jsonSerializerOptions);
             }
@@ -73,11 +77,11 @@ namespace Azure.Local.Tests.Component.Timesheets.Helpers
                 return null;
             }
         }
-        public static List<TimesheetItem>? GetTimesheetItems(this HttpResponseMessage? message)
+        public static List<TimesheetResponse>? GetTimesheetItems(this HttpResponseMessage? message)
         {
             try
             {
-                return JsonSerializer.Deserialize<List<TimesheetItem>>(
+                return JsonSerializer.Deserialize<List<TimesheetResponse>>(
                     message!.Content.ReadAsStringAsync().GetAwaiter().GetResult(),
                     jsonSerializerOptions);
             }

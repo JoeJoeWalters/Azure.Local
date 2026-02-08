@@ -23,6 +23,10 @@ namespace Azure.Local.ApiService.Timesheets.Controllers
             if (request.PersonId != personId)
                 return BadRequest("PersonId in URL does not match PersonId in request body.");
 
+            // Set CreatedBy from personId if not provided (in real app, use authenticated user)
+            if (string.IsNullOrEmpty(request.CreatedBy))
+                request.CreatedBy = personId;
+
             var validationResult = _addTestItemHttpRequestValidator.Validate(request);
             if (!validationResult.IsValid)
                 return BadRequest(validationResult.Errors);
@@ -54,6 +58,8 @@ namespace Azure.Local.ApiService.Timesheets.Controllers
                 return BadRequest(validationResult.Errors);
 
             TimesheetItem item = request.ToTimesheetItem();
+            item.ModifiedDate = DateTime.UtcNow;
+            item.ModifiedBy = personId; // In real app, use authenticated user
 
             try
             {
@@ -75,7 +81,9 @@ namespace Azure.Local.ApiService.Timesheets.Controllers
             try
             {
                 var result = await _timesheetApplication.GetAsync(personId, id);
-                return (result != null) ? new OkObjectResult(result) : NotFound();
+                return result != null 
+                    ? new OkObjectResult(result.ToTimesheetResponse()) 
+                    : NotFound();
             }
             catch (Exception ex)
             {
@@ -91,8 +99,9 @@ namespace Azure.Local.ApiService.Timesheets.Controllers
         {
             try
             {
-                // Always a result (unless exception) but could be empty list
-                return new OkObjectResult(await _timesheetApplication.SearchAsync(personId, fromDate, toDate));
+                var results = await _timesheetApplication.SearchAsync(personId, fromDate, toDate);
+                var responses = results.Select(r => r.ToTimesheetResponse()).ToList();
+                return new OkObjectResult(responses);
             }
             catch (Exception ex)
             {

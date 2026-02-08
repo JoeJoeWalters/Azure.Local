@@ -1,16 +1,12 @@
-﻿using Azure.Local.Domain.Timesheets;
-
-namespace Azure.Local.Infrastructure.Timesheets
+namespace Azure.Local.ApiService.Timesheets.Contracts
 {
-    public class TimesheetComponentRepositoryItem
+    /// <summary>
+    /// Component (line item) in a timesheet response
+    /// </summary>
+    public class TimesheetResponseComponent
     {
-        public TimesheetComponentRepositoryItem()
-        {
-
-        }
-
         // Identity
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public required string Id { get; set; }
 
         // Time & Duration
         public required double Units { get; set; }
@@ -23,12 +19,12 @@ namespace Azure.Local.Infrastructure.Timesheets
 
         // Work Details
         public string? Description { get; set; }
-        public WorkType WorkType { get; set; } = WorkType.Regular;
+        public required string WorkType { get; set; }
 
         // Classification
-        public bool IsBillable { get; set; } = true;
+        public bool IsBillable { get; set; }
 
         // Control
-        public bool IsLocked { get; set; } = false;
+        public bool IsLocked { get; set; }
     }
 }
