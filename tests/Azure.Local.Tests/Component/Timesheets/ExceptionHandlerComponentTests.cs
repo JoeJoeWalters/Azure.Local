@@ -1,4 +1,5 @@
-﻿using Azure.Local.Tests.Component.Timesheets.Setup;
+﻿using Azure.Local.Domain.Timesheets;
+using Azure.Local.Tests.Component.Timesheets.Setup;
 using LightBDD.Framework.Scenarios;
 using LightBDD.XUnit2;
 
@@ -63,6 +64,50 @@ namespace Azure.Local.Tests.Component.Timesheets
                 (
                 given => A_New_PersonId(),
                 when => A_Search_Request_Is_Performed(timeStamp, timeStamp.AddDays(7)),
+                then => The_Response_Should_Be(HttpStatusCode.InternalServerError)
+                );
+        }
+
+        [Scenario]
+        public async Task StateChangeEndpoint_Submit_ReturnsInternalServerError()
+        {
+            _ = Runner.RunScenarioAsync
+                (
+                given => A_New_PersonId(),
+                when => A_ChangeState_Request_Is_Performed(TimesheetStateAction.Submit),
+                then => The_Response_Should_Be(HttpStatusCode.InternalServerError)
+                );
+        }
+
+        [Scenario]
+        public async Task StateChangeEndpoint_Approve_ReturnsInternalServerError()
+        {
+            _ = Runner.RunScenarioAsync
+                (
+                given => A_New_PersonId(),
+                when => A_ChangeState_Request_Is_Performed(TimesheetStateAction.Approve),
+                then => The_Response_Should_Be(HttpStatusCode.InternalServerError)
+                );
+        }
+
+        [Scenario]
+        public async Task StateChangeEndpoint_Reject_ReturnsInternalServerError()
+        {
+            _ = Runner.RunScenarioAsync
+                (
+                given => A_New_PersonId(),
+                when => A_ChangeState_Request_Is_Performed(TimesheetStateAction.Reject, "Test reason"),
+                then => The_Response_Should_Be(HttpStatusCode.InternalServerError)
+                );
+        }
+
+        [Scenario]
+        public async Task StateChangeEndpoint_Recall_ReturnsInternalServerError()
+        {
+            _ = Runner.RunScenarioAsync
+                (
+                given => A_New_PersonId(),
+                when => A_ChangeState_Request_Is_Performed(TimesheetStateAction.Recall),
                 then => The_Response_Should_Be(HttpStatusCode.InternalServerError)
                 );
         }

@@ -1,6 +1,7 @@
 ﻿using Azure.Local.ApiService;
 using Azure.Local.ApiService.Timesheets.Contracts;
 using Azure.Local.ApiService.Timesheets.Helpers;
+using Azure.Local.Domain.Timesheets;
 using Azure.Local.Tests.Component.Setup;
 using Azure.Local.Tests.Component.Timesheets.Helpers;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -13,12 +14,14 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
     {
         private const string _endpoint = "/person/{personId}/timesheet/item";
         private const string _searchEndpoint = "/person/{personId}/timesheet/search";
+        private const string _stateEndpoint = "/person/{personId}/timesheet/item/{timesheetId}/state";
 
         protected string _personId = string.Empty;
         protected string _timesheetId = string.Empty;
         protected List<string> _timesheetIds = [];
         protected AddTimesheetHttpRequest? _addRequestBody;
         protected PatchTimesheetHttpRequest? _patchRequestBody;
+        protected ChangeTimesheetStateHttpRequest? _changeStateRequestBody;
         protected HttpRequestMessage? _request;
         protected HttpResponseMessage? _response;
 
@@ -176,6 +179,36 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
                 foundCount += result!.Any(t => t.Id == timesheetId) ? 1 : 0;
             });
             foundCount.Should().Be(count);
+            await Task.CompletedTask;
+        }
+
+        // State change endpoint helpers
+        protected async Task A_ChangeState_Request_Is_Performed(TimesheetStateAction state, string? comments = null)
+        {
+            _changeStateRequestBody = new ChangeTimesheetStateHttpRequest
+            {
+                State = state,
+                Comments = comments
+            };
+
+            var request = new HttpRequestMessage(HttpMethod.Post, 
+                _stateEndpoint
+                    .Replace("{personId}", _personId)
+                    .Replace("{timesheetId}", _timesheetId))
+            {
+                Content = JsonContent.Create(_changeStateRequestBody)
+            };
+
+            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
+            _response = await _client.SendAsync(request, cancelToken);
+            await Task.CompletedTask;
+        }
+
+        protected async Task The_Response_Should_Contain_Message(string expectedMessage)
+        {
+            _response.Should().NotBeNull();
+            var content = await _response!.Content.ReadAsStringAsync();
+            content.Should().Contain(expectedMessage);
             await Task.CompletedTask;
         }
 
