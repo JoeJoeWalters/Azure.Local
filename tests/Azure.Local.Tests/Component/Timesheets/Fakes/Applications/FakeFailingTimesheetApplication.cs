@@ -15,6 +15,7 @@ namespace Azure.Local.Tests.Component.Timesheets.Fakes.Applications
         public Task<TimesheetItem?> ProcessFileAsync(string personId, Stream stream, TimesheetFileTypes fileType) => throw new NotImplementedException();
         
         // Workflow methods
+        public Task<bool> ChangeStateAsync(string personId, string timesheetId, string actionBy, TimesheetStateAction state, string? comments) => throw new NotImplementedException();
         public Task<bool> SubmitAsync(string personId, string timesheetId, string submittedBy) => throw new NotImplementedException();
         public Task<bool> ApproveAsync(string personId, string timesheetId, string approvedBy) => throw new NotImplementedException();
         public Task<bool> RejectAsync(string personId, string timesheetId, string rejectedBy, string reason) => throw new NotImplementedException();

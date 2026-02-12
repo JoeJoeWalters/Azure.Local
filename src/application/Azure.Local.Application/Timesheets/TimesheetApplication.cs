@@ -46,6 +46,18 @@ namespace Azure.Local.Application.Timesheets
 
         // Workflow methods
 
+        public Task<bool> ChangeStateAsync(string personId, string timesheetId, string actionBy, TimesheetStateAction state, string? comments)
+        {
+            return state switch
+            {
+                TimesheetStateAction.Submit => SubmitAsync(personId, timesheetId, actionBy),
+                TimesheetStateAction.Approve => ApproveAsync(personId, timesheetId, actionBy),
+                TimesheetStateAction.Reject => RejectAsync(personId, timesheetId, actionBy, comments ?? string.Empty),
+                TimesheetStateAction.Recall => RecallAsync(personId, timesheetId, actionBy),
+                _ => throw new ArgumentOutOfRangeException(nameof(state), state, "Invalid state action")
+            };
+        }
+
         public async Task<bool> SubmitAsync(string personId, string timesheetId, string submittedBy)
         {
             var timesheet = await GetAsync(personId, timesheetId);
