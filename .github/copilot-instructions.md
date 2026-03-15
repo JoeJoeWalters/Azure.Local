@@ -1,5 +1,9 @@
 # Copilot Instructions for Azure.Local
 
+## Package Management
+
+NuGet package versions are controlled centrally via `Directory.Packages.props` at the solution root (Central Package Management). **Do not add `Version=` attributes to `<PackageReference>` elements in `.csproj` files.** Add new packages to `Directory.Packages.props` as `<PackageVersion Include="..." Version="..." />` first, then reference them versionlessly in the csproj.
+
 ## Build & Test
 
 ```powershell
