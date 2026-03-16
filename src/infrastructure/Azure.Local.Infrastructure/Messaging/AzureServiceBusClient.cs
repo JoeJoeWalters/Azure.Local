@@ -78,30 +78,32 @@ namespace Azure.Local.Infrastructure.Messaging
         {
             try
             {
-                using ServiceBusMessageBatch messageBatch = await _sender.CreateMessageBatchAsync();
+                var messageList = messages.ToList();
+                if (messageList.Count == 0)
+                    return true;
 
-                foreach (var message in messages)
+                ServiceBusMessageBatch currentBatch = await _sender.CreateMessageBatchAsync();
+
+                foreach (var message in messageList)
                 {
-                    if (!messageBatch.TryAddMessage(new ServiceBusMessage(message)))
-                    {
-                        // If the batch is full, send it and create a new one
-                        await _sender.SendMessagesAsync(messageBatch);
-                        using var newBatch = await _sender.CreateMessageBatchAsync();
+                    var serviceBusMessage = new ServiceBusMessage(message);
 
-                        if (!newBatch.TryAddMessage(new ServiceBusMessage(message)))
-                        {
-                            // Message too large for an empty batch
-                            throw new InvalidOperationException($"Message is too large to fit in a batch.");
-                        }
+                    if (!currentBatch.TryAddMessage(serviceBusMessage))
+                    {
+                        // Current batch is full — send it and start a new one
+                        await _sender.SendMessagesAsync(currentBatch);
+                        currentBatch.Dispose();
+                        currentBatch = await _sender.CreateMessageBatchAsync();
+
+                        if (!currentBatch.TryAddMessage(serviceBusMessage))
+                            throw new InvalidOperationException("Message is too large to fit in a batch.");
                     }
                 }
 
-                // Send remaining messages
-                if (messageBatch.Count > 0)
-                {
-                    await _sender.SendMessagesAsync(messageBatch);
-                }
+                if (currentBatch.Count > 0)
+                    await _sender.SendMessagesAsync(currentBatch);
 
+                currentBatch.Dispose();
                 return true;
             }
             catch (ServiceBusException)

@@ -1,5 +1,5 @@
-﻿using Azure.Local.Domain.Timesheets;
-using Azure.Local.Infrastructure.Timesheets.FileProcessing;
+﻿using Azure.Local.Application.Timesheets.FileProcessing;
+using Azure.Local.Domain.Timesheets;
 
 namespace Azure.Local.Application.Timesheets
 {
@@ -12,8 +12,8 @@ namespace Azure.Local.Application.Timesheets
         Task<List<TimesheetItem>> SearchAsync(string personId, DateTime fromDate, DateTime toDate);
         Task<TimesheetItem?> ProcessFileAsync(string personId, Stream stream, TimesheetFileTypes fileType);
 
-        // Workflow methods
-        Task<bool> ChangeStateAsync(string personId, string timesheetId, string actionBy, TimesheetStateAction state, string? comments);
+        // Workflow methods — ChangeStateAsync returns the workflow message on success, null if not found
+        Task<string?> ChangeStateAsync(string personId, string timesheetId, string actionBy, TimesheetStateAction state, string? comments);
         Task<bool> SubmitAsync(string personId, string timesheetId, string submittedBy);
         Task<bool> ApproveAsync(string personId, string timesheetId, string approvedBy);
         Task<bool> RejectAsync(string personId, string timesheetId, string rejectedBy, string reason);

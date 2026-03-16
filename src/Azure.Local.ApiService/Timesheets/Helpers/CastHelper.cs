@@ -17,7 +17,7 @@ namespace Azure.Local.ApiService.Timesheets.Helpers
                     PersonId = request.PersonId,
                     From = request.From,
                     To = request.To,
-                    Components = [.. request.Components.Select(c => c.ToTimesheetComponentItem())],
+                    Components = request.Components.Select(c => c.ToTimesheetComponentItem()).ToList(),
 
                     // Workflow (API can only create drafts)
                     Status = TimesheetStatus.Draft,
@@ -73,7 +73,7 @@ namespace Azure.Local.ApiService.Timesheets.Helpers
                     PersonId = item.PersonId,
                     From = item.From,
                     To = item.To,
-                    Components = [.. item.Components.Select(c => c.ToTimesheetResponseComponent())],
+                    Components = item.Components.Select(c => c.ToTimesheetResponseComponent()).ToList(),
 
                     // Workflow
                     Status = item.Status.ToString(),
@@ -155,7 +155,7 @@ namespace Azure.Local.ApiService.Timesheets.Helpers
                     PersonId = item.PersonId,
                     From = item.From,
                     To = item.To,
-                    Components = [.. item.Components.Select(c => c.Clone())],
+                    Components = item.Components.Select(c => c.Clone()).ToList(),
                     ManagerId = item.ManagerId,
                     Comments = item.Comments,
                     CreatedBy = item.CreatedBy

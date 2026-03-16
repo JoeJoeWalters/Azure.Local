@@ -1,6 +1,6 @@
-﻿using Azure.Local.Domain.Timesheets;
+using Azure.Local.Domain.Timesheets;
 
-namespace Azure.Local.Infrastructure.Timesheets.FileProcessing
+namespace Azure.Local.Application.Timesheets.FileProcessing
 {
     public interface ITimesheetFileProcessor
     {

@@ -6,7 +6,7 @@ namespace Azure.Local.Application.Timesheets.Workflows
     /// <summary>
     /// Manages timesheet status transitions and business rules
     /// </summary>
-    public class TimesheetWorkflow
+    public class TimesheetWorkflow : ITimesheetWorkflow
     {
         private readonly TimesheetBusinessRules _businessRules = new();
 

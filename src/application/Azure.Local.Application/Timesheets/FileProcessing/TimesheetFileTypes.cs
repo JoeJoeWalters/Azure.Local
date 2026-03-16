@@ -1,4 +1,4 @@
-﻿namespace Azure.Local.Infrastructure.Timesheets.FileProcessing
+namespace Azure.Local.Application.Timesheets.FileProcessing
 {
     public enum TimesheetFileTypes
     {

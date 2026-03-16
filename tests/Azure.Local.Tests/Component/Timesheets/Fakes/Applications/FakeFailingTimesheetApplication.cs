@@ -1,6 +1,6 @@
-﻿using Azure.Local.Application.Timesheets;
+using Azure.Local.Application.Timesheets;
+using Azure.Local.Application.Timesheets.FileProcessing;
 using Azure.Local.Domain.Timesheets;
-using Azure.Local.Infrastructure.Timesheets.FileProcessing;
 
 namespace Azure.Local.Tests.Component.Timesheets.Fakes.Applications
 {
@@ -13,9 +13,9 @@ namespace Azure.Local.Tests.Component.Timesheets.Fakes.Applications
         public Task<List<TimesheetItem>> SearchAsync(string personId, DateTime fromDate, DateTime toDate) => throw new NotImplementedException();
         public Task<bool> UpdateAsync(string personId, TimesheetItem item) => throw new NotImplementedException();
         public Task<TimesheetItem?> ProcessFileAsync(string personId, Stream stream, TimesheetFileTypes fileType) => throw new NotImplementedException();
-        
+
         // Workflow methods
-        public Task<bool> ChangeStateAsync(string personId, string timesheetId, string actionBy, TimesheetStateAction state, string? comments) => throw new NotImplementedException();
+        public Task<string?> ChangeStateAsync(string personId, string timesheetId, string actionBy, TimesheetStateAction state, string? comments) => throw new NotImplementedException();
         public Task<bool> SubmitAsync(string personId, string timesheetId, string submittedBy) => throw new NotImplementedException();
         public Task<bool> ApproveAsync(string personId, string timesheetId, string approvedBy) => throw new NotImplementedException();
         public Task<bool> RejectAsync(string personId, string timesheetId, string rejectedBy, string reason) => throw new NotImplementedException();

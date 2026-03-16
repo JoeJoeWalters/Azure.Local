@@ -140,19 +140,8 @@ namespace Azure.Local.ApiService.Timesheets.Controllers
 
             try
             {
-                // In real app, actionBy should come from authenticated user
-                var result = await _timesheetApplication.ChangeStateAsync(personId, id, personId, request.State, request.Comments);
-                
-                var message = request.State switch
-                {
-                    TimesheetStateAction.Submit => "Timesheet submitted successfully.",
-                    TimesheetStateAction.Approve => "Timesheet approved successfully.",
-                    TimesheetStateAction.Reject => "Timesheet rejected.",
-                    TimesheetStateAction.Recall => "Timesheet recalled successfully.",
-                    _ => "Timesheet state changed successfully."
-                };
-
-                return result ? Ok(new { Message = message }) : NotFound();
+                var message = await _timesheetApplication.ChangeStateAsync(personId, id, personId, request.State, request.Comments);
+                return message is not null ? Ok(new { Message = message }) : NotFound();
             }
             catch (InvalidOperationException ex)
             {

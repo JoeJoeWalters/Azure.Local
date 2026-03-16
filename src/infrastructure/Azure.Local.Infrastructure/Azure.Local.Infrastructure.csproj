@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\application\Azure.Local.Application\Azure.Local.Application.csproj" />
     <ProjectReference Include="..\..\domain\Azure.Local.Domain\Azure.Local.Domain.csproj" />
   </ItemGroup>
 

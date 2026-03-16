@@ -145,23 +145,9 @@ namespace Azure.Local.Application.Timesheets.Validators
         /// <summary>
         /// Calculate total units per day
         /// </summary>
-        private Dictionary<DateTime, double> CalculateTotalUnitsPerDay(TimesheetItem timesheet)
-        {
-            var unitsPerDay = new Dictionary<DateTime, double>();
-
-            foreach (var component in timesheet.Components)
-            {
-                var date = component.From.Date;
-                
-                if (!unitsPerDay.ContainsKey(date))
-                {
-                    unitsPerDay[date] = 0;
-                }
-
-                unitsPerDay[date] += component.Units;
-            }
-
-            return unitsPerDay;
-        }
+        private static Dictionary<DateTime, double> CalculateTotalUnitsPerDay(TimesheetItem timesheet)
+            => timesheet.Components
+                .GroupBy(c => c.From.Date)
+                .ToDictionary(g => g.Key, g => g.Sum(c => c.Units));
     }
 }

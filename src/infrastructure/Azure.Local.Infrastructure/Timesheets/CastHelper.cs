@@ -1,23 +1,20 @@
-﻿using Azure.Local.Domain.Timesheets;
-using Azure.Local.Infrastructure.Timesheets;
+using Azure.Local.Domain.Timesheets;
 
-namespace Azure.Local.Application.Timesheets.Helpers
+namespace Azure.Local.Infrastructure.Timesheets
 {
-    public static class CastHelper
+    internal static class CastHelper
     {
-        extension(TimesheetItem item) 
+        extension(TimesheetItem item)
         {
             public TimesheetRepositoryItem ToTimesheetRepositoryItem()
                 => new()
                 {
-                    // Core
                     Id = item.Id,
                     PersonId = item.PersonId,
                     From = item.From,
                     To = item.To,
-                    Components = [.. item.Components.Select(c => c.ToTimesheetComponentRepositoryItem())],
+                    Components = item.Components.Select(c => c.ToTimesheetComponentRepositoryItem()).ToList(),
 
-                    // Workflow
                     Status = item.Status,
                     SubmittedDate = item.SubmittedDate,
                     ApprovedDate = item.ApprovedDate,
@@ -26,47 +23,33 @@ namespace Azure.Local.Application.Timesheets.Helpers
                     RejectedBy = item.RejectedBy,
                     RejectionReason = item.RejectionReason,
 
-                    // Audit
                     CreatedDate = item.CreatedDate,
                     ModifiedDate = item.ModifiedDate,
                     CreatedBy = item.CreatedBy,
                     ModifiedBy = item.ModifiedBy,
 
-                    // Metadata
                     ManagerId = item.ManagerId,
                     Comments = item.Comments,
 
-                    // Concurrency
                     ETag = item.ETag,
                     Version = item.Version
                 };
         }
 
-        extension(TimesheetComponentItem item) 
+        extension(TimesheetComponentItem item)
         {
             public TimesheetComponentRepositoryItem ToTimesheetComponentRepositoryItem()
                 => new()
                 {
-                    // Identity
                     Id = item.Id,
-
-                    // Time
                     Units = item.Units,
                     From = item.From,
                     To = item.To,
-
-                    // Coding
                     TimeCode = item.TimeCode,
                     ProjectCode = item.ProjectCode,
-
-                    // Work Details
                     Description = item.Description,
                     WorkType = item.WorkType,
-
-                    // Classification
                     IsBillable = item.IsBillable,
-
-                    // Control
                     IsLocked = item.IsLocked
                 };
         }
@@ -74,38 +57,33 @@ namespace Azure.Local.Application.Timesheets.Helpers
         extension(TimesheetRepositoryItem item)
         {
             public TimesheetItem ToTimesheetItem()
-            => new()
-            {
-                // Core
-                Id = item.Id,
-                PersonId = item.PersonId,
-                From = item.From,
-                To = item.To,
-                Components = [.. item.Components.Select(c => c.ToTimesheetComponentItem())],
+                => new()
+                {
+                    Id = item.Id,
+                    PersonId = item.PersonId,
+                    From = item.From,
+                    To = item.To,
+                    Components = item.Components.Select(c => c.ToTimesheetComponentItem()).ToList(),
 
-                // Workflow
-                Status = item.Status,
-                SubmittedDate = item.SubmittedDate,
-                ApprovedDate = item.ApprovedDate,
-                ApprovedBy = item.ApprovedBy,
-                RejectedDate = item.RejectedDate,
-                RejectedBy = item.RejectedBy,
-                RejectionReason = item.RejectionReason,
+                    Status = item.Status,
+                    SubmittedDate = item.SubmittedDate,
+                    ApprovedDate = item.ApprovedDate,
+                    ApprovedBy = item.ApprovedBy,
+                    RejectedDate = item.RejectedDate,
+                    RejectedBy = item.RejectedBy,
+                    RejectionReason = item.RejectionReason,
 
-                // Audit
-                CreatedDate = item.CreatedDate,
-                ModifiedDate = item.ModifiedDate,
-                CreatedBy = item.CreatedBy,
-                ModifiedBy = item.ModifiedBy,
+                    CreatedDate = item.CreatedDate,
+                    ModifiedDate = item.ModifiedDate,
+                    CreatedBy = item.CreatedBy,
+                    ModifiedBy = item.ModifiedBy,
 
-                // Metadata
-                ManagerId = item.ManagerId,
-                Comments = item.Comments,
+                    ManagerId = item.ManagerId,
+                    Comments = item.Comments,
 
-                // Concurrency
-                ETag = item.ETag,
-                Version = item.Version
-            };
+                    ETag = item.ETag,
+                    Version = item.Version
+                };
         }
 
         extension(TimesheetComponentRepositoryItem item)
@@ -113,26 +91,15 @@ namespace Azure.Local.Application.Timesheets.Helpers
             public TimesheetComponentItem ToTimesheetComponentItem()
                 => new()
                 {
-                    // Identity
                     Id = item.Id,
-
-                    // Time
                     Units = item.Units,
                     From = item.From,
                     To = item.To,
-
-                    // Coding
                     TimeCode = item.TimeCode,
                     ProjectCode = item.ProjectCode,
-
-                    // Work Details
                     Description = item.Description,
                     WorkType = item.WorkType,
-
-                    // Classification
                     IsBillable = item.IsBillable,
-
-                    // Control
                     IsLocked = item.IsLocked
                 };
         }

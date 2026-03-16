@@ -45,7 +45,10 @@ tests/Azure.Local.Tests/
 ## Key Conventions
 
 ### Repository pattern
-All data access goes through `IRepository<T> where T : RepositoryItem`. Queries use typed `GenericSpecification<T>` subclasses (never raw LINQ in the application layer). `RepositoryItem` uses `[JsonProperty("id")]` for Cosmos DB partition key compatibility.
+All data access goes through `ITimesheetRepository` (defined in **Application**), implemented in Infrastructure by `TimesheetCosmosRepository`. The domain-to-repository-item mapping (`CastHelper`) lives in `Infrastructure/Timesheets/CastHelper.cs`. `IRepository<T>` / `CosmosRepository<T>` remain as a generic Cosmos DB primitive used internally by `TimesheetCosmosRepository`.
+
+### Dependency direction
+`Domain ← Application ← Infrastructure ← ApiService/Web/Functions`. Application defines interfaces (`ITimesheetRepository`, `ITimesheetWorkflow`, `ITimesheetFileProcessor`) that Infrastructure implements. Application has **no reference** to Infrastructure.
 
 ### API routes
 All timesheet endpoints are rooted at `/person/{personId}/timesheet/...`. Controllers use primary constructor injection and store injected services in `readonly` fields.
