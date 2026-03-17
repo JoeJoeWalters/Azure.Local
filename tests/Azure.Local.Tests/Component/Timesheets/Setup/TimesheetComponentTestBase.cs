@@ -185,6 +185,10 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
         // State change endpoint helpers
         protected async Task A_ChangeState_Request_Is_Performed(TimesheetStateAction state, string? comments = null)
         {
+            var timesheetId = string.IsNullOrWhiteSpace(_timesheetId)
+                ? Guid.NewGuid().ToString()
+                : _timesheetId;
+
             _changeStateRequestBody = new ChangeTimesheetStateHttpRequest
             {
                 State = state,
@@ -194,7 +198,7 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
             var request = new HttpRequestMessage(HttpMethod.Post, 
                 _stateEndpoint
                     .Replace("{personId}", _personId)
-                    .Replace("{timesheetId}", _timesheetId))
+                    .Replace("{timesheetId}", timesheetId))
             {
                 Content = JsonContent.Create(_changeStateRequestBody)
             };
