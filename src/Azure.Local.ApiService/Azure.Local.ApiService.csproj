@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" />
   </ItemGroup>

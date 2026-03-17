@@ -1,5 +1,6 @@
 using Azure.Local.ApiService.Timesheets.Contracts;
 using Azure.Local.ApiService.Timesheets.Controllers.Validators;
+using Azure.Local.ApiService.Versioning;
 using Azure.Local.Application;
 using Azure.Local.Infrastructure;
 using Azure.Local.ServiceDefaults;
@@ -37,6 +38,7 @@ namespace Azure.Local.ApiService
 
             // Register MVC controllers
             builder.Services.AddControllers();
+            builder.Services.AddHeaderApiVersioning();
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();/* (options => 

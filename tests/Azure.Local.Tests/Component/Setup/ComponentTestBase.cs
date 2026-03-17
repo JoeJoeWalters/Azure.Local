@@ -1,4 +1,5 @@
-﻿using Azure.Local.ApiService;
+using Azure.Local.ApiService;
+using Azure.Local.ApiService.Versioning;
 using LightBDD.XUnit2;
 using Microsoft.AspNetCore.Mvc.Testing;
 
@@ -17,6 +18,7 @@ namespace Azure.Local.Tests.Component.Setup
             _client = _factory.CreateDefaultClient();
             _client.DefaultRequestHeaders.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
             _client.DefaultRequestHeaders.Add("Accept", "application/json");
+            _client.DefaultRequestHeaders.Add(ApiVersioningConstants.HeaderName, ApiVersioningConstants.V1);
         }
 
         ~ComponentTestBase()

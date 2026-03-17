@@ -1,5 +1,6 @@
 using Azure.Local.ApiService.Timesheets.Contracts;
 using Azure.Local.ApiService.Timesheets.Helpers;
+using Azure.Local.ApiService.Versioning;
 using Azure.Local.Application.Timesheets;
 using Azure.Local.Domain.Timesheets;
 using FluentValidation;
@@ -7,6 +8,7 @@ using FluentValidation;
 namespace Azure.Local.ApiService.Timesheets.Controllers
 {
     [ApiController]
+    [ApiVersion(ApiVersioningConstants.V1)]
     [Route("person")]
     public class TimesheetController(
         ITimesheetApplication timesheetApplication,

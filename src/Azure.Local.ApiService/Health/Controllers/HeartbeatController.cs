@@ -1,6 +1,9 @@
+using Azure.Local.ApiService.Versioning;
+
 namespace Azure.Local.ApiService.Health.Controllers
 {
     [ApiController]
+    [ApiVersion(ApiVersioningConstants.V1)]
     [Route("[controller]")]
     public class HeartbeatController : ControllerBase
     {
