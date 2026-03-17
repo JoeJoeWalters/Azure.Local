@@ -5,7 +5,7 @@ using Azure.Local.Infrastructure.Repository.Specifications.Timesheets;
 using Azure.Local.Infrastructure.Timesheets;
 using Azure.Local.Tests.Component.Timesheets.Fakes.Repositories;
 
-namespace Azure.Local.Tests.Unit.Timesheets
+namespace Azure.Local.Tests.Unit.Timesheets.Repository
 {
     [ExcludeFromCodeCoverage]
     public class TimesheetCosmosRepositoryUnitTests

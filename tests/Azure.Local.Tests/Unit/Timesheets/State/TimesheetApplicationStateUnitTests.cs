@@ -4,7 +4,7 @@ using Azure.Local.Application.Timesheets.Workflows;
 using Azure.Local.Domain.Timesheets;
 using Azure.Local.Tests.Component.Timesheets.Fakes.Repositories;
 
-namespace Azure.Local.Tests.Unit.Timesheets
+namespace Azure.Local.Tests.Unit.Timesheets.State
 {
     [ExcludeFromCodeCoverage]
     public class TimesheetApplicationStateUnitTests

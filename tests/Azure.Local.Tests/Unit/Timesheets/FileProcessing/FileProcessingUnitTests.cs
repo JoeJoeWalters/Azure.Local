@@ -3,7 +3,7 @@ using Azure.Local.Infrastructure.Timesheets.FileProcessing;
 using Azure.Local.Infrastructure.Timesheets.FileProcessing.Converters;
 using System.Globalization;
 
-namespace Azure.Local.Tests.Unit.Timesheets
+namespace Azure.Local.Tests.Unit.Timesheets.FileProcessing
 {
     [ExcludeFromCodeCoverage]
     public class FileProcessingUnitTests
