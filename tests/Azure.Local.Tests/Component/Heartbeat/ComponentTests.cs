@@ -1,5 +1,6 @@
 using Azure.Local.Tests.Component.Setup;
 using Azure.Local.ApiService.Versioning;
+using Azure.Local.ApiService.Timesheets.Helpers;
 
 namespace Azure.Local.Tests.Component.Heartbeat
 {
@@ -23,19 +24,19 @@ namespace Azure.Local.Tests.Component.Heartbeat
         public async Task HeartbeatEndpoint_ReturnsBadRequest_ForUnsupportedApiVersion()
         {
             // Arrange
-            using var client = _factory.CreateDefaultClient();
-            client.DefaultRequestHeaders.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-            client.DefaultRequestHeaders.Add("Accept", "application/json");
-            client.DefaultRequestHeaders.Add(ApiVersioningConstants.HeaderName, "999.0"); // Using an very large unsupported API version to trigger BadRequest response
+            var _clonedClient = ClonedHttpClient(); // Don't modify the original client as it might be used by other tests
+            _clonedClient.DefaultRequestHeaders.Remove(ApiVersioningConstants.HeaderName); // Remove any existing API version header
+            _clonedClient.DefaultRequestHeaders.Add(ApiVersioningConstants.HeaderName, "999.0"); // Using an very large unsupported API version to trigger BadRequest response
 
             var request = new HttpRequestMessage(HttpMethod.Get, "/heartbeat");
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
 
             // Act
-            var response = await client.SendAsync(request, cancelToken);
+            var response = await _clonedClient.SendAsync(request, cancelToken);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            _clonedClient.Dispose(); // Dispose the cloned client after use
         }
     }
 }
