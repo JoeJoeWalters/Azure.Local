@@ -7,7 +7,7 @@ namespace Azure.Local.Application.Timesheets
     public class TimesheetApplication(
         ITimesheetRepository repository,
         ITimesheetFileProcessor fileProcessor,
-        ITimesheetWorkflow workflow) : ITimesheetApplication
+        ITimesheetWorkflow workflow) : ITimesheetApplicationV1
     {
         public Task<bool> AddAsync(string personId, TimesheetItem item)
             => repository.AddAsync(item);

@@ -18,6 +18,8 @@ namespace Azure.Local.ApiService.Versioning
                     options.ApiVersionReader = new HeaderApiVersionReader(ApiVersioningConstants.HeaderName);
                 });
 
+                services.AddSingleton<IApiVersionStrategy, ApiVersionStrategy>();
+
                 return services;
             }
         }

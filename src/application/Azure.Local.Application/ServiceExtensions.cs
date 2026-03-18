@@ -11,7 +11,9 @@ namespace Azure.Local.Application
             public IServiceCollection AddApplication()
             {
                 services.AddSingleton<ITimesheetWorkflow, TimesheetWorkflow>();
-                services.AddSingleton<ITimesheetApplication, TimesheetApplication>();
+                services.AddSingleton<TimesheetApplication>();
+                services.AddSingleton<ITimesheetApplication>(serviceProvider => serviceProvider.GetRequiredService<TimesheetApplication>());
+                services.AddSingleton<ITimesheetApplicationV1>(serviceProvider => serviceProvider.GetRequiredService<TimesheetApplication>());
                 return services;
             }
         }

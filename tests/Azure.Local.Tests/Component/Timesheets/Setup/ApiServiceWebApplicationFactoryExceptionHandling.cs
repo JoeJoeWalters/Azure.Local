@@ -27,7 +27,10 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
                     services.SetupBaseServices();
 
                     services.RemoveAll<ITimesheetApplication>();
-                    services.AddSingleton<ITimesheetApplication, FakeFailingTimesheetApplication>();
+                    services.RemoveAll<ITimesheetApplicationV1>();
+                    services.AddSingleton<FakeFailingTimesheetApplication>();
+                    services.AddSingleton<ITimesheetApplication>(serviceProvider => serviceProvider.GetRequiredService<FakeFailingTimesheetApplication>());
+                    services.AddSingleton<ITimesheetApplicationV1>(serviceProvider => serviceProvider.GetRequiredService<FakeFailingTimesheetApplication>());
                 });
         }
     }

@@ -1,22 +1,23 @@
 using Azure.Local.ApiService.Timesheets.Contracts;
-using Azure.Local.ApiService.Timesheets.Helpers;
+using Azure.Local.ApiService.Timesheets.Mapping.V1;
 using Azure.Local.ApiService.Versioning;
 using Azure.Local.Application.Timesheets;
-using Azure.Local.Domain.Timesheets;
 using FluentValidation;
 
-namespace Azure.Local.ApiService.Timesheets.Controllers
+namespace Azure.Local.ApiService.Timesheets.Controllers.V1
 {
     [ApiController]
     [ApiVersion(ApiVersioningConstants.V1)]
     [Route("person")]
-    public class TimesheetController(
-        ITimesheetApplication timesheetApplication,
+    public class TimesheetControllerV1(
+        ITimesheetApplicationV1 timesheetApplication,
+        ITimesheetContractMapperV1 mapper,
         IValidator<AddTimesheetHttpRequest> addTestItemHttpRequestValidator,
         IValidator<PatchTimesheetHttpRequest> patchTestItemHttpRequestValidator,
         IValidator<ChangeTimesheetStateHttpRequest> changeTimesheetStateHttpRequestValidator) : ControllerBase
     {
-        private readonly ITimesheetApplication _timesheetApplication = timesheetApplication;
+        private readonly ITimesheetApplicationV1 _timesheetApplication = timesheetApplication;
+        private readonly ITimesheetContractMapperV1 _mapper = mapper;
         private readonly IValidator<AddTimesheetHttpRequest> _addTestItemHttpRequestValidator = addTestItemHttpRequestValidator;
         private readonly IValidator<PatchTimesheetHttpRequest> _patchTestItemHttpRequestValidator = patchTestItemHttpRequestValidator;
         private readonly IValidator<ChangeTimesheetStateHttpRequest> _changeTimesheetStateHttpRequestValidator = changeTimesheetStateHttpRequestValidator;
@@ -35,7 +36,7 @@ namespace Azure.Local.ApiService.Timesheets.Controllers
             if (!validationResult.IsValid)
                 return BadRequest(validationResult.Errors);
 
-            TimesheetItem item = request.ToTimesheetItem();
+            var item = _mapper.ToDomain(request);
 
             try
             {
@@ -61,7 +62,7 @@ namespace Azure.Local.ApiService.Timesheets.Controllers
             if (!validationResult.IsValid)
                 return BadRequest(validationResult.Errors);
 
-            TimesheetItem item = request.ToTimesheetItem();
+            var item = _mapper.ToDomain(request);
             item.ModifiedDate = DateTime.UtcNow;
             item.ModifiedBy = personId; // In real app, use authenticated user
 
@@ -86,7 +87,7 @@ namespace Azure.Local.ApiService.Timesheets.Controllers
             {
                 var result = await _timesheetApplication.GetAsync(personId, id);
                 return result != null 
-                    ? new OkObjectResult(result.ToTimesheetResponse()) 
+                    ? new OkObjectResult(_mapper.ToResponse(result)) 
                     : NotFound();
             }
             catch (Exception ex)
@@ -104,7 +105,7 @@ namespace Azure.Local.ApiService.Timesheets.Controllers
             try
             {
                 var results = await _timesheetApplication.SearchAsync(personId, fromDate, toDate);
-                var responses = results.Select(r => r.ToTimesheetResponse()).ToList();
+                var responses = _mapper.ToResponse(results);
                 return new OkObjectResult(responses);
             }
             catch (Exception ex)

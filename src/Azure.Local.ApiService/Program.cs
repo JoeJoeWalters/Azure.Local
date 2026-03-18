@@ -1,5 +1,6 @@
 using Azure.Local.ApiService.Timesheets.Contracts;
 using Azure.Local.ApiService.Timesheets.Controllers.Validators;
+using Azure.Local.ApiService.Timesheets.Mapping.V1;
 using Azure.Local.ApiService.Versioning;
 using Azure.Local.Application;
 using Azure.Local.Infrastructure;
@@ -32,6 +33,7 @@ namespace Azure.Local.ApiService
             builder.Services.AddScoped<IValidator<AddTimesheetHttpRequest>, AddTimesheetHttpRequestValidator>();
             builder.Services.AddScoped<IValidator<PatchTimesheetHttpRequest>, PatchTimesheetHttpRequestValidator>();
             builder.Services.AddScoped<IValidator<ChangeTimesheetStateHttpRequest>, ChangeTimesheetStateHttpRequestValidator>();
+            builder.Services.AddSingleton<ITimesheetContractMapperV1, TimesheetContractMapperV1>();
 
             // Add services to the container.
             builder.Services.AddProblemDetails();
