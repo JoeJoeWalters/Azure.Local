@@ -1,4 +1,4 @@
-﻿using Azure.Local.ApiService.Timesheets.Contracts;
+﻿using Azure.Local.ApiService.Timesheets.Contracts.V1;
 using Azure.Local.ApiService.Timesheets.Helpers;
 using Azure.Local.Domain.Timesheets;
 using System.Net.Http.Json;
@@ -14,22 +14,22 @@ namespace Azure.Local.Tests.Component.Timesheets.Helpers
             PropertyNameCaseInsensitive = true
         };
 
-        public static PatchTimesheetHttpRequest? GeneratePatchTimesheetHttpRequest()
+        public static PatchTimesheetHttpRequestV1? GeneratePatchTimesheetHttpRequest()
             => GenerateAddTimesheetHttpRequest().ToPatchTimesheetHttpRequest();
 
-        public static PatchTimesheetHttpRequest? GeneratePatchTimesheetHttpRequest(AddTimesheetHttpRequest addRequest)
+        public static PatchTimesheetHttpRequestV1? GeneratePatchTimesheetHttpRequest(AddTimesheetHttpRequestV1 addRequest)
             => addRequest.ToPatchTimesheetHttpRequest();
 
-        public static PatchTimesheetHttpRequest? GeneratePatchTimesheetHttpRequest(string personId)
+        public static PatchTimesheetHttpRequestV1? GeneratePatchTimesheetHttpRequest(string personId)
             => GenerateAddTimesheetHttpRequest(personId).ToPatchTimesheetHttpRequest();
 
-        public static AddTimesheetHttpRequest? GenerateAddTimesheetHttpRequest()
+        public static AddTimesheetHttpRequestV1? GenerateAddTimesheetHttpRequest()
             => GenerateAddTimesheetHttpRequest(Guid.NewGuid().ToString(), DateTime.UtcNow, DateTime.UtcNow.AddDays(1));
 
-        public static AddTimesheetHttpRequest? GenerateAddTimesheetHttpRequest(string personId)
+        public static AddTimesheetHttpRequestV1? GenerateAddTimesheetHttpRequest(string personId)
             => GenerateAddTimesheetHttpRequest(personId, DateTime.UtcNow, DateTime.UtcNow.AddDays(1));
 
-        public static AddTimesheetHttpRequest GenerateAddTimesheetHttpRequest(string personId, DateTime from, DateTime to)
+        public static AddTimesheetHttpRequestV1 GenerateAddTimesheetHttpRequest(string personId, DateTime from, DateTime to)
             => new()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -39,7 +39,7 @@ namespace Azure.Local.Tests.Component.Timesheets.Helpers
                 CreatedBy = personId,
                 Components =
                     [
-                        new TimesheetHttpRequestComponent()
+                        new TimesheetHttpRequestComponentV1()
                         {
                             Id = Guid.NewGuid().ToString(),
                             Units = 8.0,
@@ -53,7 +53,7 @@ namespace Azure.Local.Tests.Component.Timesheets.Helpers
                     ]
             };
 
-        public static async Task<bool> AddTestItemAsync(HttpClient httpClient, string endpoint, AddTimesheetHttpRequest requestBody)
+        public static async Task<bool> AddTestItemAsync(HttpClient httpClient, string endpoint, AddTimesheetHttpRequestV1 requestBody)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, endpoint)
             {
@@ -64,11 +64,11 @@ namespace Azure.Local.Tests.Component.Timesheets.Helpers
             return response.StatusCode == HttpStatusCode.OK;
         }
 
-        public static TimesheetResponse? GetTimesheetItem(this HttpResponseMessage? message)
+        public static TimesheetResponseV1? GetTimesheetItem(this HttpResponseMessage? message)
         {
             try
             {
-                return JsonSerializer.Deserialize<TimesheetResponse>(
+                return JsonSerializer.Deserialize<TimesheetResponseV1>(
                     message!.Content.ReadAsStringAsync().GetAwaiter().GetResult(),
                     jsonSerializerOptions);
             }
@@ -77,11 +77,11 @@ namespace Azure.Local.Tests.Component.Timesheets.Helpers
                 return null;
             }
         }
-        public static List<TimesheetResponse>? GetTimesheetItems(this HttpResponseMessage? message)
+        public static List<TimesheetResponseV1>? GetTimesheetItems(this HttpResponseMessage? message)
         {
             try
             {
-                return JsonSerializer.Deserialize<List<TimesheetResponse>>(
+                return JsonSerializer.Deserialize<List<TimesheetResponseV1>>(
                     message!.Content.ReadAsStringAsync().GetAwaiter().GetResult(),
                     jsonSerializerOptions);
             }

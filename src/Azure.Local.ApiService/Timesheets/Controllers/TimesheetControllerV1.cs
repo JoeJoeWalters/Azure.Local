@@ -1,10 +1,11 @@
-using Azure.Local.ApiService.Timesheets.Contracts;
+using Azure.Local.ApiService.Timesheets.Contracts.V1;
 using Azure.Local.ApiService.Timesheets.Mapping.V1;
 using Azure.Local.ApiService.Versioning;
 using Azure.Local.Application.Timesheets;
+using Azure.Local.Application.Timesheets.V1;
 using FluentValidation;
 
-namespace Azure.Local.ApiService.Timesheets.Controllers.V1
+namespace Azure.Local.ApiService.Timesheets.Controllers
 {
     [ApiController]
     [ApiVersion(ApiVersioningConstants.V1)]
@@ -12,18 +13,18 @@ namespace Azure.Local.ApiService.Timesheets.Controllers.V1
     public class TimesheetControllerV1(
         ITimesheetApplicationV1 timesheetApplication,
         ITimesheetContractMapperV1 mapper,
-        IValidator<AddTimesheetHttpRequest> addTestItemHttpRequestValidator,
-        IValidator<PatchTimesheetHttpRequest> patchTestItemHttpRequestValidator,
-        IValidator<ChangeTimesheetStateHttpRequest> changeTimesheetStateHttpRequestValidator) : ControllerBase
+        IValidator<AddTimesheetHttpRequestV1> addTestItemHttpRequestValidator,
+        IValidator<PatchTimesheetHttpRequestV1> patchTestItemHttpRequestValidator,
+        IValidator<ChangeTimesheetStateHttpRequestV1> changeTimesheetStateHttpRequestValidator) : ControllerBase
     {
         private readonly ITimesheetApplicationV1 _timesheetApplication = timesheetApplication;
         private readonly ITimesheetContractMapperV1 _mapper = mapper;
-        private readonly IValidator<AddTimesheetHttpRequest> _addTestItemHttpRequestValidator = addTestItemHttpRequestValidator;
-        private readonly IValidator<PatchTimesheetHttpRequest> _patchTestItemHttpRequestValidator = patchTestItemHttpRequestValidator;
-        private readonly IValidator<ChangeTimesheetStateHttpRequest> _changeTimesheetStateHttpRequestValidator = changeTimesheetStateHttpRequestValidator;
+        private readonly IValidator<AddTimesheetHttpRequestV1> _addTestItemHttpRequestValidator = addTestItemHttpRequestValidator;
+        private readonly IValidator<PatchTimesheetHttpRequestV1> _patchTestItemHttpRequestValidator = patchTestItemHttpRequestValidator;
+        private readonly IValidator<ChangeTimesheetStateHttpRequestV1> _changeTimesheetStateHttpRequestValidator = changeTimesheetStateHttpRequestValidator;
 
         [HttpPost("{personId}/timesheet/item")]
-        public async Task<IActionResult> Post([FromRoute] string personId, AddTimesheetHttpRequest request)
+        public async Task<IActionResult> Post([FromRoute] string personId, AddTimesheetHttpRequestV1 request)
         {
             if (request.PersonId != personId)
                 return BadRequest("PersonId in URL does not match PersonId in request body.");
@@ -53,7 +54,7 @@ namespace Azure.Local.ApiService.Timesheets.Controllers.V1
         }
 
         [HttpPatch("{personId}/timesheet/item")]
-        public async Task<IActionResult> Patch([FromRoute] string personId, PatchTimesheetHttpRequest request)
+        public async Task<IActionResult> Patch([FromRoute] string personId, PatchTimesheetHttpRequestV1 request)
         {
             if (request.PersonId != personId)
                 return BadRequest("PersonId in URL does not match PersonId in request body.");
@@ -135,7 +136,7 @@ namespace Azure.Local.ApiService.Timesheets.Controllers.V1
         }
 
         [HttpPost("{personId}/timesheet/item/{id}/state")]
-        public async Task<IActionResult> ChangeState([FromRoute] string personId, [FromRoute] string id, ChangeTimesheetStateHttpRequest request)
+        public async Task<IActionResult> ChangeState([FromRoute] string personId, [FromRoute] string id, ChangeTimesheetStateHttpRequestV1 request)
         {
             var validationResult = _changeTimesheetStateHttpRequestValidator.Validate(request);
             if (!validationResult.IsValid)
@@ -148,7 +149,7 @@ namespace Azure.Local.ApiService.Timesheets.Controllers.V1
             }
             catch (InvalidOperationException ex)
             {
-                return BadRequest(new { Message = ex.Message });
+                return BadRequest(new { ex.Message });
             }
             catch (Exception ex)
             {
@@ -169,7 +170,7 @@ namespace Azure.Local.ApiService.Timesheets.Controllers.V1
             }
             catch (InvalidOperationException ex)
             {
-                return BadRequest(new { Message = ex.Message });
+                return BadRequest(new { ex.Message });
             }
             catch (Exception ex)
             {

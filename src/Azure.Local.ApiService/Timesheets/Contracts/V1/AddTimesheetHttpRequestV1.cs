@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Azure.Local.ApiService.Timesheets.Contracts
+namespace Azure.Local.ApiService.Timesheets.Contracts.V1
 {
-    public class AddTimesheetHttpRequest
+    public class AddTimesheetHttpRequestV1
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
@@ -15,7 +15,7 @@ namespace Azure.Local.ApiService.Timesheets.Contracts
         [Required]
         public required DateTime To { get; set; }
 
-        public List<TimesheetHttpRequestComponent> Components { get; set; } = [];
+        public List<TimesheetHttpRequestComponentV1> Components { get; set; } = [];
 
         // Metadata
         [MaxLength(50)]

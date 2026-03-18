@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Azure.Local.ApiService.Timesheets.Contracts
+namespace Azure.Local.ApiService.Timesheets.Contracts.V1
 {
-    public class TimesheetHttpRequestComponent
+    public class TimesheetHttpRequestComponentV1
     {
         // Identity (optional for new, required for updates)
         public string? Id { get; set; }

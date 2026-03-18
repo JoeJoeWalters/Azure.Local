@@ -1,4 +1,5 @@
 using Azure.Local.ApiService.Timesheets.Contracts;
+using Azure.Local.ApiService.Timesheets.Contracts.V1;
 using Azure.Local.ApiService.Timesheets.Helpers;
 using Azure.Local.Domain.Timesheets;
 
@@ -26,7 +27,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
         [Fact]
         public void Cast_Null_AddTimesheetHttpRequest_To_PatchTimesheetHttpRequest_ShouldBeNull()
         {
-            AddTimesheetHttpRequest? source = null;
+            AddTimesheetHttpRequestV1? source = null;
 
             var result = source.ToPatchTimesheetHttpRequest();
 
@@ -58,7 +59,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
         [Fact]
         public void Cast_TimesheetHttpRequestComponent_To_TimesheetComponentItem_UsesDefaults()
         {
-            var component = new TimesheetHttpRequestComponent
+            var component = new TimesheetHttpRequestComponentV1
             {
                 Id = null,
                 Units = 7.5,
@@ -80,7 +81,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
         [Fact]
         public void Cast_TimesheetHttpRequestComponent_To_TimesheetComponentItem_ShouldParseValidWorkType()
         {
-            var component = new TimesheetHttpRequestComponent
+            var component = new TimesheetHttpRequestComponentV1
             {
                 Id = "component-id",
                 Units = 8,
@@ -102,7 +103,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
         [Fact]
         public void Cast_TimesheetHttpRequestComponent_To_TimesheetComponentItem_ShouldFallbackForInvalidWorkType()
         {
-            var component = new TimesheetHttpRequestComponent
+            var component = new TimesheetHttpRequestComponentV1
             {
                 Id = "component-id",
                 Units = 8,
@@ -176,7 +177,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
         [Fact]
         public void Cast_AddTimesheetHttpRequest_To_PatchTimesheetHttpRequest_WithNullComponent_ShouldThrowError()
         {
-            var source = new AddTimesheetHttpRequest
+            var source = new AddTimesheetHttpRequestV1
             {
                 Id = Guid.NewGuid().ToString(),
                 From = DateTime.UtcNow,
@@ -192,7 +193,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
                 .Where(e => e.Message.Contains("resulted in null."));
         }
 
-        private static AddTimesheetHttpRequest CreateAddRequest()
+        private static AddTimesheetHttpRequestV1 CreateAddRequest()
             => new()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -204,7 +205,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
                 Comments = "Test comments",
                 Components =
                 [
-                    new TimesheetHttpRequestComponent
+                    new TimesheetHttpRequestComponentV1
                     {
                         Id = Guid.NewGuid().ToString(),
                         Units = 8,

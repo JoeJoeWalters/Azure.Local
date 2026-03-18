@@ -1,12 +1,12 @@
-using Azure.Local.ApiService.Timesheets.Contracts;
+using Azure.Local.ApiService.Timesheets.Contracts.V1;
 using Azure.Local.Domain.Timesheets;
 using FluentValidation;
 
-namespace Azure.Local.ApiService.Timesheets.Controllers.Validators
+namespace Azure.Local.ApiService.Timesheets.Controllers.Validators.V1
 {
-    public class ChangeTimesheetStateHttpRequestValidator : AbstractValidator<ChangeTimesheetStateHttpRequest>
+    public class ChangeTimesheetStateHttpRequestValidatorV1 : AbstractValidator<ChangeTimesheetStateHttpRequestV1>
     {
-        public ChangeTimesheetStateHttpRequestValidator()
+        public ChangeTimesheetStateHttpRequestValidatorV1()
         {
             RuleFor(x => x.State)
                 .IsInEnum()

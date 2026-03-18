@@ -18,7 +18,7 @@ namespace Azure.Local.Tests.Unit.Timesheets.State
         {
             var repository = new FakeTimesheetRepository();
             var workflow = new SpyWorkflow();
-            var app = new TimesheetApplication(repository, new NullFileProcessor(), workflow);
+            var app = new TimesheetApplicationV1(repository, new NullFileProcessor(), workflow);
             var timesheet = CreateDraftTimesheet("person-1", "ts-1");
             _ = await repository.AddAsync(timesheet);
 
@@ -30,7 +30,7 @@ namespace Azure.Local.Tests.Unit.Timesheets.State
         [Fact]
         public async Task ChangeStateAsync_ShouldReturnNull_WhenTimesheetNotFound()
         {
-            var app = new TimesheetApplication(new FakeTimesheetRepository(), new NullFileProcessor(), new SpyWorkflow());
+            var app = new TimesheetApplicationV1(new FakeTimesheetRepository(), new NullFileProcessor(), new SpyWorkflow());
 
             var message = await app.ChangeStateAsync("person-1", "missing", "actor-1", TimesheetStateAction.Submit, null);
 
@@ -41,7 +41,7 @@ namespace Azure.Local.Tests.Unit.Timesheets.State
         public async Task ChangeStateAsync_ShouldThrow_WhenWorkflowFails()
         {
             var repository = new FakeTimesheetRepository();
-            var app = new TimesheetApplication(repository, new NullFileProcessor(), new FailingWorkflow());
+            var app = new TimesheetApplicationV1(repository, new NullFileProcessor(), new FailingWorkflow());
             var timesheet = CreateDraftTimesheet("person-1", "ts-1");
             _ = await repository.AddAsync(timesheet);
 
@@ -55,7 +55,7 @@ namespace Azure.Local.Tests.Unit.Timesheets.State
         public async Task ChangeStateAsync_ShouldThrow_ForInvalidStateAction()
         {
             var repository = new FakeTimesheetRepository();
-            var app = new TimesheetApplication(repository, new NullFileProcessor(), new SpyWorkflow());
+            var app = new TimesheetApplicationV1(repository, new NullFileProcessor(), new SpyWorkflow());
             var timesheet = CreateDraftTimesheet("person-1", "ts-1");
             _ = await repository.AddAsync(timesheet);
 
@@ -68,7 +68,7 @@ namespace Azure.Local.Tests.Unit.Timesheets.State
         public async Task SubmitAsync_ShouldReturnTrue_WhenFound()
         {
             var repository = new FakeTimesheetRepository();
-            var app = new TimesheetApplication(repository, new NullFileProcessor(), new SpyWorkflow());
+            var app = new TimesheetApplicationV1(repository, new NullFileProcessor(), new SpyWorkflow());
             var timesheet = CreateDraftTimesheet("person-1", "ts-1");
             _ = await repository.AddAsync(timesheet);
 
@@ -81,7 +81,7 @@ namespace Azure.Local.Tests.Unit.Timesheets.State
         public async Task ApproveAsync_ShouldReturnTrue_WhenFound()
         {
             var repository = new FakeTimesheetRepository();
-            var app = new TimesheetApplication(repository, new NullFileProcessor(), new SpyWorkflow());
+            var app = new TimesheetApplicationV1(repository, new NullFileProcessor(), new SpyWorkflow());
             var timesheet = CreateDraftTimesheet("person-1", "ts-1");
             _ = await repository.AddAsync(timesheet);
 
@@ -94,7 +94,7 @@ namespace Azure.Local.Tests.Unit.Timesheets.State
         public async Task RejectAsync_ShouldReturnTrue_WhenFound()
         {
             var repository = new FakeTimesheetRepository();
-            var app = new TimesheetApplication(repository, new NullFileProcessor(), new SpyWorkflow());
+            var app = new TimesheetApplicationV1(repository, new NullFileProcessor(), new SpyWorkflow());
             var timesheet = CreateDraftTimesheet("person-1", "ts-1");
             _ = await repository.AddAsync(timesheet);
 
@@ -107,7 +107,7 @@ namespace Azure.Local.Tests.Unit.Timesheets.State
         public async Task RecallAsync_ShouldReturnTrue_WhenFound()
         {
             var repository = new FakeTimesheetRepository();
-            var app = new TimesheetApplication(repository, new NullFileProcessor(), new SpyWorkflow());
+            var app = new TimesheetApplicationV1(repository, new NullFileProcessor(), new SpyWorkflow());
             var timesheet = CreateDraftTimesheet("person-1", "ts-1");
             _ = await repository.AddAsync(timesheet);
 
@@ -120,7 +120,7 @@ namespace Azure.Local.Tests.Unit.Timesheets.State
         public async Task ReopenAsync_ShouldReturnTrue_WhenFound()
         {
             var repository = new FakeTimesheetRepository();
-            var app = new TimesheetApplication(repository, new NullFileProcessor(), new SpyWorkflow());
+            var app = new TimesheetApplicationV1(repository, new NullFileProcessor(), new SpyWorkflow());
             var timesheet = CreateDraftTimesheet("person-1", "ts-1");
             _ = await repository.AddAsync(timesheet);
 
@@ -132,7 +132,7 @@ namespace Azure.Local.Tests.Unit.Timesheets.State
         [Fact]
         public async Task SubmitAsync_ShouldReturnFalse_WhenNotFound()
         {
-            var app = new TimesheetApplication(new FakeTimesheetRepository(), new NullFileProcessor(), new SpyWorkflow());
+            var app = new TimesheetApplicationV1(new FakeTimesheetRepository(), new NullFileProcessor(), new SpyWorkflow());
 
             var result = await app.SubmitAsync("person-1", "missing", "actor-1");
 

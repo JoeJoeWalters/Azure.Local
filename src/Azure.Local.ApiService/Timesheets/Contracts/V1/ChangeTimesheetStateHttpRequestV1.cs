@@ -1,11 +1,11 @@
 using Azure.Local.Domain.Timesheets;
 
-namespace Azure.Local.ApiService.Timesheets.Contracts
+namespace Azure.Local.ApiService.Timesheets.Contracts.V1
 {
     /// <summary>
     /// Request to change the state of a timesheet
     /// </summary>
-    public class ChangeTimesheetStateHttpRequest
+    public class ChangeTimesheetStateHttpRequestV1
     {
         /// <summary>
         /// The target state action to perform

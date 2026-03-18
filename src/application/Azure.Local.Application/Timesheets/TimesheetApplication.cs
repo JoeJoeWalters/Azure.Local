@@ -1,10 +1,11 @@
 using Azure.Local.Application.Timesheets.FileProcessing;
+using Azure.Local.Application.Timesheets.V1;
 using Azure.Local.Application.Timesheets.Workflows;
 using Azure.Local.Domain.Timesheets;
 
 namespace Azure.Local.Application.Timesheets
 {
-    public class TimesheetApplication(
+    public class TimesheetApplicationV1(
         ITimesheetRepository repository,
         ITimesheetFileProcessor fileProcessor,
         ITimesheetWorkflow workflow) : ITimesheetApplicationV1
