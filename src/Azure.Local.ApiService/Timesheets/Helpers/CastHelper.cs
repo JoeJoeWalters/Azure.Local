@@ -1,4 +1,4 @@
-﻿using Azure.Local.ApiService.Timesheets.Contracts.V1;
+﻿using Azure.Local.ApiService.Timesheets.Contracts;
 using Azure.Local.Domain.Timesheets;
 using System.Text.Json;
 
@@ -6,7 +6,7 @@ namespace Azure.Local.ApiService.Timesheets.Helpers
 {
     public static class CastHelper
     {
-        extension(AddTimesheetHttpRequestV1 request)
+        extension(AddTimesheetHttpRequest request)
         {
             public TimesheetItem ToTimesheetItem()
             {
@@ -34,7 +34,7 @@ namespace Azure.Local.ApiService.Timesheets.Helpers
             }
         }
 
-        extension(TimesheetHttpRequestComponentV1 component)
+        extension(TimesheetHttpRequestComponent component)
         {
             public TimesheetComponentItem ToTimesheetComponentItem()
             {
@@ -64,9 +64,9 @@ namespace Azure.Local.ApiService.Timesheets.Helpers
 
         extension(TimesheetItem item)
         {
-            public TimesheetResponseV1 ToTimesheetResponse()
+            public TimesheetResponse ToTimesheetResponse()
             {
-                return new TimesheetResponseV1
+                return new TimesheetResponse
                 {
                     // Core
                     Id = item.Id,
@@ -113,9 +113,9 @@ namespace Azure.Local.ApiService.Timesheets.Helpers
 
         extension(TimesheetComponentItem item)
         {
-            public TimesheetResponseComponentV1 ToTimesheetResponseComponent()
+            public TimesheetResponseComponent ToTimesheetResponseComponent()
             {
-                return new TimesheetResponseComponentV1
+                return new TimesheetResponseComponent
                 {
                     // Identity
                     Id = item.Id,
@@ -142,14 +142,14 @@ namespace Azure.Local.ApiService.Timesheets.Helpers
             }
         }
 
-        extension(AddTimesheetHttpRequestV1? item)
+        extension(AddTimesheetHttpRequest? item)
         {
-            public PatchTimesheetHttpRequestV1? ToPatchTimesheetHttpRequest()
+            public PatchTimesheetHttpRequest? ToPatchTimesheetHttpRequest()
             {
                 if (item is null)
                     return null;
 
-                return new PatchTimesheetHttpRequestV1
+                return new PatchTimesheetHttpRequest
                 {
                     Id = item.Id,
                     PersonId = item.PersonId,

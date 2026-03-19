@@ -1,11 +1,11 @@
-﻿using Azure.Local.ApiService.Timesheets.Contracts.V1;
+﻿using Azure.Local.ApiService.Timesheets.Contracts;
 using FluentValidation;
 
-namespace Azure.Local.ApiService.Timesheets.Controllers.Validators.V1
+namespace Azure.Local.ApiService.Timesheets.Controllers.Validators
 {
-    public class AddTimesheetHttpRequestValidatorV1 : AbstractValidator<AddTimesheetHttpRequestV1>
+    public class AddTimesheetHttpRequestValidator : AbstractValidator<AddTimesheetHttpRequest>
     {
-        public AddTimesheetHttpRequestValidatorV1()
+        public AddTimesheetHttpRequestValidator()
         {
             RuleFor(x => x.Id)
                 .NotEmpty().WithMessage("Id is required.")

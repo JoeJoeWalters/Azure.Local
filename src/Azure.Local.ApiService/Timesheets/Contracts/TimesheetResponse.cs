@@ -1,16 +1,16 @@
-namespace Azure.Local.ApiService.Timesheets.Contracts.V1
+namespace Azure.Local.ApiService.Timesheets.Contracts
 {
     /// <summary>
     /// Timesheet response with full details for GET operations
     /// </summary>
-    public class TimesheetResponseV1
+    public class TimesheetResponse
     {
         // Core
         public required string Id { get; set; }
         public required string PersonId { get; set; }
         public required DateTime From { get; set; }
         public required DateTime To { get; set; }
-        public List<TimesheetResponseComponentV1> Components { get; set; } = [];
+        public List<TimesheetResponseComponent> Components { get; set; } = [];
 
         // Workflow
         public required string Status { get; set; }

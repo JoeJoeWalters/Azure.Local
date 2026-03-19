@@ -11,12 +11,12 @@ namespace Azure.Local.Tests.Unit.Timesheets
     [ExcludeFromCodeCoverage]
     public class ApplicationUnitTests
     {
-        private readonly TimesheetApplicationV1 _application;
+        private readonly TimesheetApplication _application;
 
         public ApplicationUnitTests()
         {
             var repository = new FakeTimesheetRepository();
-            _application = new TimesheetApplicationV1(
+            _application = new TimesheetApplication(
                 repository: repository,
                 fileProcessor: new TimesheetFileProcessor(repository, new FakeFileConverterFactory()),
                 workflow: new TimesheetWorkflow()

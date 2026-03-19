@@ -1,4 +1,4 @@
-namespace Azure.Local.Application.Timesheets.V1
+namespace Azure.Local.Application.Timesheets
 {
     public interface ITimesheetApplicationV1 : ITimesheetApplication
     {

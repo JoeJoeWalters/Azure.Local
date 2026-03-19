@@ -1,5 +1,5 @@
 ﻿using Azure.Local.ApiService;
-using Azure.Local.ApiService.Timesheets.Contracts.V1;
+using Azure.Local.ApiService.Timesheets.Contracts;
 using Azure.Local.ApiService.Timesheets.Helpers;
 using Azure.Local.Domain.Timesheets;
 using Azure.Local.Tests.Component.Setup;
@@ -19,9 +19,9 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
         protected string _personId = string.Empty;
         protected string _timesheetId = string.Empty;
         protected List<string> _timesheetIds = [];
-        protected AddTimesheetHttpRequestV1? _addRequestBody;
-        protected PatchTimesheetHttpRequestV1? _patchRequestBody;
-        protected ChangeTimesheetStateHttpRequestV1? _changeStateRequestBody;
+        protected AddTimesheetHttpRequest? _addRequestBody;
+        protected PatchTimesheetHttpRequest? _patchRequestBody;
+        protected ChangeTimesheetStateHttpRequest? _changeStateRequestBody;
         protected HttpRequestMessage? _request;
         protected HttpResponseMessage? _response;
 
@@ -150,7 +150,7 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
             _timesheetIds = [];
             for (int t = 0; t < count; t++)
             {
-                AddTimesheetHttpRequestV1 requestBody = TestHelper.GenerateAddTimesheetHttpRequest(_personId, from.AddDays(t), from.AddDays(t + 1));
+                AddTimesheetHttpRequest requestBody = TestHelper.GenerateAddTimesheetHttpRequest(_personId, from.AddDays(t), from.AddDays(t + 1));
                 _timesheetIds.Add(requestBody.Id);
                 _ = await TestHelper.AddTestItemAsync(_client, _endpoint.Replace("{personId}", _personId), requestBody);
             }
@@ -189,7 +189,7 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
                 ? Guid.NewGuid().ToString()
                 : _timesheetId;
 
-            _changeStateRequestBody = new ChangeTimesheetStateHttpRequestV1
+            _changeStateRequestBody = new ChangeTimesheetStateHttpRequest
             {
                 State = state,
                 Comments = comments

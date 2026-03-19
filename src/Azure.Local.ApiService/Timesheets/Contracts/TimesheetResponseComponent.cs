@@ -1,9 +1,9 @@
-namespace Azure.Local.ApiService.Timesheets.Contracts.V1
+namespace Azure.Local.ApiService.Timesheets.Contracts
 {
     /// <summary>
     /// Component (line item) in a timesheet response
     /// </summary>
-    public class TimesheetResponseComponentV1
+    public class TimesheetResponseComponent
     {
         // Identity
         public required string Id { get; set; }

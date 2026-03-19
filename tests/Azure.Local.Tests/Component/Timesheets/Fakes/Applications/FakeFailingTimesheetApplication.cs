@@ -1,6 +1,5 @@
 using Azure.Local.Application.Timesheets;
 using Azure.Local.Application.Timesheets.FileProcessing;
-using Azure.Local.Application.Timesheets.V1;
 using Azure.Local.Domain.Timesheets;
 
 namespace Azure.Local.Tests.Component.Timesheets.Fakes.Applications

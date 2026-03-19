@@ -1,5 +1,4 @@
 using Azure.Local.ApiService.Timesheets.Contracts;
-using Azure.Local.ApiService.Timesheets.Contracts.V1;
 using Azure.Local.ApiService.Timesheets.Mapping.V1;
 using Azure.Local.Domain.Timesheets;
 
@@ -25,7 +24,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
         [Fact]
         public void ToDomain_FromPatchRequest_ShouldMap()
         {
-            var request = new PatchTimesheetHttpRequestV1
+            var request = new PatchTimesheetHttpRequest
             {
                 Id = "ts-1",
                 PersonId = "person-1",
@@ -34,7 +33,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
                 CreatedBy = "person-1",
                 Components =
                 [
-                    new TimesheetHttpRequestComponentV1
+                    new TimesheetHttpRequestComponent
                     {
                         Id = "c-1",
                         Units = 8,
@@ -83,7 +82,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
             result.Select(r => r.Id).Should().BeEquivalentTo(["ts-1", "ts-2"]);
         }
 
-        private static AddTimesheetHttpRequestV1 CreateAddRequest()
+        private static AddTimesheetHttpRequest CreateAddRequest()
             => new()
             {
                 Id = "ts-1",
@@ -93,7 +92,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
                 CreatedBy = "person-1",
                 Components =
                 [
-                    new TimesheetHttpRequestComponentV1
+                    new TimesheetHttpRequestComponent
                     {
                         Id = "c-1",
                         Units = 8,

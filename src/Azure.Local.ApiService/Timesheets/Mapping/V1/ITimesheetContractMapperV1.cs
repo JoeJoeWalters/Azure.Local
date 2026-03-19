@@ -1,13 +1,13 @@
-using Azure.Local.ApiService.Timesheets.Contracts.V1;
+using Azure.Local.ApiService.Timesheets.Contracts;
 using Azure.Local.Domain.Timesheets;
 
 namespace Azure.Local.ApiService.Timesheets.Mapping.V1
 {
     public interface ITimesheetContractMapperV1
     {
-        TimesheetItem ToDomain(AddTimesheetHttpRequestV1 request);
-        TimesheetItem ToDomain(PatchTimesheetHttpRequestV1 request);
-        TimesheetResponseV1 ToResponse(TimesheetItem item);
-        List<TimesheetResponseV1> ToResponse(IEnumerable<TimesheetItem> items);
+        TimesheetItem ToDomain(AddTimesheetHttpRequest request);
+        TimesheetItem ToDomain(PatchTimesheetHttpRequest request);
+        TimesheetResponse ToResponse(TimesheetItem item);
+        List<TimesheetResponse> ToResponse(IEnumerable<TimesheetItem> items);
     }
 }
