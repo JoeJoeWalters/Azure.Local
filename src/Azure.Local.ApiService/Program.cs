@@ -33,7 +33,7 @@ namespace Azure.Local.ApiService
             builder.Services.AddScoped<IValidator<AddTimesheetHttpRequest>, AddTimesheetHttpRequestValidator>();
             builder.Services.AddScoped<IValidator<PatchTimesheetHttpRequest>, PatchTimesheetHttpRequestValidator>();
             builder.Services.AddScoped<IValidator<ChangeTimesheetStateHttpRequest>, ChangeTimesheetStateHttpRequestValidator>();
-            builder.Services.AddSingleton<ITimesheetContractMapperV1, TimesheetContractMapperV1>();
+            builder.Services.AddSingleton<ITimesheetContractMapper, TimesheetContractMapper>();
 
             // Add services to the container.
             builder.Services.AddProblemDetails();

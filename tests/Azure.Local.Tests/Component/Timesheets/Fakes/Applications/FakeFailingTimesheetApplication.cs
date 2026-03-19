@@ -5,7 +5,7 @@ using Azure.Local.Domain.Timesheets;
 namespace Azure.Local.Tests.Component.Timesheets.Fakes.Applications
 {
     [ExcludeFromCodeCoverage]
-    public class FakeFailingTimesheetApplication : ITimesheetApplicationV1
+    public class FakeFailingTimesheetApplication : ITimesheetApplication
     {
         public Task<bool> AddAsync(string personId, TimesheetItem item) => throw new NotImplementedException();
         public Task<bool> DeleteAsync(string personId, string id) => throw new NotImplementedException();

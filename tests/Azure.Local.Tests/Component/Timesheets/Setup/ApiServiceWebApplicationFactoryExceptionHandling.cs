@@ -21,17 +21,17 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
                 .ConfigureAppConfiguration((context, configBuilder) =>
                 {
                     // Additional Configuration Setup
-                }).ConfigureTestServices(services =>
+                }).ConfigureTestServices((Action<IServiceCollection>)(services =>
                 {
                     // Remove existing registrations setup in Program.cs or Infrastructure
                     services.SetupBaseServices();
 
-                    services.RemoveAll<ITimesheetApplication>();
-                    services.RemoveAll<ITimesheetApplicationV1>();
+                    ServiceCollectionDescriptorExtensions.RemoveAll<ITimesheetApplication>(services);
+                    ServiceCollectionDescriptorExtensions.RemoveAll<ITimesheetApplication>(services);
                     services.AddSingleton<FakeFailingTimesheetApplication>();
-                    services.AddSingleton<ITimesheetApplication>(serviceProvider => serviceProvider.GetRequiredService<FakeFailingTimesheetApplication>());
-                    services.AddSingleton<ITimesheetApplicationV1>(serviceProvider => serviceProvider.GetRequiredService<FakeFailingTimesheetApplication>());
-                });
+                    ServiceCollectionServiceExtensions.AddSingleton<ITimesheetApplication>(services, (Func<IServiceProvider, ITimesheetApplication>)(serviceProvider => serviceProvider.GetRequiredService<FakeFailingTimesheetApplication>()));
+                    ServiceCollectionServiceExtensions.AddSingleton<ITimesheetApplication>(services, (Func<IServiceProvider, ITimesheetApplication>)(serviceProvider => serviceProvider.GetRequiredService<FakeFailingTimesheetApplication>()));
+                }));
         }
     }
 }

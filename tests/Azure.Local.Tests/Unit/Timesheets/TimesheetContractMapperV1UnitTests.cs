@@ -7,7 +7,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
     [ExcludeFromCodeCoverage]
     public class TimesheetContractMapperV1UnitTests
     {
-        private readonly TimesheetContractMapperV1 _sut = new();
+        private readonly TimesheetContractMapper _sut = new();
 
         [Fact]
         public void ToDomain_FromAddRequest_ShouldMap()

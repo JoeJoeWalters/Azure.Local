@@ -9,15 +9,15 @@ namespace Azure.Local.ApiService.Timesheets.Controllers.V1
     [ApiController]
     [ApiVersion(ApiVersioningConstants.V1)]
     [Route("person")]
-    public class TimesheetControllerV1(
-        ITimesheetApplicationV1 timesheetApplication,
-        ITimesheetContractMapperV1 mapper,
+    public class TimesheetController(
+        ITimesheetApplication timesheetApplication,
+        ITimesheetContractMapper mapper,
         IValidator<AddTimesheetHttpRequest> addTestItemHttpRequestValidator,
         IValidator<PatchTimesheetHttpRequest> patchTestItemHttpRequestValidator,
         IValidator<ChangeTimesheetStateHttpRequest> changeTimesheetStateHttpRequestValidator) : ControllerBase
     {
-        private readonly ITimesheetApplicationV1 _timesheetApplication = timesheetApplication;
-        private readonly ITimesheetContractMapperV1 _mapper = mapper;
+        private readonly ITimesheetApplication _timesheetApplication = timesheetApplication;
+        private readonly ITimesheetContractMapper _mapper = mapper;
         private readonly IValidator<AddTimesheetHttpRequest> _addTestItemHttpRequestValidator = addTestItemHttpRequestValidator;
         private readonly IValidator<PatchTimesheetHttpRequest> _patchTestItemHttpRequestValidator = patchTestItemHttpRequestValidator;
         private readonly IValidator<ChangeTimesheetStateHttpRequest> _changeTimesheetStateHttpRequestValidator = changeTimesheetStateHttpRequestValidator;

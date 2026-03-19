@@ -13,7 +13,7 @@ namespace Azure.Local.Application
                 services.AddSingleton<ITimesheetWorkflow, TimesheetWorkflow>();
                 services.AddSingleton<TimesheetApplication>();
                 services.AddSingleton<ITimesheetApplication>(serviceProvider => serviceProvider.GetRequiredService<TimesheetApplication>());
-                services.AddSingleton<ITimesheetApplicationV1>(serviceProvider => serviceProvider.GetRequiredService<TimesheetApplication>());
+                services.AddSingleton<ITimesheetApplication>(serviceProvider => serviceProvider.GetRequiredService<TimesheetApplication>());
                 return services;
             }
         }

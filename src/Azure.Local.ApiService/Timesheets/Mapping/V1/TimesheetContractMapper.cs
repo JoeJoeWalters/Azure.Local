@@ -4,7 +4,7 @@ using Azure.Local.Domain.Timesheets;
 
 namespace Azure.Local.ApiService.Timesheets.Mapping.V1
 {
-    public class TimesheetContractMapperV1 : ITimesheetContractMapperV1
+    public class TimesheetContractMapper : ITimesheetContractMapper
     {
         public TimesheetItem ToDomain(AddTimesheetHttpRequest request)
             => request.ToTimesheetItem();
