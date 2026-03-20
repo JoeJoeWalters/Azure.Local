@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc.Versioning;
+using Asp.Versioning;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Local.ApiService.Versioning
@@ -16,7 +16,8 @@ namespace Azure.Local.ApiService.Versioning
                     options.AssumeDefaultVersionWhenUnspecified = true;
                     options.ReportApiVersions = true;
                     options.ApiVersionReader = new HeaderApiVersionReader(ApiVersioningConstants.HeaderName);
-                });
+                })
+                .AddMvc();
 
                 services.AddSingleton<IApiVersionStrategy, ApiVersionStrategy>();
 
