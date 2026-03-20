@@ -22,12 +22,67 @@ jobs:
       uses: actions/setup-dotnet@v5
       with:
         dotnet-version: 10.0.x
+    - name: Setup Node.js
+      uses: actions/setup-node@v5
+      with:
+        node-version: 20
     - name: Restore Dependencies
       run: dotnet restore ./Azure.Local.slnx
     - name: Build Project
       run: dotnet build ./Azure.Local.slnx --no-restore
 #      with:
 #        dotnet-version: 10.0.x
+    - name: Generate OpenAPI 3.1 Spec
+      shell: bash
+      run: |
+        set -euo pipefail
+        OPENAPI_DIR="${{ github.workspace }}/openapi"
+        mkdir -p "$OPENAPI_DIR"
+
+        export ASPNETCORE_ENVIRONMENT=Development
+        dotnet run --project ./src/Azure.Local.ApiService/Azure.Local.ApiService.csproj --no-build --urls http://127.0.0.1:5067 > "$OPENAPI_DIR/apiservice.log" 2>&1 &
+        API_PID=$!
+        trap 'kill $API_PID || true' EXIT
+
+        for i in {1..60}; do
+          if curl --silent --show-error --fail "http://127.0.0.1:5067/openapi/v1.json" -o "$OPENAPI_DIR/openapi.v1.json"; then
+            break
+          fi
+          sleep 1
+        done
+
+        if [ ! -s "$OPENAPI_DIR/openapi.v1.json" ]; then
+          echo "OpenAPI document was not generated."
+          tail -n 200 "$OPENAPI_DIR/apiservice.log" || true
+          exit 1
+        fi
+
+        python - <<'PY'
+        import json
+        from pathlib import Path
+
+        doc_path = Path("${{ github.workspace }}/openapi/openapi.v1.json")
+        doc = json.loads(doc_path.read_text(encoding="utf-8"))
+        version = str(doc.get("openapi", ""))
+        if not version.startswith("3.1"):
+          raise SystemExit(f"Expected OpenAPI 3.1.x but got '{version}'")
+        print(f"Generated OpenAPI version: {version}")
+        PY
+
+    - name: Generate OpenAPI HTML
+      shell: bash
+      run: |
+        npx --yes @redocly/cli@latest build-docs "${{ github.workspace }}/openapi/openapi.v1.json" --output "${{ github.workspace }}/openapi/openapi.v1.html"
+    - name: Upload OpenAPI Json Artifact
+      uses: actions/upload-artifact@v7
+      with:
+          name: openapi-spec
+          path: ${{ github.workspace }}/openapi/openapi.v1.json
+    - name: Upload OpenAPI Html Artifact
+      uses: actions/upload-artifact@v7
+      with:
+          name: openapi-html
+          path: ${{ github.workspace }}/openapi/openapi.v1.html
     - name: Run Tests
       run: dotnet test ./tests/Azure.Local.Tests/Azure.Local.Tests.csproj --verbosity detailed --logger trx --results-directory ${{ github.workspace }}/unittests
     - name: Upload Test Results
