@@ -1,7 +1,6 @@
 using Azure.Local.Domain.Timesheets;
+using Azure.Local.Tests.Component.Setup;
 using Azure.Local.Tests.Component.Timesheets.Setup;
-using LightBDD.Framework.Scenarios;
-using LightBDD.XUnit2;
 
 namespace Azure.Local.Tests.Component.Timesheets
 {
@@ -11,10 +10,10 @@ namespace Azure.Local.Tests.Component.Timesheets
     {
         ~ExceptionHandlerComponentTests() => Dispose();
 
-        [Scenario]
+        [Fact]
         public async Task AddEndpoint_ReturnsInternalServerError()
         {
-            await Runner.RunScenarioAsync
+            await ScenarioSteps.RunAsync
                 (
                     given => A_New_PersonId(),
                     when => An_Add_Request_Is_Performed(),
@@ -22,10 +21,10 @@ namespace Azure.Local.Tests.Component.Timesheets
                 );
         }
 
-        [Scenario]
+        [Fact]
         public async Task PatchEndpoint_ReturnsInternalServerError()
         {
-            await Runner.RunScenarioAsync
+            await ScenarioSteps.RunAsync
                 (
                     given => A_New_PersonId(),
                     when => A_Patch_Request_Is_Performed(),
@@ -33,10 +32,10 @@ namespace Azure.Local.Tests.Component.Timesheets
                 );
         }
 
-        [Scenario]
+        [Fact]
         public async Task GetEndpoint_ReturnsInternalServerError()
         {
-            await Runner.RunScenarioAsync
+            await ScenarioSteps.RunAsync
                 (
                     given => A_New_PersonId(),
                     when => A_Get_Request_Is_Performed(Guid.NewGuid().ToString()),
@@ -44,10 +43,10 @@ namespace Azure.Local.Tests.Component.Timesheets
                 );
         }
 
-        [Scenario]
+        [Fact]
         public async Task DeleteEndpoint_ReturnsInternalServerError()
         {
-            await Runner.RunScenarioAsync
+            await ScenarioSteps.RunAsync
                 (
                     given => A_New_PersonId(),
                     when => A_Delete_Request_Is_Performed(Guid.NewGuid().ToString()),
@@ -55,12 +54,12 @@ namespace Azure.Local.Tests.Component.Timesheets
                 );
         }
 
-        [Scenario]
+        [Fact]
         public async Task SearchEndpoint_ReturnsInternalServerError()
         {
             DateTime timeStamp = DateTime.UtcNow;
 
-            await Runner.RunScenarioAsync
+            await ScenarioSteps.RunAsync
                 (
                 given => A_New_PersonId(),
                 when => A_Search_Request_Is_Performed(timeStamp, timeStamp.AddDays(7)),
@@ -68,10 +67,10 @@ namespace Azure.Local.Tests.Component.Timesheets
                 );
         }
 
-        [Scenario]
+        [Fact]
         public async Task StateChangeEndpoint_Submit_ReturnsInternalServerError()
         {
-            await Runner.RunScenarioAsync
+            await ScenarioSteps.RunAsync
                 (
                 given => A_New_PersonId(),
                 when => A_ChangeState_Request_Is_Performed(TimesheetStateAction.Submit),
@@ -79,10 +78,10 @@ namespace Azure.Local.Tests.Component.Timesheets
                 );
         }
 
-        [Scenario]
+        [Fact]
         public async Task StateChangeEndpoint_Approve_ReturnsInternalServerError()
         {
-            await Runner.RunScenarioAsync
+            await ScenarioSteps.RunAsync
                 (
                 given => A_New_PersonId(),
                 when => A_ChangeState_Request_Is_Performed(TimesheetStateAction.Approve),
@@ -90,10 +89,10 @@ namespace Azure.Local.Tests.Component.Timesheets
                 );
         }
 
-        [Scenario]
+        [Fact]
         public async Task StateChangeEndpoint_Reject_ReturnsInternalServerError()
         {
-            await Runner.RunScenarioAsync
+            await ScenarioSteps.RunAsync
                 (
                 given => A_New_PersonId(),
                 when => A_ChangeState_Request_Is_Performed(TimesheetStateAction.Reject, "Test reason"),
@@ -101,10 +100,10 @@ namespace Azure.Local.Tests.Component.Timesheets
                 );
         }
 
-        [Scenario]
+        [Fact]
         public async Task StateChangeEndpoint_Recall_ReturnsInternalServerError()
         {
-            await Runner.RunScenarioAsync
+            await ScenarioSteps.RunAsync
                 (
                 given => A_New_PersonId(),
                 when => A_ChangeState_Request_Is_Performed(TimesheetStateAction.Recall),

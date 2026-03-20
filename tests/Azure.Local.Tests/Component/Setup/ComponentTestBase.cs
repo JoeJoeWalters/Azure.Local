@@ -1,14 +1,11 @@
 using Azure.Local.ApiService;
 using Azure.Local.ApiService.Versioning;
-using LightBDD.XUnit2;
 using Microsoft.AspNetCore.Mvc.Testing;
-using System.Runtime.CompilerServices;
 
-[assembly: LightBddScope]
 namespace Azure.Local.Tests.Component.Setup
 {
     [ExcludeFromCodeCoverage]
-    public abstract class ComponentTestBase<T> : FeatureFixture, IClassFixture<T>, IDisposable where T : WebApplicationFactory<Program>
+    public abstract class ComponentTestBase<T> : IClassFixture<T>, IDisposable where T : WebApplicationFactory<Program>
     {
         protected readonly T _factory;
         protected HttpClient _client;

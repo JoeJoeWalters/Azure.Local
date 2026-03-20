@@ -44,7 +44,7 @@ The project follows **Clean Architecture** with clear separation of concerns:
   - Redis
 - **Testing**:
   - xUnit 2.9.3
-  - LightBDD 3.11.1 (BDD-style tests)
+  - xUnit scenario-step tests (BDD-style sequencing without LightBDD)
   - AwesomeAssertions 9.3.0
   - Aspire.Hosting.Testing
   - Coverlet for code coverage
@@ -104,7 +104,7 @@ dotnet test --collect:"XPlat Code Coverage" --settings codecoverage.runsettings
 ### Test Organization
 - **Unit tests**: Located in `tests/Azure.Local.Tests/Unit/`
 - **Integration tests**: Use Aspire.Hosting.Testing
-- **BDD tests**: Use LightBDD framework
+- **BDD-style tests**: Use xUnit `[Fact]` with `ScenarioSteps.RunAsync(...)`
 - **Test files**: Stored in `TestFiles/` subdirectories
 
 ## Common Patterns
@@ -151,7 +151,7 @@ public class MyValidator : AbstractValidator<MyModel>
 ### When Working on This Project
 1. **Respect Clean Architecture**: Don't reference outer layers from inner layers
 2. **Use Aspire patterns**: Leverage Aspire for service orchestration and Azure integration
-3. **Write tests**: Follow existing patterns with xUnit and LightBDD
+3. **Write tests**: Follow existing patterns with xUnit and `ScenarioSteps.RunAsync(...)` for scenario sequencing
 4. **Enable nullable**: All code should handle nullable reference types properly
 5. **Use ServiceExtensions**: Register dependencies in the appropriate layer's ServiceExtensions
 6. **API changes**: Update Swagger/OpenAPI documentation when modifying endpoints

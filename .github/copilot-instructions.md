@@ -39,7 +39,7 @@ src/
   Azure.Local.ServiceDefaults/        # Shared telemetry/health config
 tests/Azure.Local.Tests/
   Unit/Timesheets/                    # xUnit [Fact] tests against application layer
-  Component/Timesheets/               # LightBDD [Scenario] tests via WebApplicationFactory
+  Component/Timesheets/               # xUnit [Fact] scenario-step tests via WebApplicationFactory
 ```
 
 ## Key Conventions
@@ -60,7 +60,7 @@ Each layer exposes a `ServiceExtensions.cs` with extension methods (e.g., `AddAp
 - Use `WebApplicationFactory<Program>` with fakes replacing real infrastructure.
 - Replace `IRepository<T>` with `FakeRepository<T>` and `IServiceBusClient` with `FakeServiceBusClient` via `services.RemoveAll<>() + AddSingleton<>()` in `ConfigureTestServices`.
 - All component test classes must be `[Collection("NoParallelization")]`.
-- Scenarios use LightBDD's `Runner.RunScenarioAsync` with `given/when/then/and` steps defined as methods (snake_case method names map to readable scenario steps).
+- Scenarios use xUnit `[Fact]` methods with `ScenarioSteps.RunAsync(...)` and `given/when/then/and` lambdas mapped to step methods.
 - `ComponentTestBase<T>` pre-configures `HttpClient` with `x-ms-client-request-id` and `Accept: application/json` headers.
 
 ### Assertions
