@@ -1,0 +1,34 @@
+<Solution>
+  <Folder Name="/.github/">
+    <File Path=".github/dependabot.yml" />
+  </Folder>
+  <Folder Name="/.github/workflows/">
+    <File Path=".github/workflows/dependabot-build.yml" />
+    <File Path=".github/workflows/dotnet.yml" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Azure.Local.ApiService/Azure.Local.ApiService.csproj" />
+    <Project Path="src/Azure.Local.AppHost/Azure.Local.AppHost.csproj" />
+    <Project Path="src/Azure.Local.Functions/Azure.Local.Functions.csproj" />
+    <Project Path="src/Azure.Local.ServiceDefaults/Azure.Local.ServiceDefaults.csproj" />
+    <Project Path="src/Azure.Local.Web/Azure.Local.Web.csproj" />
+  </Folder>
+  <Folder Name="/src/application/">
+    <Project Path="src/application/Azure.Local.Application/Azure.Local.Application.csproj" />
+  </Folder>
+  <Folder Name="/src/domain/">
+    <Project Path="src/domain/Azure.Local.Domain/Azure.Local.Domain.csproj" />
+  </Folder>
+  <Folder Name="/src/infrastructure/">
+    <Project Path="src/infrastructure/Azure.Local.Infrastructure/Azure.Local.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Azure.Local.Tests/Azure.Local.Tests.csproj" />
+  </Folder>
+  <Folder Name="/utils/">
+    <File Path="utils/clean.bat" />
+    <File Path="utils/cosmosrenew.bat" />
+    <File Path="utils/stryker.bat" />
+    <File Path="utils/tests.bat" />
+  </Folder>
+</Solution>

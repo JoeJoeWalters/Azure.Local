@@ -7,7 +7,7 @@ NuGet package versions are controlled centrally via `Directory.Packages.props` a
 ## Build & Test
 
 ```powershell
-dotnet build Azure.Local.sln
+dotnet build Azure.Local.slnx
 dotnet test ./tests/Azure.Local.Tests/Azure.Local.Tests.csproj
 
 # Run a single test class

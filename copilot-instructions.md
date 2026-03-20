@@ -43,7 +43,7 @@ The project follows **Clean Architecture** with clear separation of concerns:
   - Azure Functions
   - Redis
 - **Testing**:
-  - xUnit 2.9.3
+  - xUnit v3
   - xUnit scenario-step tests (BDD-style sequencing without LightBDD)
   - AwesomeAssertions 9.3.0
   - Aspire.Hosting.Testing
@@ -80,7 +80,7 @@ The project follows **Clean Architecture** with clear separation of concerns:
 ### Build Commands
 ```powershell
 # Build solution
-dotnet build Azure.Local.sln
+dotnet build Azure.Local.slnx
 
 # Restore packages
 dotnet restore
@@ -199,7 +199,7 @@ Azure.Local/
 ```
 
 ### Key Files
-- `Azure.Local.sln`: Main solution file
+- `Azure.Local.slnx`: Main solution file
 - `codecoverage.runsettings`: Code coverage configuration
 - `.github/workflows/`: CI/CD pipelines
 - `utils/*.bat`: Utility scripts for development
