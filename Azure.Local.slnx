@@ -28,6 +28,7 @@
   <Folder Name="/utils/">
     <File Path="utils/clean.bat" />
     <File Path="utils/cosmosrenew.bat" />
+    <File Path="utils/openapi.bat" />
     <File Path="utils/stryker.bat" />
     <File Path="utils/tests.bat" />
   </Folder>
