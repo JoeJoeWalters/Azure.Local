@@ -118,8 +118,10 @@ namespace Azure.Local.ApiService.Timesheets.Controllers.V1
                     return NotFound();
                 }
 
-                var renderedTimesheet = _renderService.Render(result, resolvedOutputType);
-                return File(renderedTimesheet.Content, renderedTimesheet.ContentType);
+                var renderedTimesheet = await _renderService.RenderAsync(result, resolvedOutputType);
+                return string.IsNullOrWhiteSpace(renderedTimesheet.FileDownloadName)
+                    ? File(renderedTimesheet.Content, renderedTimesheet.ContentType)
+                    : File(renderedTimesheet.Content, renderedTimesheet.ContentType, renderedTimesheet.FileDownloadName);
             }
             catch (NotSupportedException ex)
             {

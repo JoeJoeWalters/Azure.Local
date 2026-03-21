@@ -104,6 +104,19 @@ namespace Azure.Local.Tests.Component.Timesheets
         }
 
         [Fact]
+        public async Task RenderEndpoint_ReturnsPdf()
+        {
+            await ScenarioSteps.RunAsync
+                (
+                    given => A_New_PersonId(),
+                    and => A_Test_Timesheet_Is_Added(),
+                    when => A_Render_Request_Is_Performed(_timesheetId, "pdf"),
+                    then => The_Response_Should_Be(HttpStatusCode.OK),
+                    and => The_Rendered_Pdf_Should_Be_Returned()
+                );
+        }
+
+        [Fact]
         public async Task RenderEndpoint_ReturnsNotFound_WhenIdNotRecognised()
         {
             await ScenarioSteps.RunAsync
@@ -111,6 +124,18 @@ namespace Azure.Local.Tests.Component.Timesheets
                     given => A_New_PersonId(),
                     when => A_Render_Request_Is_Performed(Guid.NewGuid().ToString()),
                     then => The_Response_Should_Be(HttpStatusCode.NotFound)
+                );
+        }
+
+        [Fact]
+        public async Task RenderEndpoint_ReturnsBadRequest_WhenOutputTypeInvalid()
+        {
+            await ScenarioSteps.RunAsync
+                (
+                    given => A_New_PersonId(),
+                    and => A_Test_Timesheet_Is_Added(),
+                    when => A_Render_Request_Is_Performed(_timesheetId, "invalid-format"),
+                    then => The_Response_Should_Be(HttpStatusCode.BadRequest)
                 );
         }
 

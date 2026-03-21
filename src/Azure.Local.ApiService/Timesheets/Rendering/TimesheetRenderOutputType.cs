@@ -2,6 +2,7 @@ namespace Azure.Local.ApiService.Timesheets.Rendering
 {
     public enum TimesheetRenderOutputType
     {
-        Html = 0
+        Html = 0,
+        Pdf = 1
     }
 }

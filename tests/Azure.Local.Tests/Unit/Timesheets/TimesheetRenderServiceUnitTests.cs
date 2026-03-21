@@ -8,28 +8,28 @@ namespace Azure.Local.Tests.Unit.Timesheets
     public class TimesheetRenderServiceUnitTests
     {
         [Fact]
-        public void Render_ShouldUseRenderer_ForRequestedOutputType()
+        public async Task Render_ShouldUseRenderer_ForRequestedOutputType()
         {
             var item = CreateItem();
             var expected = Encoding.UTF8.GetBytes("<html>ok</html>");
             var renderer = new StubRenderer(TimesheetRenderOutputType.Html, expected);
             var sut = new TimesheetRenderService([renderer]);
 
-            var result = sut.Render(item, TimesheetRenderOutputType.Html);
+            var result = await sut.RenderAsync(item, TimesheetRenderOutputType.Html);
 
             result.Content.Should().BeEquivalentTo(expected);
             result.ContentType.Should().Be("text/html; charset=utf-8");
         }
 
         [Fact]
-        public void Render_ShouldThrow_WhenOutputTypeNotRegistered()
+        public async Task Render_ShouldThrow_WhenOutputTypeNotRegistered()
         {
             var item = CreateItem();
             var renderer = new StubRenderer(TimesheetRenderOutputType.Html, []);
             var sut = new TimesheetRenderService([renderer]);
 
-            var action = () => sut.Render(item, (TimesheetRenderOutputType)999);
-            action.Should().Throw<NotSupportedException>();
+            var action = async () => await sut.RenderAsync(item, (TimesheetRenderOutputType)999);
+            await action.Should().ThrowAsync<NotSupportedException>();
         }
 
         private static TimesheetItem CreateItem()
@@ -46,12 +46,12 @@ namespace Azure.Local.Tests.Unit.Timesheets
         {
             public TimesheetRenderOutputType OutputType => outputType;
 
-            public TimesheetRenderResult Render(TimesheetItem item)
-                => new()
+            public Task<TimesheetRenderResult> RenderAsync(TimesheetItem item, CancellationToken cancellationToken = default)
+                => Task.FromResult(new TimesheetRenderResult
                 {
                     ContentType = "text/html; charset=utf-8",
                     Content = payload
-                };
+                });
         }
     }
 }

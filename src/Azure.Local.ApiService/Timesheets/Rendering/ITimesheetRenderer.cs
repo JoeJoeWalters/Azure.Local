@@ -5,6 +5,6 @@ namespace Azure.Local.ApiService.Timesheets.Rendering
     public interface ITimesheetRenderer
     {
         TimesheetRenderOutputType OutputType { get; }
-        TimesheetRenderResult Render(TimesheetItem item);
+        Task<TimesheetRenderResult> RenderAsync(TimesheetItem item, CancellationToken cancellationToken = default);
     }
 }

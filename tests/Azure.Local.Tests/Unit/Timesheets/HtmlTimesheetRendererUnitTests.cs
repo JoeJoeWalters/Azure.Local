@@ -8,9 +8,9 @@ namespace Azure.Local.Tests.Unit.Timesheets
     public class HtmlTimesheetRendererUnitTests
     {
         [Fact]
-        public void Render_ShouldReturnHtml_WithEncodedContent()
+        public async Task Render_ShouldReturnHtml_WithEncodedContent()
         {
-            var sut = new HtmlTimesheetRenderer();
+            var sut = new HtmlTimesheetRenderer(new TimesheetHtmlDocumentBuilder());
             var item = new TimesheetItem
             {
                 Id = "ts-<1>",
@@ -34,7 +34,7 @@ namespace Azure.Local.Tests.Unit.Timesheets
                 ]
             };
 
-            var result = sut.Render(item);
+            var result = await sut.RenderAsync(item);
             var html = Encoding.UTF8.GetString(result.Content);
 
             result.ContentType.Should().StartWith("text/html");

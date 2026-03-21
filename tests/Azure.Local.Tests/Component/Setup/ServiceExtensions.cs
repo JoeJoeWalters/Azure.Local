@@ -1,7 +1,9 @@
 using Azure.Local.Application.Timesheets;
 using Azure.Local.Application.Timesheets.FileProcessing;
+using Azure.Local.ApiService.Timesheets.Rendering;
 using Azure.Local.Infrastructure.Messaging;
 using Azure.Local.Tests.Component.Timesheets.Fakes.Repositories;
+using Azure.Local.Tests.Component.Timesheets.Fakes.Rendering;
 using Azure.Local.Tests.Component.Timesheets.Fakes.ServiceBus;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -16,6 +18,7 @@ namespace Azure.Local.Tests.Component.Setup
             {
                 services.AddTimesheetPersistence();
                 services.AddServiceBus();
+                services.AddRenderingSupport();
                 return services;
             }
 
@@ -30,6 +33,13 @@ namespace Azure.Local.Tests.Component.Setup
             {
                 services.RemoveAll<IServiceBusClient>();
                 services.AddSingleton<IServiceBusClient, FakeServiceBusClient>();
+                return services;
+            }
+
+            private IServiceCollection AddRenderingSupport()
+            {
+                services.RemoveAll<IHtmlToPdfConverter>();
+                services.AddSingleton<IHtmlToPdfConverter, FakeHtmlToPdfConverter>();
                 return services;
             }
         }

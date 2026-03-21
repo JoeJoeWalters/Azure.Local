@@ -8,14 +8,14 @@ namespace Azure.Local.ApiService.Timesheets.Rendering
             renderer => renderer.OutputType,
             renderer => renderer);
 
-        public TimesheetRenderResult Render(TimesheetItem item, TimesheetRenderOutputType outputType)
+        public async Task<TimesheetRenderResult> RenderAsync(TimesheetItem item, TimesheetRenderOutputType outputType, CancellationToken cancellationToken = default)
         {
             if (!_renderers.TryGetValue(outputType, out var renderer))
             {
                 throw new NotSupportedException($"Timesheet output type '{outputType}' is not supported.");
             }
 
-            return renderer.Render(item);
+            return await renderer.RenderAsync(item, cancellationToken);
         }
     }
 }

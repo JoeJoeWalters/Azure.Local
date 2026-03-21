@@ -240,6 +240,16 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
             await Task.CompletedTask;
         }
 
+        protected async Task The_Rendered_Pdf_Should_Be_Returned()
+        {
+            _response.Should().NotBeNull();
+            _response!.Content.Headers.ContentType.Should().NotBeNull();
+            _response.Content.Headers.ContentType!.MediaType.Should().Be("application/pdf");
+            var content = await _response.Content.ReadAsByteArrayAsync();
+            content.Length.Should().BeGreaterThan(0);
+            await Task.CompletedTask;
+        }
+
         public override void Dispose()
         {
             base.Dispose();
