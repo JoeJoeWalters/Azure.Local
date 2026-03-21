@@ -14,7 +14,7 @@
   </ItemGroup>
   <ItemGroup Label="Azure">
     <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.20.1" />
-    <PackageVersion Include="Microsoft.Azure.Cosmos" Version="3.57.1" />
+    <PackageVersion Include="Microsoft.Azure.Cosmos" Version="3.58.0" />
     <PackageVersion Include="Microsoft.Azure.Functions.Worker" Version="2.51.0" />
     <PackageVersion Include="Microsoft.Azure.Functions.Worker.ApplicationInsights" Version="2.50.0" />
     <PackageVersion Include="Microsoft.Azure.Functions.Worker.Extensions.ServiceBus" Version="5.24.0" />
