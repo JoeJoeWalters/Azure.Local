@@ -44,6 +44,17 @@ namespace Azure.Local.Tests.Component.Timesheets
         }
 
         [Fact]
+        public async Task RenderEndpoint_ReturnsInternalServerError()
+        {
+            await ScenarioSteps.RunAsync
+                (
+                    given => A_New_PersonId(),
+                    when => A_Render_Request_Is_Performed(Guid.NewGuid().ToString()),
+                    then => The_Response_Should_Be(HttpStatusCode.InternalServerError)
+                );
+        }
+
+        [Fact]
         public async Task DeleteEndpoint_ReturnsInternalServerError()
         {
             await ScenarioSteps.RunAsync

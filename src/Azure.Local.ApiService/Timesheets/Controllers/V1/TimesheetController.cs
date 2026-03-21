@@ -1,5 +1,6 @@
 using Azure.Local.ApiService.Timesheets.Contracts;
 using Azure.Local.ApiService.Timesheets.Mapping.V1;
+using Azure.Local.ApiService.Timesheets.Rendering;
 using Azure.Local.ApiService.Versioning;
 using Azure.Local.Application.Timesheets;
 using FluentValidation;
@@ -11,12 +12,14 @@ namespace Azure.Local.ApiService.Timesheets.Controllers.V1
     [Route("person")]
     public class TimesheetController(
         ITimesheetApplication timesheetApplication,
+        ITimesheetRenderService renderService,
         ITimesheetContractMapper mapper,
         IValidator<AddTimesheetHttpRequest> addTestItemHttpRequestValidator,
         IValidator<PatchTimesheetHttpRequest> patchTestItemHttpRequestValidator,
         IValidator<ChangeTimesheetStateHttpRequest> changeTimesheetStateHttpRequestValidator) : ControllerBase
     {
         private readonly ITimesheetApplication _timesheetApplication = timesheetApplication;
+        private readonly ITimesheetRenderService _renderService = renderService;
         private readonly ITimesheetContractMapper _mapper = mapper;
         private readonly IValidator<AddTimesheetHttpRequest> _addTestItemHttpRequestValidator = addTestItemHttpRequestValidator;
         private readonly IValidator<PatchTimesheetHttpRequest> _patchTestItemHttpRequestValidator = patchTestItemHttpRequestValidator;
@@ -89,6 +92,38 @@ namespace Azure.Local.ApiService.Timesheets.Controllers.V1
                 return result != null 
                     ? new OkObjectResult(_mapper.ToResponse(result)) 
                     : NotFound();
+            }
+            catch (Exception ex)
+            {
+                return new ObjectResult(ex.Message)
+                {
+                    StatusCode = (int)HttpStatusCode.InternalServerError
+                };
+            }
+        }
+
+        [HttpGet("{personId}/timesheet/item/{id}/render")]
+        public async Task<IActionResult> Render([FromRoute] string personId, [FromRoute] string id, [FromQuery] string? outputType = "html")
+        {
+            if (!Enum.TryParse<TimesheetRenderOutputType>(outputType, ignoreCase: true, out var resolvedOutputType))
+            {
+                return BadRequest($"Unsupported output type '{outputType}'.");
+            }
+
+            try
+            {
+                var result = await _timesheetApplication.GetAsync(personId, id);
+                if (result is null)
+                {
+                    return NotFound();
+                }
+
+                var renderedTimesheet = _renderService.Render(result, resolvedOutputType);
+                return File(renderedTimesheet.Content, renderedTimesheet.ContentType);
+            }
+            catch (NotSupportedException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
             }
             catch (Exception ex)
             {

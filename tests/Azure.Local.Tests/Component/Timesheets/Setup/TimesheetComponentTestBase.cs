@@ -13,6 +13,7 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
     public abstract class TimesheetComponentTestBase<T>(T factory) : ComponentTestBase<T>(factory) where T : WebApplicationFactory<Program>
     {
         private const string _endpoint = "/person/{personId}/timesheet/item";
+        private const string _renderEndpoint = "/person/{personId}/timesheet/item/{timesheetId}/render";
         private const string _searchEndpoint = "/person/{personId}/timesheet/search";
         private const string _stateEndpoint = "/person/{personId}/timesheet/item/{timesheetId}/state";
 
@@ -50,6 +51,19 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
         protected async Task A_Get_Request_Is_Performed(string timesheetId)
         {
             _request = new HttpRequestMessage(HttpMethod.Get, $"{_endpoint.Replace("{personId}", _personId)}/{timesheetId}");
+            var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
+            _response = await _client.SendAsync(_request, cancelToken);
+            await Task.CompletedTask;
+        }
+
+        protected async Task A_Render_Request_Is_Performed(string timesheetId, string outputType = "html")
+        {
+            _request = new HttpRequestMessage(
+                HttpMethod.Get,
+                _renderEndpoint
+                    .Replace("{personId}", _personId)
+                    .Replace("{timesheetId}", timesheetId) + $"?outputType={outputType}");
+
             var cancelToken = new CancellationTokenSource(TimeSpan.FromSeconds(30)).Token;
             _response = await _client.SendAsync(_request, cancelToken);
             await Task.CompletedTask;
@@ -213,6 +227,16 @@ namespace Azure.Local.Tests.Component.Timesheets.Setup
             _response.Should().NotBeNull();
             var content = await _response!.Content.ReadAsStringAsync();
             content.Should().Contain(expectedMessage);
+            await Task.CompletedTask;
+        }
+
+        protected async Task The_Rendered_Html_Should_Contain(string expectedContent)
+        {
+            _response.Should().NotBeNull();
+            _response!.Content.Headers.ContentType.Should().NotBeNull();
+            _response.Content.Headers.ContentType!.MediaType.Should().Be("text/html");
+            var content = await _response.Content.ReadAsStringAsync();
+            content.Should().Contain(expectedContent);
             await Task.CompletedTask;
         }
 

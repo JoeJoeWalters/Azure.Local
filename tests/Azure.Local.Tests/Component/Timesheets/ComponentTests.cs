@@ -91,6 +91,30 @@ namespace Azure.Local.Tests.Component.Timesheets
         }
 
         [Fact]
+        public async Task RenderEndpoint_ReturnsHtml()
+        {
+            await ScenarioSteps.RunAsync
+                (
+                    given => A_New_PersonId(),
+                    and => A_Test_Timesheet_Is_Added(),
+                    when => A_Render_Request_Is_Performed(_timesheetId),
+                    then => The_Response_Should_Be(HttpStatusCode.OK),
+                    and => The_Rendered_Html_Should_Contain($"Timesheet {_timesheetId}")
+                );
+        }
+
+        [Fact]
+        public async Task RenderEndpoint_ReturnsNotFound_WhenIdNotRecognised()
+        {
+            await ScenarioSteps.RunAsync
+                (
+                    given => A_New_PersonId(),
+                    when => A_Render_Request_Is_Performed(Guid.NewGuid().ToString()),
+                    then => The_Response_Should_Be(HttpStatusCode.NotFound)
+                );
+        }
+
+        [Fact]
         public async Task DeleteEndpoint_ReturnsOk()
         {
             await ScenarioSteps.RunAsync
