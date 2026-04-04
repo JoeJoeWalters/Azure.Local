@@ -26,6 +26,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
     <ProjectReference Include="..\application\Azure.Local.Application\Azure.Local.Application.csproj" />
     <ProjectReference Include="..\infrastructure\Azure.Local.Infrastructure\Azure.Local.Infrastructure.csproj" />
   </ItemGroup>

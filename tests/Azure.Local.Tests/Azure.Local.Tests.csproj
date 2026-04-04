@@ -54,6 +54,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost" />
     <Resource Include="Unit\Timesheets\TestFiles\FileProcessing\StandardCSV.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
