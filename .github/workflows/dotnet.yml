@@ -84,14 +84,14 @@ jobs:
           name: openapi-html
           path: ${{ github.workspace }}/openapi/openapi.v1.html
     - name: Run Tests
-      run: dotnet test ./tests/Azure.Local.Tests/Azure.Local.Tests.csproj --verbosity detailed --logger trx --results-directory ${{ github.workspace }}/unittests
+      run: dotnet test ./tests/Azure.Local.Tests/Azure.Local.Tests.csproj -p:IsTestingPlatformApplication=false --verbosity detailed --logger trx --results-directory ${{ github.workspace }}/unittests
     - name: Upload Test Results
       uses: actions/upload-artifact@v7
       with:
           name: unittestresults
           path: ${{ github.workspace }}/unittests    
     - name: Run Tests For Coverage
-      run: dotnet test ./tests/Azure.Local.Tests/Azure.Local.Tests.csproj --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ${{ github.workspace }}/coverage --settings:./codecoverage.runsettings      
+      run: dotnet test ./tests/Azure.Local.Tests/Azure.Local.Tests.csproj -p:IsTestingPlatformApplication=false --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ${{ github.workspace }}/coverage --settings:./codecoverage.runsettings      
     - name: Combine Coverage Reports as Cobertura # This is because one report is produced per project, and we want one result for all of them.
       uses: danielpalme/ReportGenerator-GitHub-Action@5.5.4
       with:
