@@ -1,4 +1,5 @@
 using Azure.Local.Domain.Timesheets;
+using QRCoder;
 using System.Globalization;
 using System.Net;
 using System.Text;
@@ -9,6 +10,11 @@ namespace Azure.Local.ApiService.Timesheets.Rendering
     {
         public string Build(TimesheetItem item)
         {
+            using var qrData = QRCodeGenerator.GenerateQrCode(item.Id, QRCodeGenerator.ECCLevel.H);
+            using var qrCode = new SvgQRCode(qrData);
+            var qrSvg = qrCode.GetGraphic(1, "#000000", "#ffffff", drawQuietZones: true);
+            var qrSource = Convert.ToBase64String(Encoding.UTF8.GetBytes(qrSvg));
+
             var sb = new StringBuilder();
             sb.AppendLine("<!DOCTYPE html>");
             sb.AppendLine("<html lang=\"en\">");
@@ -23,15 +29,23 @@ namespace Azure.Local.ApiService.Timesheets.Rendering
             sb.AppendLine("    th, td { border: 1px solid #d1d5db; padding: 8px; text-align: left; }");
             sb.AppendLine("    th { background-color: #f3f4f6; }");
             sb.AppendLine("    .meta { margin-top: 4px; }");
+            sb.AppendLine("    .timesheet-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; break-inside: avoid; }");
+            sb.AppendLine("    .timesheet-details { flex: 1; min-width: 0; overflow-wrap: anywhere; }");
+            sb.AppendLine("    .timesheet-qr { display: block; width: 40mm; height: 40mm; flex: none; }");
             sb.AppendLine("  </style>");
             sb.AppendLine("</head>");
             sb.AppendLine("<body>");
+            sb.AppendLine("  <header class=\"timesheet-header\">");
+            sb.AppendLine("  <div class=\"timesheet-details\">");
             sb.AppendLine($"  <h1>Timesheet {Encode(item.Id)}</h1>");
             sb.AppendLine($"  <div class=\"meta\"><strong>Person ID:</strong> {Encode(item.PersonId)}</div>");
             sb.AppendLine($"  <div class=\"meta\"><strong>Period:</strong> {FormatDate(item.From)} to {FormatDate(item.To)}</div>");
             sb.AppendLine($"  <div class=\"meta\"><strong>Status:</strong> {Encode(item.Status.ToString())}</div>");
             sb.AppendLine($"  <div class=\"meta\"><strong>Total Units:</strong> {item.TotalUnits.ToString("0.##", CultureInfo.InvariantCulture)}</div>");
             sb.AppendLine($"  <div class=\"meta\"><strong>Created By:</strong> {Encode(item.CreatedBy)}</div>");
+            sb.AppendLine("  </div>");
+            sb.AppendLine($"  <img class=\"timesheet-qr\" src=\"data:image/svg+xml;base64,{qrSource}\" alt=\"QR code for timesheet {Encode(item.Id)}\">");
+            sb.AppendLine("  </header>");
             sb.AppendLine("  <h2>Components</h2>");
             sb.AppendLine("  <table>");
             sb.AppendLine("    <thead>");

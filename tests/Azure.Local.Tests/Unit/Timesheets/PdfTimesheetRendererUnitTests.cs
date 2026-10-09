@@ -1,5 +1,6 @@
 using Azure.Local.ApiService.Timesheets.Rendering;
 using Azure.Local.Domain.Timesheets;
+using Azure.Local.Tests.Unit.Timesheets.Helpers;
 using System.Text;
 
 namespace Azure.Local.Tests.Unit.Timesheets
@@ -22,12 +23,13 @@ namespace Azure.Local.Tests.Unit.Timesheets
                 CreatedBy = "person-1"
             };
 
-            var result = await sut.RenderAsync(item);
+            var result = await sut.RenderAsync(item, TestContext.Current.CancellationToken);
             var payloadText = Encoding.UTF8.GetString(result.Content);
 
             result.ContentType.Should().Be("application/pdf");
             result.FileDownloadName.Should().Be("ts-1.pdf");
             payloadText.Should().Contain("Timesheet ts-1");
+            TimesheetQrCodeTestHelper.Decode(payloadText).Text.Should().Be(item.Id);
         }
 
         private sealed class StubConverter : IHtmlToPdfConverter
