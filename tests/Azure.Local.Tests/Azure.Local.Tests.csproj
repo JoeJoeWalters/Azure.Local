@@ -56,6 +56,7 @@
 
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.AppHost" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
     <Resource Include="Unit\Timesheets\TestFiles\FileProcessing\StandardCSV.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
